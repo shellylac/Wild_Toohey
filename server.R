@@ -4,7 +4,8 @@ server <- function(input, output, session) {
   observe({
     # Add "All" option to all choices for common name
     updateSelectInput(session, "vernacular_name",
-                      choices = c("All", sort(unique(toohey_occs$vernacular_name))))
+                      choices = c("All", sort(unique(toohey_occs$vernacular_name))),
+                      selected = 'Koala')
 
     updateSelectInput(session, "class",
                       choices = c(sort(unique(toohey_occs$class))))
@@ -74,7 +75,6 @@ server <- function(input, output, session) {
       toohey_occs %>% filter(vernacular_name == input$vernacular_name)
     } else {
       data <- toohey_occs
-      if(input$class != "All") data <- data %>% filter(class == input$class)
       if(input$order != "All") data <- data %>% filter(order == input$order)
       if(input$family != "All") data <- data %>% filter(family == input$family)
       if(input$genus != "All") data <- data %>% filter(genus == input$genus)
@@ -82,6 +82,44 @@ server <- function(input, output, session) {
       data
     }
   })
+
+  # Create the leaflet map
+  output$map <- renderLeaflet({
+    # Create a base map first
+    leaflet() %>%
+      addTiles() %>%  # Add default OpenStreetMap tiles
+      setView(
+        lng = 153.0586,  # Default center coordinates
+        lat = -27.5483,
+        zoom = 14
+      )
+  })
+
+  observeEvent(filtered_data(), {
+    df <- filtered_data()
+    cat("Columns in df:\n")
+    print(names(df))
+
+    # Check for lat/long columns:
+    validate(
+      need("latitude" %in% names(df), "No column named 'latitude' found."),
+      need("longitude" %in% names(df), "No column named 'longitude' found.")
+    )
+
+    leafletProxy("map", data = df) %>%
+      clearMarkers() %>%
+      addCircleMarkers(
+        lat = ~latitude,
+        lng = ~longitude,
+        popup = ~paste0("Species: ", species, "<br>",
+                        "Date: ", eventDate),
+        radius = 5,
+        color = "blue",
+        fillColor = "blue",
+        fillOpacity = 0.5
+      )
+  })
+
 
 
 

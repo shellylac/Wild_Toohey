@@ -33,8 +33,8 @@ ui <- page_fluid(
       nav_panel(
         title = "Wild Finder",
         card(
-          card_header("Species Data"),
-          DT::DTOutput("summary_table")
+          card_header("Species locations"),
+          leafletOutput('map')
         )
       ),
 
@@ -50,7 +50,7 @@ ui <- page_fluid(
         title = "Stats",
         card(
           card_header("Statistical Analysis"),
-          "Statistical information will go here"  # Placeholder
+          DT::DTOutput("summary_table")
         )
       ),
 
