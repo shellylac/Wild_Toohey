@@ -1,31 +1,66 @@
-ui <- page_sidebar(
+ui <- page_fluid(
   title = "Wild Toohey Explorer",
 
-  sidebar = sidebar(
-    # Direct species selection
-    selectInput("select_method", "Selection Method:",
-                choices = c("By Common Name", "By Taxonomy")),
+  # Create a layout with a persistent sidebar and navbar pages
+  layout_columns(
+    col_widths = c(3, 9),  # 3/12 for sidebar, 9/12 for main content
 
-    # Common name selection (shown when select_method is "By Common Name")
-    conditionalPanel(
-      condition = "input.select_method == 'By Common Name'",
-      selectInput("vernacular_name", "Common Name:",
-                  choices = NULL)
+    # Left column: Persistent sidebar
+    card(
+      selectInput("select_method", "Selection Method:",
+                  choices = c("By Common Name", "By Taxonomy")),
+
+      # Common name selection
+      conditionalPanel(
+        condition = "input.select_method == 'By Common Name'",
+        selectInput("vernacular_name", "Common Name:",
+                    choices = NULL)
+      ),
+
+      # Taxonomic selection
+      conditionalPanel(
+        condition = "input.select_method == 'By Taxonomy'",
+        selectInput("class", "Class:", choices = NULL),
+        selectInput("order", "Order:", choices = NULL),
+        selectInput("family", "Family:", choices = NULL),
+        selectInput("genus", "Genus:", choices = NULL),
+        selectInput("species", "Species:", choices = NULL)
+      )
     ),
 
-    # Taxonomic selection (shown when select_method is "By Taxonomy")
-    conditionalPanel(
-      condition = "input.select_method == 'By Taxonomy'",
-      selectInput("class", "Class:", choices = NULL),
-      selectInput("order", "Order:", choices = NULL),
-      selectInput("family", "Family:", choices = NULL),
-      selectInput("genus", "Genus:", choices = NULL),
-      selectInput("species", "Species:", choices = NULL)
-    )
-  ),
+    # Right column: Navbar pages
+    navset_card_tab(
+      nav_panel(
+        title = "Wild Finder",
+        card(
+          card_header("Species Data"),
+          DT::DTOutput("summary_table")
+        )
+      ),
 
-  card(
-    card_header("Data Summary"),
-    DT::DTOutput("summary_table")
+      nav_panel(
+        title = "Wild Heat Maps",
+        card(
+          card_header("Species Distribution"),
+          "Heat map visualization will go here"  # Placeholder
+        )
+      ),
+
+      nav_panel(
+        title = "Stats",
+        card(
+          card_header("Statistical Analysis"),
+          "Statistical information will go here"  # Placeholder
+        )
+      ),
+
+      nav_panel(
+        title = "Resources",
+        card(
+          card_header("Additional Resources"),
+          "Resource links and information will go here"  # Placeholder
+        )
+      )
+    )
   )
 )

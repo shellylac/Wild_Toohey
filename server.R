@@ -16,7 +16,7 @@ server <- function(input, output, session) {
     req(input$class)
     orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
     updateSelectInput(session, "order",
-                      choices = c(orders))
+                      choices = c('All', orders))
   })
 
   # Update Family based on Order
@@ -82,6 +82,8 @@ server <- function(input, output, session) {
       data
     }
   })
+
+
 
   # Create summary output table
   output$summary_table <- DT::renderDT({
