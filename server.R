@@ -2,37 +2,30 @@ server <- function(input, output, session) {
 
   # Initialize selection lists
   observe({
-    # Add "All" option to all choices
+    # Add "All" option to all choices for common name
     updateSelectInput(session, "vernacular_name",
                       choices = c("All", sort(unique(toohey_occs$vernacular_name))))
 
     updateSelectInput(session, "class",
-                      choices = c("All", sort(unique(toohey_occs$class))))
+                      choices = c(sort(unique(toohey_occs$class))))
   })
 
   # Update Order based on Class
+  # Can't pick 'All' for classes - have to choose one
   observe({
     req(input$class)
-    if(input$class == "All") {
-      orders <- sort(unique(toohey_occs$order))
-    } else {
-      orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
-    }
+    orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
     updateSelectInput(session, "order",
-                      choices = c("All", orders))
+                      choices = c(orders))
   })
 
   # Update Family based on Order
   observe({
     req(input$order)
     if(input$order == "All") {
-      if(input$class == "All") {
-        families <- sort(unique(toohey_occs$family))
-      } else {
-        families <- sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
-      }
-    } else {
-      families <- sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
+     families <- sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
+     } else {
+     families <- sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
     }
     updateSelectInput(session, "family",
                       choices = c("All", families))
@@ -43,15 +36,11 @@ server <- function(input, output, session) {
     req(input$family)
     if(input$family == "All") {
       if(input$order == "All") {
-        if(input$class == "All") {
-          genera <- sort(unique(toohey_occs$genus))
+        genera <- sort(unique(toohey_occs$genus[toohey_occs$class == input$class]))
         } else {
-          genera <- sort(unique(toohey_occs$genus[toohey_occs$class == input$class]))
-        }
+          genera <- sort(unique(toohey_occs$genus[toohey_occs$order == input$order]))
+          }
       } else {
-        genera <- sort(unique(toohey_occs$genus[toohey_occs$order == input$order]))
-      }
-    } else {
       genera <- sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
     }
     updateSelectInput(session, "genus",
@@ -64,12 +53,8 @@ server <- function(input, output, session) {
     if(input$genus == "All") {
       if(input$family == "All") {
         if(input$order == "All") {
-          if(input$class == "All") {
-            species <- sort(unique(toohey_occs$species))
-          } else {
             species <- sort(unique(toohey_occs$species[toohey_occs$class == input$class]))
-          }
-        } else {
+          } else {
           species <- sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
         }
       } else {
