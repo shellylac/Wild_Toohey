@@ -1,5 +1,8 @@
 server <- function(input, output, session) {
 
+  # Add this at the start of the server function
+  first_load <- reactiveVal(TRUE)
+
   # Initialize selection lists ----
   observe({
     updateSelectInput(session, "vernacular_name",
@@ -131,29 +134,28 @@ server <- function(input, output, session) {
 
     df <- date_filtered_data()
 
-    if (nrow(df) == 0) {
-      # Show a message or clear the map so the user sees "no data"
+    if (nrow(df) == 0 && !first_load()) {  # Only show warning if not first load
       showNotification("No data available for current selection", type = "warning")
 
       leafletProxy("map") %>%
         clearMarkers() %>%
         clearMarkerClusters()
-
     } else {
-
-    leafletProxy("map") |>
-      clearMarkers() |>
-      clearMarkerClusters() |>
-      addMarkers(
-        data = df,
-        lng = ~longitude,
-        lat = ~latitude,
-        popup = ~paste("<b>", vernacular_name, "</b><br>",
-                       "Scientific name:", species, "<br>",
-                       "Date:", eventDate),
-        clusterOptions = markerClusterOptions()
-      )
+      leafletProxy("map") |>
+        clearMarkers() |>
+        clearMarkerClusters() |>
+        addMarkers(
+          data = df,
+          lng = ~longitude,
+          lat = ~latitude,
+          popup = ~paste("<b>", vernacular_name, "</b><br>",
+                         "Scientific name:", species, "<br>",
+                         "Date:", eventDate),
+          clusterOptions = markerClusterOptions()
+        )
     }
+
+    first_load(FALSE)  # Set to FALSE after first load
   })
 
   # Reset the map view to the original on button click ----
