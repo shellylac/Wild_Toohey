@@ -34,6 +34,26 @@ ui <- page_fluid(
         title = "Wild Finder",
         card(
           card_header("Species locations"),
+          # Add this new section
+          radioButtons(
+            "date_filter", "Time period:",
+            choices = c("Past 3 days" = "3days",
+                        "Past week" = "week",
+                        "Custom date range" = "custom"),
+            selected = "3days",
+            inline = TRUE
+          ),
+
+          # Add conditional panel for custom date range
+          conditionalPanel(
+            condition = "input.date_filter == 'custom'",
+            dateRangeInput("date_range", "Select date range:",
+                           start = Sys.Date() - 30,  # Default to last 30 days
+                           end = Sys.Date(),
+                           min = min(toohey_occs$eventDate),
+                           max = Sys.Date())
+          ),
+          actionButton("reset_view", "Reset Map View", class = "btn-sm"),  # Add this line
           leafletOutput('map')
         )
       ),

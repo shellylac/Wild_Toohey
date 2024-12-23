@@ -68,8 +68,11 @@ server <- function(input, output, session) {
                       choices = c("All", species))
   })
 
-  # Filtered dataset based on selection method and choices ----
+  # Filtered species dataset based on selection method and choices ----
   filtered_data <- reactive({
+    validate(
+      need(input$select_method, "Please select a method"),
+      )
 
     if(input$select_method == "By Common Name") {
       if(input$vernacular_name == "All") return(toohey_occs)
@@ -84,6 +87,30 @@ server <- function(input, output, session) {
     }
   })
 
+  # Filtered data for wild finder map - with date filtering ----
+  date_filtered_data <- reactive({
+
+    data <- filtered_data()
+
+    # Then apply date filtering
+    data <- data |>
+        mutate(eventDate = as.Date(eventDate))  # Ensure dates are in Date format
+      switch(input$date_filter,
+             "3days" = {
+               data |> filter(eventDate >= (Sys.Date() - 3))
+             },
+             "week" = {
+               data |> filter(eventDate >= (Sys.Date() - 7))
+             },
+             "custom" = {
+               data |>  filter(
+                 eventDate >= input$date_range[1],
+                 eventDate <= input$date_range[2]
+               )
+             }
+             )
+    })
+
   # Create the leaflet base map ----
   output$map <- renderLeaflet({
     leaflet() |>
@@ -95,6 +122,9 @@ server <- function(input, output, session) {
 
   # Update the map with observations ----
   observeEvent(filtered_data(), {
+    validate(
+      need(nrow(filtered_data()) > 0, "No data available for current selection")
+    )
     df <- filtered_data()
 
     leafletProxy("map") |>
@@ -108,6 +138,17 @@ server <- function(input, output, session) {
                        "Scientific name:", species, "<br>",
                        "Date:", eventDate),
         clusterOptions = markerClusterOptions()
+      )
+  })
+
+  # Reset the map view to the original on button click ----
+  # Add reset view functionality
+  observeEvent(input$reset_view, {
+    leafletProxy("map") |>
+      setView(
+        lng = 153.0586,
+        lat = -27.5483,
+        zoom = 14
       )
   })
 
