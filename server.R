@@ -1,6 +1,6 @@
 server <- function(input, output, session) {
 
-  # Initialize selection lists
+  # Initialize selection lists ----
   observe({
     # Add "All" option to all choices for common name
     updateSelectInput(session, "vernacular_name",
@@ -11,7 +11,7 @@ server <- function(input, output, session) {
                       choices = c(sort(unique(toohey_occs$class))))
   })
 
-  # Update Order based on Class
+  # Update Order based on Class ----
   # Can't pick 'All' for classes - have to choose one
   observe({
     req(input$class)
@@ -20,7 +20,7 @@ server <- function(input, output, session) {
                       choices = c('All', orders))
   })
 
-  # Update Family based on Order
+  # Update Family based on Order ----
   observe({
     req(input$order)
     if(input$order == "All") {
@@ -32,7 +32,7 @@ server <- function(input, output, session) {
                       choices = c("All", families))
   })
 
-  # Update Genus based on Family
+  # Update Genus based on Family ----
   observe({
     req(input$family)
     if(input$family == "All") {
@@ -48,7 +48,7 @@ server <- function(input, output, session) {
                       choices = c("All", genera))
   })
 
-  # Update Species based on Genus
+  # Update Species based on Genus ----
   observe({
     req(input$genus)
     if(input$genus == "All") {
@@ -68,8 +68,9 @@ server <- function(input, output, session) {
                       choices = c("All", species))
   })
 
-  # Filtered dataset based on selection method and choices
+  # Filtered dataset based on selection method and choices ----
   filtered_data <- reactive({
+
     if(input$select_method == "By Common Name") {
       if(input$vernacular_name == "All") return(toohey_occs)
       toohey_occs %>% filter(vernacular_name == input$vernacular_name)
@@ -83,47 +84,35 @@ server <- function(input, output, session) {
     }
   })
 
-  # Create the leaflet map
+  # Create the leaflet base map ----
   output$map <- renderLeaflet({
-    # Create a base map first
-    leaflet() %>%
-      addTiles() %>%  # Add default OpenStreetMap tiles
-      setView(
-        lng = 153.0586,  # Default center coordinates
-        lat = -27.5483,
-        zoom = 14
-      )
+    leaflet() |>
+      addTiles() |>
+      addProviderTiles(providers$CartoDB.Positron) |>   # Better looking tiles
+      setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
+      addScaleBar(position = "bottomleft")
   })
 
+  # Update the map with observations ----
   observeEvent(filtered_data(), {
     df <- filtered_data()
-    cat("Columns in df:\n")
-    print(names(df))
 
-    # Check for lat/long columns:
-    validate(
-      need("latitude" %in% names(df), "No column named 'latitude' found."),
-      need("longitude" %in% names(df), "No column named 'longitude' found.")
-    )
-
-    leafletProxy("map", data = df) %>%
-      clearMarkers() %>%
-      addCircleMarkers(
-        lat = ~latitude,
+    leafletProxy("map") |>
+      clearMarkers() |>
+      clearMarkerClusters() |>
+      addMarkers(
+        data = df,
         lng = ~longitude,
-        popup = ~paste0("Species: ", species, "<br>",
-                        "Date: ", eventDate),
-        radius = 5,
-        color = "blue",
-        fillColor = "blue",
-        fillOpacity = 0.5
+        lat = ~latitude,
+        popup = ~paste("<b>", vernacular_name, "</b><br>",
+                       "Scientific name:", species, "<br>",
+                       "Date:", eventDate),
+        clusterOptions = markerClusterOptions()
       )
   })
 
 
-
-
-  # Create summary output table
+  # Create summary output table ----
   output$summary_table <- DT::renderDT({
     df <- filtered_data()
     summary_df <- data.frame(
