@@ -48,7 +48,7 @@ ui <- page_fluid(
           conditionalPanel(
             condition = "input.date_filter == 'custom'",
             dateRangeInput("date_range", "Select date range:",
-                           start = Sys.Date() - 30,  # Default to last 30 days
+                           start = min(toohey_occs$eventDate),  # Default to last 30 days
                            end = Sys.Date(),
                            min = min(toohey_occs$eventDate),
                            max = Sys.Date())

@@ -2,13 +2,12 @@ server <- function(input, output, session) {
 
   # Initialize selection lists ----
   observe({
-    # Add "All" option to all choices for common name
     updateSelectInput(session, "vernacular_name",
-                      choices = c("All", sort(unique(toohey_occs$vernacular_name))),
+                      choices = sort(unique(toohey_occs$vernacular_name)),
                       selected = 'Koala')
 
     updateSelectInput(session, "class",
-                      choices = c(sort(unique(toohey_occs$class))))
+                      choices = sort(unique(toohey_occs$class)))
   })
 
   # Update Order based on Class ----
@@ -22,6 +21,7 @@ server <- function(input, output, session) {
 
   # Update Family based on Order ----
   observe({
+    req(input$class)
     req(input$order)
     if(input$order == "All") {
      families <- sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
@@ -34,6 +34,8 @@ server <- function(input, output, session) {
 
   # Update Genus based on Family ----
   observe({
+    req(input$class)
+    req(input$order)
     req(input$family)
     if(input$family == "All") {
       if(input$order == "All") {
@@ -50,6 +52,9 @@ server <- function(input, output, session) {
 
   # Update Species based on Genus ----
   observe({
+    req(input$class)
+    req(input$order)
+    req(input$family)
     req(input$genus)
     if(input$genus == "All") {
       if(input$family == "All") {
@@ -74,15 +79,16 @@ server <- function(input, output, session) {
       need(input$select_method, "Please select a method"),
       )
 
+    data <- toohey_occs
+
     if(input$select_method == "By Common Name") {
-      if(input$vernacular_name == "All") return(toohey_occs)
-      toohey_occs %>% filter(vernacular_name == input$vernacular_name)
+      data <- data |> filter(vernacular_name == input$vernacular_name)
     } else {
-      data <- toohey_occs
-      if(input$order != "All") data <- data %>% filter(order == input$order)
-      if(input$family != "All") data <- data %>% filter(family == input$family)
-      if(input$genus != "All") data <- data %>% filter(genus == input$genus)
-      if(input$species != "All") data <- data %>% filter(species == input$species)
+      if(input$class != "All") data <- data |> filter(class == input$class)
+      if(input$order != "All") data <- data |> filter(order == input$order)
+      if(input$family != "All") data <- data |> filter(family == input$family)
+      if(input$genus != "All") data <- data  |>  filter(genus == input$genus)
+      if(input$species != "All") data <- data |> filter(species == input$species)
       data
     }
   })
@@ -121,11 +127,19 @@ server <- function(input, output, session) {
   })
 
   # Update the map with observations ----
-  observeEvent(filtered_data(), {
-    validate(
-      need(nrow(filtered_data()) > 0, "No data available for current selection")
-    )
-    df <- filtered_data()
+  observeEvent(date_filtered_data(), {
+
+    df <- date_filtered_data()
+
+    if (nrow(df) == 0) {
+      # Show a message or clear the map so the user sees "no data"
+      showNotification("No data available for current selection", type = "warning")
+
+      leafletProxy("map") %>%
+        clearMarkers() %>%
+        clearMarkerClusters()
+
+    } else {
 
     leafletProxy("map") |>
       clearMarkers() |>
@@ -139,6 +153,7 @@ server <- function(input, output, session) {
                        "Date:", eventDate),
         clusterOptions = markerClusterOptions()
       )
+    }
   })
 
   # Reset the map view to the original on button click ----
