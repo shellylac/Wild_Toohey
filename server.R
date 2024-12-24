@@ -6,20 +6,22 @@ server <- function(input, output, session) {
   # Initialize selection lists ----
   observe({
     updateSelectInput(session, "vernacular_name",
-                      choices = sort(unique(toohey_occs$vernacular_name)),
-                      selected = 'Koala')
+                      choices = c('All', sort(unique(toohey_occs$vernacular_name))))
 
-    updateSelectInput(session, "class",
-                      choices = sort(unique(toohey_occs$class)))
-  })
+    })
 
   # Update Order based on Class ----
   # Can't pick 'All' for classes - have to choose one
   observe({
     req(input$class)
     orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
-    updateSelectInput(session, "order",
-                      choices = c('All', orders))
+    if(length(orders) == 1){
+      updateSelectInput(session, "order",
+                        choices = orders)
+    } else {
+      updateSelectInput(session, "order",
+                        choices = c("All", orders))
+    }
   })
 
   # Update Family based on Order ----
@@ -30,9 +32,14 @@ server <- function(input, output, session) {
      families <- sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
      } else {
      families <- sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
+     }
+    if(length(families) == 1){
+      updateSelectInput(session, "family",
+                        choices = families)
+    } else {
+      updateSelectInput(session, "family",
+                        choices = c("All", families))
     }
-    updateSelectInput(session, "family",
-                      choices = c("All", families))
   })
 
   # Update Genus based on Family ----
@@ -49,9 +56,14 @@ server <- function(input, output, session) {
       } else {
       genera <- sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
     }
-    updateSelectInput(session, "genus",
-                      choices = c("All", genera))
-  })
+    if(length(genera) == 1){
+      updateSelectInput(session, "genus",
+                        choices = genera)
+    } else {
+      updateSelectInput(session, "genus",
+                        choices = c("All", genera))
+    }
+ })
 
   # Update Species based on Genus ----
   observe({
@@ -72,8 +84,13 @@ server <- function(input, output, session) {
     } else {
       species <- sort(unique(toohey_occs$species[toohey_occs$genus == input$genus]))
     }
+    if(length(species) == 1){
+      updateSelectInput(session, "species",
+                        choices = species)
+    } else {
     updateSelectInput(session, "species",
                       choices = c("All", species))
+    }
   })
 
   # Filtered species dataset based on selection method and choices ----
@@ -84,7 +101,8 @@ server <- function(input, output, session) {
 
     data <- toohey_occs
 
-    if(input$select_method == "By Common Name") {
+    if(input$select_method == "By common name") {
+      if(input$vernacular_name == 'All') return(data)
       data <- data |> filter(vernacular_name == input$vernacular_name)
     } else {
       if(input$class != "All") data <- data |> filter(class == input$class)

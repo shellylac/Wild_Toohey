@@ -3,20 +3,47 @@ ui <- page_navbar(
 
   # Sidebar will be shared across all nav panels
   sidebar = sidebar(
-    selectInput("select_method", "Selection Method:",
-                choices = c("By Common Name", "By Taxonomy")),
+    radioButtons(inputId = "select_method", label = "Species selection method:",
+                choiceNames = list(
+                  # Example icons: using Font Awesome or an image
+                  tagList("By common name", shiny::icon("comment")),
+                  tagList("By taxonomy", shiny::icon("sitemap"))
+                ),
+                choiceValues = c("By common name", "By taxonomy"),
+                selected = "By common name"),
 
     # Common name selection
     conditionalPanel(
-      condition = "input.select_method == 'By Common Name'",
-      selectInput("vernacular_name", "Common Name:",
+      condition = "input.select_method == 'By common name'",
+      selectInput("vernacular_name", "Common name:",
                   choices = NULL)
     ),
 
+    conditionalPanel(
+      condition = "input.select_method == 'By taxonomy'",
+      radioButtons(
+        inputId = "class",
+        label   = "Class:",
+        choiceNames = list(
+          # Example icons: using Font Awesome or an image
+          # "Aves": a bird icon
+          tagList(shiny::icon("dove"), "Birds"),
+          # "Mammalia": a koala icon (requires adding a custom image or using an icon)
+          tagList(shiny::icon("paw"), "Mammals"),
+          # "Reptilia": a lizard icon
+          tagList(shiny::icon("worm"), "Reptiles")
+        ),
+        choiceValues = c("Aves", "Mammalia", "Reptilia"),
+        # selected = character(0)  # start with nothing selected, if desired
+        selected = "Aves"
+      )
+    ),
+
+
     # Taxonomic selection
     conditionalPanel(
-      condition = "input.select_method == 'By Taxonomy'",
-      selectInput("class", "Class:", choices = NULL),
+      condition = "input.select_method == 'By taxonomy'",
+      # selectInput("class", "Class:", choices = NULL),
       selectInput("order", "Order:", choices = NULL),
       selectInput("family", "Family:", choices = NULL),
       selectInput("genus", "Genus:", choices = NULL),
