@@ -1,5 +1,5 @@
-# Module UI for map
-mapUI <- function(id) {
+# Map Module UI
+mapModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
@@ -28,8 +28,8 @@ mapUI <- function(id) {
   )
 }
 
-# Module Server for map
-mapServer <- function(id, filtered_data) {
+# Map Module Server
+mapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
     first_load <- reactiveVal(TRUE)
 
@@ -37,13 +37,14 @@ mapServer <- function(id, filtered_data) {
     date_filtered_data <- reactive({
       data <- filtered_data()
 
-      data <- data |> mutate(eventDate = as.Date(eventDate))
+      data <- data |>
+        mutate(eventDate = as.Date(eventDate))
+
       switch(input$date_filter,
              "3days" = {data |> filter(eventDate >= (Sys.Date() - 3))},
              "week" = {data |> filter(eventDate >= (Sys.Date() - 7))},
              "custom" = {data |> filter(eventDate >= input$date_range[1],
-                                        eventDate <= input$date_range[2])}
-      )
+                                        eventDate <= input$date_range[2])})
     })
 
     # Create base map
@@ -55,13 +56,12 @@ mapServer <- function(id, filtered_data) {
         addScaleBar(position = "bottomleft")
     })
 
-    # Update markers
+    # Update map
     observeEvent(date_filtered_data(), {
       df <- date_filtered_data()
 
       if (nrow(df) == 0 && !first_load()) {
         showNotification("No data available for current selection", type = "warning")
-
         leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters()

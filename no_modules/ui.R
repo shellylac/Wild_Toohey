@@ -12,13 +12,14 @@ ui <- page_navbar(
                 choiceValues = c("By common name", "By taxonomy"),
                 selected = "By common name"),
 
-    # Common name selection
+    # Common name selection ----
     conditionalPanel(
       condition = "input.select_method == 'By common name'",
       selectInput("vernacular_name", "Common name:",
                   choices = NULL)
     ),
 
+    #Class selection ----
     conditionalPanel(
       condition = "input.select_method == 'By taxonomy'",
       radioButtons(
@@ -39,8 +40,7 @@ ui <- page_navbar(
       )
     ),
 
-
-    # Taxonomic selection
+    # Taxonomic selection ----
     conditionalPanel(
       condition = "input.select_method == 'By taxonomy'",
       # selectInput("class", "Class:", choices = NULL),
@@ -52,6 +52,7 @@ ui <- page_navbar(
   ),
 
   # Main navigation panels
+  # Wild Finder ----
   nav_panel(
     title = "Wild Finder",
     card(
@@ -80,11 +81,21 @@ ui <- page_navbar(
     )
   ),
 
+  #Wild heat maps ----
   nav_panel(
     title = "Wild Heat Maps",
     card(
-      card_header("Species Distribution"),
-      "Heat map visualization will go here"  # Placeholder
+      card_header("Species occurrence heat map"),
+      selectInput(
+        inputId = 'heatmap_periods',
+        label = "Select temporal period for map: ",
+        choices = c('Yearly', 'Spring', 'Summer', 'Autumn', 'Winter',
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+        selected = 'Yearly'
+      ),
+      actionButton("heatmap_reset_view", "Reset Map View", class = "btn-sm"),
+      leafletOutput('heatmap')
     )
   ),
 

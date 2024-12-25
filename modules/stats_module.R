@@ -1,5 +1,5 @@
-# Module UI for statistics
-statsUI <- function(id) {
+# Stats Module UI
+statsModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
@@ -8,8 +8,8 @@ statsUI <- function(id) {
   )
 }
 
-# Module Server for statistics
-statsServer <- function(id, filtered_data) {
+# Stats Module Server
+statsModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
     output$summary_table <- DT::renderDT({
       df <- filtered_data()

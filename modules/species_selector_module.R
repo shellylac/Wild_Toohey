@@ -1,5 +1,5 @@
-# Module UI for species selection
-speciesSelectorUI <- function(id) {
+# Species Selection Module UI
+speciesSelectionUI <- function(id) {
   ns <- NS(id)
 
   tagList(
@@ -17,11 +17,12 @@ speciesSelectorUI <- function(id) {
       selectInput(ns("vernacular_name"), "Common name:", choices = NULL)
     ),
 
+    # Taxonomy selection
     conditionalPanel(
       condition = sprintf("input['%s'] == 'By taxonomy'", ns("select_method")),
       radioButtons(
         inputId = ns("class"),
-        label   = "Class:",
+        label = "Class:",
         choiceNames = list(
           tagList(shiny::icon("dove"), "Birds"),
           tagList(shiny::icon("paw"), "Mammals"),
@@ -29,12 +30,7 @@ speciesSelectorUI <- function(id) {
         ),
         choiceValues = c("Aves", "Mammalia", "Reptilia"),
         selected = "Aves"
-      )
-    ),
-
-    # Taxonomic selection
-    conditionalPanel(
-      condition = sprintf("input['%s'] == 'By taxonomy'", ns("select_method")),
+      ),
       selectInput(ns("order"), "Order:", choices = NULL),
       selectInput(ns("family"), "Family:", choices = NULL),
       selectInput(ns("genus"), "Genus:", choices = NULL),
@@ -43,20 +39,20 @@ speciesSelectorUI <- function(id) {
   )
 }
 
-# Module Server for species selection
-speciesSelectorServer <- function(id, data) {
+# Species Selection Module Server
+speciesSelectionServer <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     # Initialize selection lists
     observe({
       updateSelectInput(session, "vernacular_name",
-                        choices = c('All', sort(unique(data$vernacular_name))))
+                        choices = c('All', sort(unique(toohey_occs$vernacular_name))),
+                        selected = 'All')
     })
 
     # Update Order based on Class
     observe({
       req(input$class)
-      orders <- sort(unique(data$order[data$class == input$class]))
+      orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
       updateSelectInput(session, "order",
                         choices = if(length(orders) == 1) orders else c("All", orders))
     })
@@ -65,9 +61,9 @@ speciesSelectorServer <- function(id, data) {
     observe({
       req(input$class, input$order)
       families <- if(input$order == "All") {
-        sort(unique(data$family[data$class == input$class]))
+        sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
       } else {
-        sort(unique(data$family[data$order == input$order]))
+        sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
       }
       updateSelectInput(session, "family",
                         choices = if(length(families) == 1) families else c("All", families))
@@ -78,12 +74,12 @@ speciesSelectorServer <- function(id, data) {
       req(input$class, input$order, input$family)
       genera <- if(input$family == "All") {
         if(input$order == "All") {
-          sort(unique(data$genus[data$class == input$class]))
+          sort(unique(toohey_occs$genus[toohey_occs$class == input$class]))
         } else {
-          sort(unique(data$genus[data$order == input$order]))
+          sort(unique(toohey_occs$genus[toohey_occs$order == input$order]))
         }
       } else {
-        sort(unique(data$genus[data$family == input$family]))
+        sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
       }
       updateSelectInput(session, "genus",
                         choices = if(length(genera) == 1) genera else c("All", genera))
@@ -95,24 +91,26 @@ speciesSelectorServer <- function(id, data) {
       species <- if(input$genus == "All") {
         if(input$family == "All") {
           if(input$order == "All") {
-            sort(unique(data$species[data$class == input$class]))
+            sort(unique(toohey_occs$species[toohey_occs$class == input$class]))
           } else {
-            sort(unique(data$species[data$order == input$order]))
+            sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
           }
         } else {
-          sort(unique(data$species[data$family == input$family]))
+          sort(unique(toohey_occs$species[toohey_occs$family == input$family]))
         }
       } else {
-        sort(unique(data$species[data$genus == input$genus]))
+        sort(unique(toohey_occs$species[toohey_occs$genus == input$genus]))
       }
       updateSelectInput(session, "species",
                         choices = if(length(species) == 1) species else c("All", species))
     })
 
-    # Return reactive expression with filtered data
+    # Return reactive filtered data
     reactive({
       validate(need(input$select_method, "Please select a method"))
+
       data <- toohey_occs
+
       if(input$select_method == "By common name") {
         if(input$vernacular_name == 'All') return(data)
         data <- data |> filter(vernacular_name == input$vernacular_name)
@@ -122,8 +120,8 @@ speciesSelectorServer <- function(id, data) {
         if(input$family != "All") data <- data |> filter(family == input$family)
         if(input$genus != "All") data <- data |> filter(genus == input$genus)
         if(input$species != "All") data <- data |> filter(species == input$species)
-        data
       }
+      data
     })
   })
 }
