@@ -2,11 +2,13 @@ server <- function(input, output, session) {
 
   # Add this at the start of the server function
   first_load <- reactiveVal(TRUE)
+  first_load_heatmap <- reactiveVal(TRUE)
 
   # Initialize selection lists ----
   observe({
     updateSelectInput(session, "vernacular_name",
-                      choices = c('All', sort(unique(toohey_occs$vernacular_name))))
+                      choices = c('All', sort(unique(toohey_occs$vernacular_name))),
+                      selected = 'All')
 
     })
 
@@ -140,7 +142,7 @@ server <- function(input, output, session) {
                eventMonth = lubridate::month(eventDate))
 
     switch(input$heatmap_periods,
-           "Yearly" = period_data,
+           "Yearly" = {period_data},
            'Spring' = {period_data |> filter(eventMonth %in% c(9, 10, 11))},
            'Summer' = {period_data |> filter(eventMonth %in% c(12, 1, 2))},
            'Autumn' = {period_data |> filter(eventMonth %in% c(3, 4, 5))},
@@ -173,10 +175,10 @@ server <- function(input, output, session) {
 
   # Update the map with observations ----
   observeEvent(date_filtered_data(), {
-
     df <- date_filtered_data()
 
-    if (nrow(df) == 0 && !first_load()) {  # Only show warning if not first load
+    # Only show warning if there's no data AND it's not the first load
+    if (nrow(df) == 0 && !first_load()) {
       showNotification("No data available for current selection", type = "warning")
 
       leafletProxy("map") %>%
@@ -211,21 +213,35 @@ server <- function(input, output, session) {
       )
   })
 
+  # Create the leaflet base heat map ----
   # Create the leaflet heat map ----
   output$heatmap <- renderLeaflet({
-    leaflet() |>
+    base_map <- leaflet() |>
       addTiles() |>
-      addProviderTiles(providers$CartoDB.Positron) |>   # Better looking tiles
+      addProviderTiles(providers$CartoDB.Positron) |>
       setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
       addScaleBar(position = "bottomleft")
+
+    # Add initial heatmap layer
+    if (nrow(period_filtered_data()) > 0) {
+      base_map <- base_map |>
+        leaflet.extras::addHeatmap(
+          data = period_filtered_data(),
+          lng = ~longitude, lat = ~latitude,
+          intensity = NULL,
+          blur = 20, max = 1, radius = 15,
+          group = "heatmap_cols"
+        )
+    }
+
+    base_map
   })
 
   # Update the heatmap with observations ----
   observeEvent(period_filtered_data(), {
 
     df <- period_filtered_data()
-
-    if (nrow(df) == 0) {  # Only show warning if not first load
+    if (nrow(df) == 0 && !first_load_heatmap()) {  # Only show warning if not first load
       showNotification("No data available for current selection", type = "warning")
 
       leafletProxy("heatmap") |>
@@ -241,10 +257,8 @@ server <- function(input, output, session) {
           group = "heatmap_cols"  # Assign group for easy management
         )
     }
-
-    first_load(FALSE)  # Set to FALSE after first load
+    first_load_heatmap(FALSE)
   })
-
 
   # Reset the heatmap view to the original on button click ----
   observeEvent(input$heatmap_reset_view, {
@@ -255,8 +269,6 @@ server <- function(input, output, session) {
         zoom = 14
       )
   })
-
-
 
 
   # Create summary output table ----
