@@ -7,6 +7,7 @@ library(sf)
 library(bslib)
 library(DT)
 library(leaflet)
+library(leaflet.extras)
 
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"

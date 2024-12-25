@@ -39,7 +39,6 @@ ui <- page_navbar(
       )
     ),
 
-
     # Taxonomic selection
     conditionalPanel(
       condition = "input.select_method == 'By taxonomy'",
@@ -83,8 +82,17 @@ ui <- page_navbar(
   nav_panel(
     title = "Wild Heat Maps",
     card(
-      card_header("Species Distribution"),
-      "Heat map visualization will go here"  # Placeholder
+      card_header("Species occurrence heat map"),
+      selectInput(
+        inputId = 'heatmap_periods',
+        label = "Select temporal period for map: ",
+        choices = c('Yearly', 'Spring', 'Summer', 'Autumn', 'Winter',
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+        selected = 'Yearly'
+      ),
+      actionButton("heatmap_reset_view", "Reset Map View", class = "btn-sm"),
+      leafletOutput('heatmap')
     )
   ),
 
