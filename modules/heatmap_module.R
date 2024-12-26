@@ -47,6 +47,9 @@ heatmapModuleServer <- function(id, filtered_data) {
              'Dec' = {period_data |> filter(eventMonth == 12)})
     })
 
+    # Default leaflet.extras heatmap colors
+    heatmap_colors <- c("#0000ff", "#00ffff", "#00ff00", "#ffff00", "#ff0000")
+
     output$heatmap <- renderLeaflet({
       base_map <- leaflet() |>
         addTiles() |>
@@ -59,9 +62,20 @@ heatmapModuleServer <- function(id, filtered_data) {
           leaflet.extras::addHeatmap(
             data = period_filtered_data(),
             lng = ~longitude, lat = ~latitude,
-            intensity = NULL,
-            blur = 20, max = 1, radius = 15,
+            intensity = 1,
+            blur = 20,
+            max = 0.7,          # Reduced max to make colors more intense
+            radius = 20,        # Increased radius to make points more visible
+            minOpacity = 0.7,   # Increased minimum opacity
             group = "heatmap_cols"
+          ) |>
+          addLegend(
+            position = "bottomright",
+            colors = rev(heatmap_colors),
+            labels = c("High Density", "Medium-High",
+                       "Medium", "Medium-Low", "Low Density"),
+            title = "Species Occurrence Density",
+            opacity = 0.8
           )
       }
       base_map
@@ -79,8 +93,11 @@ heatmapModuleServer <- function(id, filtered_data) {
           leaflet.extras::addHeatmap(
             data = df,
             lng = ~longitude, lat = ~latitude,
-            intensity = NULL,
-            blur = 20, max = 1, radius = 15,
+            intensity = 1,
+            blur = 20,
+            max = 0.7,          # Reduced max to make colors more intense
+            radius = 20,        # Increased radius to make points more visible
+            minOpacity = 0.7,   # Increased minimum opacity
             group = "heatmap_cols"
           )
       }

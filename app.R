@@ -1,10 +1,4 @@
-library(shiny)
-library(bslib)
-library(dplyr)
-library(leaflet)
-library(leaflet.extras)
-library(lubridate)
-library(DT)
+
 
 source('./modules/global.R')
 source('./modules/species_selector_module.R')
