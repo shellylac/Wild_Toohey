@@ -1,5 +1,8 @@
 
+# Source functions
+source('./modules/functions.R')
 
+# Source modules
 source('./modules/global.R')
 source('./modules/species_selector_module.R')
 source('./modules/map_module.R')
