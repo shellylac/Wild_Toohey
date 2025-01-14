@@ -27,18 +27,18 @@ fix_common_names <- function(string){
 
   return(corrected_common_names)
 }
-!!rlang::ensym(group_var)
 
 # Aggregate annual counts by taxonomy
-agg_by_taxonomy <- function(data, tax_level, period) {
-  # Convert only `tax_level` to a symbol - because it will be a string input
-  tax_sym <- rlang::sym(tax_level)
+agg_by_period <- function(data, period) {
 
-  agg_data <- data %>%
-    dplyr::group_by(!!tax_sym, {{ period }}) %>%
-    dplyr::summarise(n = sum(n), .groups = "drop")
-
+  agg_data <- data |>
+    mutate(year = lubridate::year(eventDate),
+           month = lubridate::month(eventDate, label = TRUE)) |>
+    group_by(class, order, family, genus, species, vernacular_name, !!period) |>
+    summarise(
+      count = n(),
+      .groups = "drop"
+    )
   return(agg_data)
 }
-
 
