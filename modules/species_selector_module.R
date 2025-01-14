@@ -1,4 +1,5 @@
 # Species Selection Module UI
+# Species Selection Module UI
 speciesSelectionUI <- function(id) {
   ns <- NS(id)
 
@@ -11,10 +12,19 @@ speciesSelectionUI <- function(id) {
                  choiceValues = c("By common name", "By taxonomy"),
                  selected = "By common name"),
 
-    # Common name selection
+    # Common name selection with search functionality
     conditionalPanel(
       condition = sprintf("input['%s'] == 'By common name'", ns("select_method")),
-      selectInput(ns("vernacular_name"), "Common name:", choices = NULL)
+      selectizeInput(
+        ns("vernacular_name"),
+        "Common name:",
+        choices = NULL,
+        options = list(
+          placeholder = 'Select or search for a species',
+          searchField = c("value", "label"),
+          sortField = "label"
+        )
+      )
     ),
 
     # Taxonomy selection
@@ -31,30 +41,41 @@ speciesSelectionUI <- function(id) {
         choiceValues = c("Aves", "Mammalia", "Reptilia"),
         selected = "Aves"
       ),
-      selectInput(ns("order"), "Order:", choices = NULL),
-      selectInput(ns("family"), "Family:", choices = NULL),
-      selectInput(ns("genus"), "Genus:", choices = NULL),
-      selectInput(ns("species"), "Species:", choices = NULL)
+      selectizeInput(ns("order"), "Order:", choices = NULL),
+      selectizeInput(ns("family"), "Family:", choices = NULL),
+      selectizeInput(ns("genus"), "Genus:", choices = NULL),
+      selectizeInput(ns("species"), "Species:", choices = NULL)
     )
   )
 }
 
+
 # Species Selection Module Server
 speciesSelectionServer <- function(id) {
   moduleServer(id, function(input, output, session) {
+    # Validate data availability
+    validate(
+      need(exists("toohey_occs"), "Species data not loaded"),
+      need(nrow(toohey_occs) > 0, "Species data is empty")
+    )
+
     # Initialize selection lists
     observe({
-      updateSelectInput(session, "vernacular_name",
-                        choices = c('All', sort(unique(toohey_occs$vernacular_name))),
-                        selected = 'All')
+      updateSelectizeInput(session, "vernacular_name",
+                           choices = c('All', sort(unique(toohey_occs$vernacular_name))),
+                           selected = 'All',
+                           server = TRUE
+      )
     })
 
     # Update Order based on Class
     observe({
       req(input$class)
       orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
-      updateSelectInput(session, "order",
-                        choices = if(length(orders) == 1) orders else c("All", orders))
+      updateSelectizeInput(session, "order",
+                           choices = if (length(orders) == 1) orders else c("All", orders),
+                           server = TRUE
+      )
     })
 
     # Update Family based on Order
@@ -65,8 +86,10 @@ speciesSelectionServer <- function(id) {
       } else {
         sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
       }
-      updateSelectInput(session, "family",
-                        choices = if (length(families) == 1) families else c("All", families))
+      updateSelectizeInput(session, "family",
+                           choices = if (length(families) == 1) families else c("All", families),
+                           server = TRUE
+      )
     })
 
     # Update Genus based on Family
@@ -81,8 +104,10 @@ speciesSelectionServer <- function(id) {
       } else {
         sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
       }
-      updateSelectInput(session, "genus",
-                        choices = if (length(genera) == 1) genera else c("All", genera))
+      updateSelectizeInput(session, "genus",
+                           choices = if (length(genera) == 1) genera else c("All", genera),
+                           server = TRUE
+      )
     })
 
     # Update Species based on Genus
@@ -101,8 +126,10 @@ speciesSelectionServer <- function(id) {
       } else {
         sort(unique(toohey_occs$species[toohey_occs$genus == input$genus]))
       }
-      updateSelectInput(session, "species",
-                        choices = if (length(species) == 1) species else c("All", species))
+      updateSelectizeInput(session, "species",
+                           choices = if (length(species) == 1) species else c("All", species),
+                           server = TRUE
+      )
     })
 
     # Return reactive filtered data
