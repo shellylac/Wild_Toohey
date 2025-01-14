@@ -53,7 +53,17 @@ mapModuleServer <- function(id, filtered_data) {
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
         setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
-        addScaleBar(position = "bottomleft")
+        addScaleBar(position = "bottomleft") |>
+        addEasyButton(easyButton(
+          states = list(
+            easyButtonState(
+              stateName = "default",
+              icon = "fa-crosshairs",
+              title = "Locate Me",
+              onClick = JS("function(btn, map){ map.locate({setView: true}); }")
+            )
+          )
+        ))
     })
 
     # Update map
