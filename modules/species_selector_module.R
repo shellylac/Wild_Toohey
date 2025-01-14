@@ -106,22 +106,43 @@ speciesSelectionServer <- function(id) {
     })
 
     # Return reactive filtered data
-    reactive({
+    filtered_data <- reactive({
       validate(need(input$select_method, "Please select a method"))
 
       data <- toohey_occs
 
-      if(input$select_method == "By common name") {
-        if(input$vernacular_name == 'All') return(data)
+      if (input$select_method == "By common name") {
+        if (input$vernacular_name == 'All') return(data)
         data <- data |> filter(vernacular_name == input$vernacular_name)
       } else {
-        if(input$class != "All") data <- data |> filter(class == input$class)
-        if(input$order != "All") data <- data |> filter(order == input$order)
-        if(input$family != "All") data <- data |> filter(family == input$family)
-        if(input$genus != "All") data <- data |> filter(genus == input$genus)
-        if(input$species != "All") data <- data |> filter(species == input$species)
+        if (input$class != "All") data <- data |> filter(class == input$class)
+        if (input$order != "All") data <- data |> filter(order == input$order)
+        if (input$family != "All") data <- data |> filter(family == input$family)
+        if (input$genus != "All") data <- data |> filter(genus == input$genus)
+        if (input$species != "All") data <- data |> filter(species == input$species)
       }
       data
     })
+
+    # In speciesSelectionServer, add:
+    selected_taxa_level <- reactive({
+      if (input$select_method == "By common name" & input$vernacular_name != 'All') {
+        return("species")  # Default to species level for common name selection
+      } else {
+        # Return the lowest selected level that isn't "All"
+        if (input$species != "All") return("species")
+        if (input$genus != "All") return("genus")
+        if (input$family != "All") return("family")
+        if (input$order != "All") return("order")
+        return("class")
+      }
+    })
+
+    # Return both the filtered data and the taxonomic level
+    list(
+      filtered_data = filtered_data,  # Your existing filtered data reactive
+      taxa_level = selected_taxa_level
+    )
+
   })
 }

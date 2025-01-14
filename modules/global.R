@@ -25,23 +25,4 @@ sample_data <- toohey_occs[indices, ]
 boundary_url <- "./data/toohey_shapefiles/toohey_forest_boundary.shp"
 toohey_outline <- sf::st_read(boundary_url)
 
-#
-# out <- agg_by_period(data = toohey_occs, period = rlang::sym("year"))
-#
-# out_filtered <- out |>
-#   filter(class == "Mammalia")
-#
-# constructive::construct(out_filtered)
-# plotly::plot_ly(out_filtered,
-#                 x = ~year,
-#                 y = ~count,
-#                 color = ~vernacular_name,  # Color lines by species (adjust as needed)
-#                 type = 'scatter',
-#                 mode = 'lines+markers',
-#                 hoverinfo = 'text',
-#                 text = ~paste0(
-#                   "Year: ", year, "<br>",
-#                   "Common Name: ", vernacular_name, "<br>",
-#                   "Species: ", species, "<br>",
-#                   "Count: ", count
-#                 ))
+

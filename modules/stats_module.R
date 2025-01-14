@@ -19,7 +19,7 @@ statsModuleUI <- function(id) {
 }
 
 # Stats Module Server
-statsModuleServer <- function(id, filtered_data) {
+statsModuleServer <- function(id, filtered_data, taxa_level) {
   moduleServer(id, function(input, output, session) {
 
     # Create reactive period symbol
@@ -27,12 +27,21 @@ statsModuleServer <- function(id, filtered_data) {
       rlang::sym(input$plot_type)
     })
 
+    # Create reactive period symbol
+    taxa_group <- reactive({
+      rlang::sym(taxa_level())
+    })
+
     # Important: evaluate the reactive expression with ()
     agg_tax_data <- reactive({
+
+      #taxa_group <- taxa_level()
+
       agg_data <- agg_by_period(
         data = filtered_data(),
+        taxa_level = taxa_group(),
         period = my_period()
-      )
+        )
       agg_data
     })
 
@@ -41,32 +50,10 @@ statsModuleServer <- function(id, filtered_data) {
       req(agg_tax_data())
 
       period_name <- input$plot_type
+      taxa_group <- taxa_level()
 
-      # Create the plot
-      p <- plotly::plot_ly(
-        data = agg_tax_data(),
-        x = as.formula(paste0("~", period_name)),
-        y = ~count,
-        color = ~species,
-        type = 'scatter',
-        mode = 'lines+markers',
-        hoverinfo = 'text',
-        text = ~paste0(
-          ifelse(period_name == "year",
-                 paste0("Year: ", year),
-                 paste0("Month: ", month)), "<br>",
-          "Species: ", species, "<br>",
-          "Common name: ", vernacular_name, "<br>",
-          "Count: ", count
-        )
-      )  |>
-        plotly::layout(
-          xaxis = list(title = ifelse(period_name == "year", "Year", "Month")),
-          yaxis = list(title = "Count"),
-          showlegend = TRUE
-        )
-
-      p
+      # Use the extracted plotting function
+      plot_trend(agg_tax_data(), period_name, taxa_group)
     })
 
     # Render the aggregated data table

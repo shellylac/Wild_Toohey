@@ -43,12 +43,14 @@ ui <- page_navbar(
 
 server <- function(input, output, session) {
   # Get filtered data from species selection module
-  filtered_data <- speciesSelectionServer("species")
+  species_data <- speciesSelectionServer("species")
 
   # Pass filtered data to other modules
-  mapModuleServer("finder", filtered_data)
-  heatmapModuleServer("heatmap", filtered_data)
-  statsModuleServer("stats", filtered_data)
+  mapModuleServer("finder", species_data$filtered_data)
+  heatmapModuleServer("heatmap", species_data$filtered_data)
+  statsModuleServer("stats",
+                    filtered_data = species_data$filtered_data,
+                    taxa_level = species_data$taxa_level)
 }
 
 shinyApp(ui, server)
