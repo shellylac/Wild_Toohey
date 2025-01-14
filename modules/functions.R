@@ -32,7 +32,7 @@ fix_common_names <- function(string){
 agg_by_period <- function(data, taxa_level, period) {
 
   agg_data <- data |>
-    mutate(year = lubridate::year(eventDate),
+    mutate(year = as.factor(lubridate::year(eventDate)),
            month = lubridate::month(eventDate, label = TRUE)) |>
     #group_by(class, order, family, genus, species, vernacular_name, !!period) |>
     group_by(!!taxa_level, !!period) |>

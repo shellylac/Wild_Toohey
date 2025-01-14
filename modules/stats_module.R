@@ -12,8 +12,7 @@ statsModuleUI <- function(id) {
         selected = "year",
         inline = TRUE
       ),
-      plotly::plotlyOutput(ns("annual_trend")),
-      DT::DTOutput(ns("agg_table"))
+      plotly::plotlyOutput(ns("annual_trend"))
     )
   )
 }
@@ -56,22 +55,5 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
       plot_trend(agg_tax_data(), period_name, taxa_group)
     })
 
-    # Render the aggregated data table
-    output$agg_table <- DT::renderDT({
-      req(agg_tax_data())
-
-      DT::datatable(
-        agg_tax_data(),
-        options = list(
-          pageLength = 10,
-          scrollX = TRUE,
-          dom = 'lrtip',    # Added 'l' to show length menu
-          searchHighlight = TRUE,
-          search = list(regex = TRUE, caseInsensitive = TRUE)
-        ),
-        filter = 'top',     # This enables the filter UI
-        class = 'cell-border stripe'  # Optional styling
-      )
-    })
   })
 }
