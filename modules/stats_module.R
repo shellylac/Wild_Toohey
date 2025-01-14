@@ -51,8 +51,14 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
       period_name <- input$plot_type
       taxa_group <- taxa_level()
 
-      # Use the extracted plotting function
-      plot_trend(agg_tax_data(), period_name, taxa_group)
+      plot_trend_year(agg_tax_data(), period_name, taxa_group)
+
+      if (input$plot_type == "year" | dim(agg_tax_data())[1] < 2) {
+        # Use the extracted plotting function
+        plot_trend_year(agg_tax_data(), period_name, taxa_group)
+      } else {
+        plot_trend_month(agg_tax_data(), period_name, taxa_group)
+      }
     })
 
   })

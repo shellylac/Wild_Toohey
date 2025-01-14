@@ -44,7 +44,7 @@ agg_by_period <- function(data, taxa_level, period) {
 }
 
 # Create a separate plotting function
-plot_trend <- function(data, period_name, taxa_level) {
+plot_trend_year <- function(data, period_name, taxa_level) {
   plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
@@ -65,4 +65,32 @@ plot_trend <- function(data, period_name, taxa_level) {
       yaxis = list(title = "Count"),
       showlegend = TRUE
     )
+}
+
+plot_trend_month <- function(data, period_name, taxa_level) {
+  plotly::plot_ly(
+    data = data,
+    x = as.formula(paste0("~", period_name)),
+    y = ~count,
+    color = as.formula(paste0("~", taxa_level)),
+    type = 'bar',
+    hoverinfo = 'text',
+    text = ~paste0(
+      ifelse(period_name == "year",
+             paste0("Year: ", year),
+             paste0("Month: ", month)), "<br>",
+      "Count: ", count
+    )
+  ) |>
+    plotly::layout(
+      xaxis = list(title = ifelse(period_name == "year", "Year", "Month")),
+      yaxis = list(title = "Count"),
+      showlegend = TRUE
+    ) |>
+    plotly::config(displaylogo = FALSE,
+                   modeBarButtonsToRemove = c(
+                     'sendDataToCloud', 'autoScale2d',
+                     'toggleSpikelines','hoverClosestCartesian',
+                     'hoverCompareCartesian','zoom2d','pan2d',
+                     'select2d', 'lasso2d'))
 }
