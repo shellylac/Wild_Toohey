@@ -7,9 +7,7 @@ heatmapModuleUI <- function(id) {
     selectInput(
       inputId = ns('heatmap_periods'),
       label = "Select temporal period for map: ",
-      choices = c('Yearly', 'Spring', 'Summer', 'Autumn', 'Winter',
-                  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+      choices = c('Yearly', 'Spring', 'Summer', 'Autumn', 'Winter'),
       selected = 'Yearly'
     ),
     actionButton(ns("heatmap_reset_view"), "Reset Map View", class = "btn-sm"),
@@ -32,19 +30,7 @@ heatmapModuleServer <- function(id, filtered_data) {
              'Spring' = {period_data |> filter(eventMonth %in% c(9, 10, 11))},
              'Summer' = {period_data |> filter(eventMonth %in% c(12, 1, 2))},
              'Autumn' = {period_data |> filter(eventMonth %in% c(3, 4, 5))},
-             'Winter' = {period_data |> filter(eventMonth %in% c(6, 7, 8))},
-             'Jan' = {period_data |> filter(eventMonth == 1)},
-             'Feb' = {period_data |> filter(eventMonth == 2)},
-             'Mar' = {period_data |> filter(eventMonth == 3)},
-             'Apr' = {period_data |> filter(eventMonth == 4)},
-             'May' = {period_data |> filter(eventMonth == 5)},
-             'Jun' = {period_data |> filter(eventMonth == 6)},
-             'Jul' = {period_data |> filter(eventMonth == 7)},
-             'Aug' = {period_data |> filter(eventMonth == 8)},
-             'Sep' = {period_data |> filter(eventMonth == 9)},
-             'Oct' = {period_data |> filter(eventMonth == 10)},
-             'Nov' = {period_data |> filter(eventMonth == 11)},
-             'Dec' = {period_data |> filter(eventMonth == 12)})
+             'Winter' = {period_data |> filter(eventMonth %in% c(6, 7, 8))})
     })
 
     # Default leaflet.extras heatmap colors
