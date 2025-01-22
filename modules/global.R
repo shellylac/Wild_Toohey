@@ -11,15 +11,17 @@ library(leaflet)
 library(leaflet.extras)
 library(plotly)
 
+
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
 toohey_occs <- readRDS(url(data_url)) |>
   filter(!is.na(species)) |>
   mutate(vernacular_name = fix_common_names(vernacular_name)) |>
-  filter(vernacular_name != "Brown Hare")
+  filter(vernacular_name != "Brown Hare") |>
+  mutate(google_maps_url = create_google_maps_url(latitude, longitude))
 
-indices <- sample(nrow(toohey_occs), 5)
-sample_data <- toohey_occs[indices, ]
+# indices <- sample(nrow(toohey_occs), 5)
+# sample_data <- toohey_occs[indices, ]
 
 # Read in the toohey shapefile
 boundary_url <- "./data/toohey_shapefiles/toohey_forest_boundary.shp"

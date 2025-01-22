@@ -28,6 +28,24 @@ fix_common_names <- function(string){
   return(corrected_common_names)
 }
 
+
+# Construct Google Maps URL string
+create_google_maps_url <- function(latitude, longitude) {
+  # # Validate coordinates
+  # if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+  #   #stop("Invalid coordinates")
+  #   return("Invalid location")
+  # }
+
+  # Format coordinates with 6 decimal places
+  lat <- format(round(latitude, 6), nsmall = 6)
+  lon <- format(round(longitude, 6), nsmall = 6)
+
+  # Construct Google Maps URL
+  sprintf("https://www.google.com/maps?q=%s,%s", lat, lon)
+}
+
+
 # Aggregate annual counts by taxonomy
 agg_by_period <- function(data, taxa_level, period) {
 
