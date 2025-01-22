@@ -33,6 +33,28 @@ mapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
     first_load <- reactiveVal(TRUE)
 
+    # # Create icons based on class
+    # icons <- list(
+    #   Aves = makeAwesomeIcon(
+    #     icon = "circle",
+    #     iconColor = "black",
+    #     markerColor = "lightblue",
+    #     library = "fa"
+    #   ),
+    #   Mammalia = makeAwesomeIcon(
+    #     icon = "circle",
+    #     iconColor = "black",
+    #     markerColor = "red",
+    #     library = "fa"
+    #   ),
+    #   Reptilia = makeAwesomeIcon(
+    #     icon = "circle",
+    #     iconColor = "black",
+    #     markerColor = "green",
+    #     library = "fa"
+    #   )
+    # )
+
     # Date filtered data
     date_filtered_data <- reactive({
       data <- filtered_data()
@@ -46,6 +68,7 @@ mapModuleServer <- function(id, filtered_data) {
              "custom" = {data |> filter(eventDate >= input$date_range[1],
                                         eventDate <= input$date_range[2])})
     })
+
 
     # Create base map
     output$map <- renderLeaflet({
@@ -72,18 +95,42 @@ mapModuleServer <- function(id, filtered_data) {
 
       if (nrow(df) == 0 && !first_load()) {
         showNotification("No data available for current selection", type = "warning")
-        leafletProxy("map") |>
-          clearMarkers() |>
+        leafletProxy("map") %>%
+          clearMarkers() %>%
           clearMarkerClusters()
       } else {
-        leafletProxy("map") |>
+
+          leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters() |>
-          addMarkers(
-            data = df,
-            lng = ~longitude,
-            lat = ~latitude,
-            popup = ~paste0(
+          # addMarkers(
+          #   data    = df,
+          #   lng     = ~longitude,
+          #   lat     = ~latitude,
+          #   icon = ~icons[class],
+          #   popup   = ~paste0(
+          #     "<b>", vernacular_name, "</b><br/>",
+          #     "Scientific name: ", species, "<br/>",
+          #     "Date: ", eventDate, "<br/>",
+          #     "Source: ", dataResourceName, "<br/>",
+          #     "<a href='", google_maps_url, "' target='_blank'>View in Google Maps</a>"
+          #   ),
+          addAwesomeMarkers(
+            data    = df,
+            lng     = ~longitude,
+            lat     = ~latitude,
+            icon    = ~awesomeIcons(
+              icon        = "fa-binoculars",       # pick any icon you like
+              library     = "fa",
+              iconColor   = "white",
+              markerColor = dplyr::case_when(
+                class == "Aves"     ~ "lightblue",
+                class == "Mammalia" ~ "maroon",
+                class == "Reptilia" ~ "green",
+                TRUE                ~ "gray"
+              )
+            ),
+            popup   = ~paste0(
               "<b>", vernacular_name, "</b><br/>",
               "Scientific name: ", species, "<br/>",
               "Date: ", eventDate, "<br/>",
@@ -96,6 +143,7 @@ mapModuleServer <- function(id, filtered_data) {
 
       first_load(FALSE)
     })
+
 
     # Reset view
     observeEvent(input$reset_view, {
