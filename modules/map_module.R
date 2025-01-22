@@ -83,9 +83,13 @@ mapModuleServer <- function(id, filtered_data) {
             data = df,
             lng = ~longitude,
             lat = ~latitude,
-            popup = ~paste("<b>", vernacular_name, "</b><br>",
-                           "Scientific name:", species, "<br>",
-                           "Date:", eventDate),
+            popup = ~paste0(
+              "<b>", vernacular_name, "</b><br/>",
+              "Scientific name: ", species, "<br/>",
+              "Date: ", eventDate, "<br/>",
+              "Source: ", dataResourceName, "<br/>",
+              "<a href='", google_maps_url, "' target='_blank'>View in Google Maps</a>"
+            ),
             clusterOptions = markerClusterOptions()
           )
       }
