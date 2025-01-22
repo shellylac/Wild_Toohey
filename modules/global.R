@@ -10,6 +10,7 @@ library(DT)
 library(leaflet)
 library(leaflet.extras)
 library(plotly)
+library(fontawesome)
 
 
 # Read in the occurrence data
@@ -20,8 +21,9 @@ toohey_occs <- readRDS(url(data_url)) |>
   filter(vernacular_name != "Brown Hare") |>
   mutate(google_maps_url = create_google_maps_url(latitude, longitude))
 
-# indices <- sample(nrow(toohey_occs), 5)
-# sample_data <- toohey_occs[indices, ]
+ # indices <- sample(nrow(toohey_occs), 5)
+ # sample_data <- toohey_occs[indices, ]
+ # constructive::construct(sample_data)
 
 # Read in the toohey shapefile
 boundary_url <- "./data/toohey_shapefiles/toohey_forest_boundary.shp"
