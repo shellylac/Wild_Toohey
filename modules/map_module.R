@@ -116,21 +116,29 @@ mapModuleServer <- function(id, filtered_data) {
           #     "<a href='", google_maps_url, "' target='_blank'>View in Google Maps</a>"
           #   ),
           addAwesomeMarkers(
-            data    = df,
-            lng     = ~longitude,
-            lat     = ~latitude,
-            icon    = ~awesomeIcons(
-              icon        = "fa-binoculars",       # pick any icon you like
-              library     = "fa",
-              iconColor   = "white",
+            data = df,
+            lng  = ~longitude,
+            lat  = ~latitude,
+            icon = ~awesomeIcons(
+              # icon        = "fa-binoculars",       # pick any icon you like
+              # choose icon based on `class`
+              icon = dplyr::case_when(
+                class == "Aves"     ~ "dove",  # Font Awesome icon "dove"
+                class == "Mammalia" ~ "paw",   # Font Awesome icon "paw"
+                class == "Reptilia" ~ "worm",  # Font Awesome 6 icon "worm"
+                TRUE                ~ "question"  # fallback icon
+              ),
+              # choose colors
+              library    = "fa",
+              iconColor  = "white",
               markerColor = dplyr::case_when(
-                class == "Aves"     ~ "lightblue",
-                class == "Mammalia" ~ "maroon",
+                class == "Aves"     ~ "blue",
+                class == "Mammalia" ~ "red",
                 class == "Reptilia" ~ "green",
                 TRUE                ~ "gray"
               )
             ),
-            popup   = ~paste0(
+            popup = ~paste0(
               "<b>", vernacular_name, "</b><br/>",
               "Scientific name: ", species, "<br/>",
               "Date: ", eventDate, "<br/>",
@@ -140,6 +148,7 @@ mapModuleServer <- function(id, filtered_data) {
             clusterOptions = markerClusterOptions()
           )
       }
+
 
       first_load(FALSE)
     })
