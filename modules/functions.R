@@ -64,3 +64,11 @@ plot_trend_month <- function(data, period_name, taxa_level) {
                      'hoverCompareCartesian','zoom2d','pan2d',
                      'select2d', 'lasso2d'))
 }
+
+
+# Good to know
+# col2hex <- function(x, alpha = FALSE) {
+#   args <- as.data.frame(t(col2rgb(x, alpha = alpha)))
+#   args <- c(args, list(names = x, maxColorValue = 255))
+#   do.call(rgb, args)
+# }
