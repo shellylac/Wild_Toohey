@@ -28,10 +28,6 @@ toohey_outline <- sf::st_read(boundary_url)
 
 
 # These are my TO-DOS!!
-#> 1. Add amphibians and icon!!
-#> 1b. Limit map data to past year of data (now have 10 years)
-#> 1c. change default time period on map, past week and choice
-#> 1d. Add legend to map
 #> 2. Add Family common names as column in the data
 #> 3. Add time of day histograms to charts page
 #> 4. Remove extra text above the plotly figures
