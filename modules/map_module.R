@@ -8,8 +8,7 @@ mapModuleUI <- function(id) {
       col_widths = c(8, 4),
       radioButtons(
         ns("date_filter"), "Time period:",
-        choices = c("Past 3 days" = "3days",
-                    "Past week" = "week",
+        choices = c("Past week" = "week",
                     "Custom date range" = "custom"),
         selected = "custom",
         inline = TRUE
@@ -33,28 +32,6 @@ mapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
     first_load <- reactiveVal(TRUE)
 
-    # # Create icons based on class
-    # icons <- list(
-    #   Aves = makeAwesomeIcon(
-    #     icon = "circle",
-    #     iconColor = "black",
-    #     markerColor = "lightblue",
-    #     library = "fa"
-    #   ),
-    #   Mammalia = makeAwesomeIcon(
-    #     icon = "circle",
-    #     iconColor = "black",
-    #     markerColor = "red",
-    #     library = "fa"
-    #   ),
-    #   Reptilia = makeAwesomeIcon(
-    #     icon = "circle",
-    #     iconColor = "black",
-    #     markerColor = "green",
-    #     library = "fa"
-    #   )
-    # )
-
     # Date filtered data
     date_filtered_data <- reactive({
       data <- filtered_data()
@@ -63,7 +40,6 @@ mapModuleServer <- function(id, filtered_data) {
         mutate(eventDate = as.Date(eventDate))
 
       switch(input$date_filter,
-             "3days" = {data |> filter(eventDate >= (Sys.Date() - 3))},
              "week" = {data |> filter(eventDate >= (Sys.Date() - 7))},
              "custom" = {data |> filter(eventDate >= input$date_range[1],
                                         eventDate <= input$date_range[2])})
@@ -103,18 +79,6 @@ mapModuleServer <- function(id, filtered_data) {
           leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters() |>
-          # addMarkers(
-          #   data    = df,
-          #   lng     = ~longitude,
-          #   lat     = ~latitude,
-          #   icon = ~icons[class],
-          #   popup   = ~paste0(
-          #     "<b>", vernacular_name, "</b><br/>",
-          #     "Scientific name: ", species, "<br/>",
-          #     "Date: ", eventDate, "<br/>",
-          #     "Source: ", dataResourceName, "<br/>",
-          #     "<a href='", google_maps_url, "' target='_blank'>View in Google Maps</a>"
-          #   ),
           addAwesomeMarkers(
             data = df,
             lng  = ~longitude,
@@ -126,6 +90,7 @@ mapModuleServer <- function(id, filtered_data) {
                 class == "Aves"     ~ "dove",  # Font Awesome icon "dove"
                 class == "Mammalia" ~ "paw",   # Font Awesome icon "paw"
                 class == "Reptilia" ~ "worm",  # Font Awesome 6 icon "worm"
+                class == "Amphibia" ~ "frog",  # Font Awesome 6 icon "worm"
                 TRUE                ~ "question"  # fallback icon
               ),
               # choose colors
@@ -134,7 +99,8 @@ mapModuleServer <- function(id, filtered_data) {
               markerColor = dplyr::case_when(
                 class == "Aves"     ~ "blue",
                 class == "Mammalia" ~ "red",
-                class == "Reptilia" ~ "green",
+                class == "Reptilia" ~ "orange",
+                class == "Amphibia" ~ "green",
                 TRUE                ~ "gray"
               )
             ),
