@@ -1,5 +1,5 @@
 # Species Selection Module UI
-# Species Selection Module UI
+
 speciesSelectionUI <- function(id) {
   ns <- NS(id)
 
@@ -34,10 +34,10 @@ speciesSelectionUI <- function(id) {
         inputId = ns("class"),
         label = "Class:",
         choiceNames = list(
-          tagList(shiny::icon("dove"), "Birds"),
-          tagList(shiny::icon("paw"), "Mammals"),
-          tagList(shiny::icon("worm"), "Reptiles"),
-          tagList(shiny::icon("frog"), "Amphibians")
+          tagList(shiny::icon("dove", style = "color: #0000FF;"), "Birds"), # blue
+          tagList(shiny::icon("paw", style = "color: #FF0000;"), "Mammals"), # red
+          tagList(shiny::icon("worm", style = "color: #FFA500;"), "Reptiles"),  # orange
+          tagList(shiny::icon("frog", style = "color: #00FF00;"), "Amphibians")  # green
         ),
         choiceValues = c("Aves", "Mammalia", "Reptilia", "Amphibia"),
         selected = "Aves"
