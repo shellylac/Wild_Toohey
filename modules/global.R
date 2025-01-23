@@ -16,10 +16,7 @@ library(fontawesome)
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
 toohey_occs <- readRDS(url(data_url)) |>
-  filter(!is.na(species)) |>
-  mutate(vernacular_name = fix_common_names(vernacular_name)) |>
-  filter(vernacular_name != "Brown Hare") |>
-  mutate(google_maps_url = create_google_maps_url(latitude, longitude))
+  dplyr::filter(!is.na(species))
 
  # indices <- sample(nrow(toohey_occs), 5)
  # sample_data <- toohey_occs[indices, ]
@@ -31,15 +28,18 @@ toohey_outline <- sf::st_read(boundary_url)
 
 
 # These are my TO-DOS!!
-#> 1. Add all the data wrangling from here to the ALA repo!!
-#> 1b. Think about getting 10 years of data (map still limited to last 3 yrs)
+#> 1. Add amphibians and icon!!
+#> 1b. Limit map data to past year of data (now have 10 years)
+#> 1c. change default time period on map, past week and choice
+#> 1d. Add legend to map
 #> 2. Add Family common names as column in the data
-#> 3. Add in Wikipedia links from ALA output to the data!
+#> 3. Add time of day histograms to charts page
 #> 4. Remove extra text above the plotly figures
 #> 5. Think about download options (are they necessary!?)
 #> 6. Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
 #>
 #> Bigger things
+#> 0. Get rid of all the suprious warning messages about no data!!
 #> 1. Add module for Toohey Species List page (with links to Wikipedia)
 #> 1b. Can I do this dynamically from the dataset of occs?
 #> 1c. How can I get photos for all of these? download from ALA? do in separate repo?
