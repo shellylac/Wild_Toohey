@@ -10,8 +10,8 @@ mapModuleUI <- function(id) {
         ns("date_filter"), "Time period:",
         choices = c("Past week" = "week",
                     "Custom date range" = "custom"),
-        selected = "custom",
-        inline = TRUE
+        selected = "custom"
+        #,inline = TRUE
       ),
       conditionalPanel(
         condition = sprintf("input['%s'] == 'custom'", ns("date_filter")),
@@ -53,6 +53,17 @@ mapModuleServer <- function(id, filtered_data) {
         addProviderTiles(providers$CartoDB.Positron) |>
         setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
         addScaleBar(position = "bottomleft") |>
+        addLegend(
+          position = "bottomright",
+          colors = c("blue", "red", "orange", "green"),
+          labels = c("Birds", "Mammals", "Reptiles", "Amphibians"),
+          title = "Marker colours:",
+          labFormat = labelFormat(
+            prefix = "<span style='margin-top: 5px; margin-bottom: 5px;'>",
+            suffix = "</span>"
+          ),
+          opacity = 0.7
+        ) |>
         addEasyButton(easyButton(
           states = list(
             easyButtonState(
