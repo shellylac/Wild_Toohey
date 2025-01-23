@@ -36,9 +36,10 @@ speciesSelectionUI <- function(id) {
         choiceNames = list(
           tagList(shiny::icon("dove"), "Birds"),
           tagList(shiny::icon("paw"), "Mammals"),
-          tagList(shiny::icon("worm"), "Reptiles")
+          tagList(shiny::icon("worm"), "Reptiles"),
+          tagList(shiny::icon("frog"), "Amphibians")
         ),
-        choiceValues = c("Aves", "Mammalia", "Reptilia"),
+        choiceValues = c("Aves", "Mammalia", "Reptilia", "Amphibia"),
         selected = "Aves"
       ),
       selectizeInput(ns("order"), "Order:", choices = NULL),
