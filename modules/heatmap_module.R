@@ -20,8 +20,14 @@ heatmapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
     first_load <- reactiveVal(TRUE)
 
+    # Create a debounced version of filtered_data
+    debounced_data <- reactive({
+      filtered_data()
+    }) |> debounce(1000)  # 1000ms debounce
+
+
     period_filtered_data <- reactive({
-      period_data <- filtered_data() |>
+      period_data <- debounced_data() |>
         mutate(eventDate = as.Date(eventDate),
                eventMonth = lubridate::month(eventDate))
 
