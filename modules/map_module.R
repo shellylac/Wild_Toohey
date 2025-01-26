@@ -9,8 +9,9 @@ mapModuleUI <- function(id) {
       radioButtons(
         ns("date_filter"), "Time period:",
         choices = c("Past week" = "week",
+                    "Past month" = "month",
                     "Custom date range" = "custom"),
-        selected = "custom"
+        selected = "month"
         #,inline = TRUE
       ),
       conditionalPanel(
@@ -41,6 +42,7 @@ mapModuleServer <- function(id, filtered_data) {
 
       switch(input$date_filter,
              "week" = {data |> filter(eventDate >= (Sys.Date() - 7))},
+             "month" = {data |> filter(eventDate >= (Sys.Date() - 30))},
              "custom" = {data |> filter(eventDate >= input$date_range[1],
                                         eventDate <= input$date_range[2])})
     })
@@ -56,7 +58,12 @@ mapModuleServer <- function(id, filtered_data) {
         addLegend(
           position = "bottomright",
           colors = c("blue", "red", "orange", "green"),
-          labels = c("Birds", "Mammals", "Reptiles", "Amphibians"),
+          labels = c(
+            HTML("Birds <i class='fa fa-dove'></i>"),
+            HTML("Mammals <i class='fa fa-paw'></i>"),
+            HTML("Reptiles <i class='fa fa-worm'></i>"),
+            HTML("Amphibians <i class='fa fa-frog'></i>")
+          ),
           title = "Marker colours:",
           labFormat = labelFormat(
             prefix = "<span style='margin-top: 5px; margin-bottom: 5px;'>",
@@ -116,7 +123,7 @@ mapModuleServer <- function(id, filtered_data) {
               )
             ),
             popup = ~paste0(
-              "<b>", vernacular_name, "</b><br/>",
+              "<a href='", wikipedia_url, "' target='_blank'><b>", vernacular_name, "</b></a><br/>",
               "Scientific name: ", species, "<br/>",
               "Date: ", eventDate, "<br/>",
               "Source: ", dataResourceName, "<br/>",
