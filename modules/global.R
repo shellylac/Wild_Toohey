@@ -38,7 +38,6 @@ toohey_outline <- sf::st_read(boundary_url)
 #>
 #>
 #> Bigger things
-#> * Get rid of all the suprious warning messages about no data!!
 #> * Figures
 #> -- Get the hover text working
 #> -- remove most of the plotly buttons
