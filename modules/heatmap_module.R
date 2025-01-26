@@ -78,7 +78,7 @@ heatmapModuleServer <- function(id, filtered_data) {
       if (nrow(df) == 0 && !first_load()) {
         showNotification("No data available for current selection",
                          type = "warning",
-                         duration = 1,
+                         duration = 1.5,
                          id = "no_data_warning")
         leafletProxy("heatmap") |>
           clearGroup("heatmap_cols")
