@@ -88,11 +88,15 @@ mapModuleServer <- function(id, filtered_data) {
       df <- date_filtered_data()
 
       if (nrow(df) == 0 && !first_load()) {
-        showNotification("No data available for current selection", type = "warning")
+        showNotification("No data available for current selection",
+                         type = "warning",
+                         duration = 1,
+                         id = "no_data_warning")
         leafletProxy("map") %>%
           clearMarkers() %>%
           clearMarkerClusters()
       } else {
+        removeNotification("no_data_warning")
 
           leafletProxy("map") |>
           clearMarkers() |>

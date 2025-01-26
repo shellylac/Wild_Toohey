@@ -70,10 +70,15 @@ heatmapModuleServer <- function(id, filtered_data) {
     observeEvent(period_filtered_data(), {
       df <- period_filtered_data()
       if (nrow(df) == 0 && !first_load()) {
-        showNotification("No data available for current selection", type = "warning")
+        showNotification("No data available for current selection",
+                         type = "warning",
+                         duration = 1,
+                         id = "no_data_warning")
         leafletProxy("heatmap") |>
           clearGroup("heatmap_cols")
       } else {
+        removeNotification("no_data_warning")
+
         leafletProxy("heatmap") |>
           clearGroup("heatmap_cols") |>
           leaflet.extras::addHeatmap(

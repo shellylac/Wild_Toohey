@@ -137,6 +137,15 @@ speciesSelectionServer <- function(id) {
     filtered_data <- reactive({
       validate(need(input$select_method, "Please select a method"))
 
+      # If using taxonomy method, wait until all selections are stable
+      if (input$select_method == "By taxonomy") {
+        req(input$class)
+        req(input$order)
+        req(input$family)
+        req(input$genus)
+        req(input$species)
+      }
+
       data <- toohey_occs
 
       if (input$select_method == "By common name") {
