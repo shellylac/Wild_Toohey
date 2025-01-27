@@ -18,28 +18,42 @@ ui <- page_navbar(
   ),
 
   nav_panel(
-    title = "Wild Finder",
+    title = "Fauna Finder",
     mapModuleUI("finder")
   ),
 
   nav_panel(
-    title = "Wild Heat Maps",
+    title = "Hotspots",
     heatmapModuleUI("heatmap")
   ),
 
   nav_panel(
-    title = "Stats",
+    title = "Trends",
     statsModuleUI("stats")
   ),
 
   nav_panel(
-    title = "Resources",
+    title = "Species List ",
     card(
-      card_header("Additional Resources"),
+      "Species list table with images to go here"
+    )
+  ),
+
+  nav_panel(
+    title = "Fact File",
+    card(
+      "Resource links and information will go here"
+    )
+  ),
+
+  nav_panel(
+    title = "About",
+    card(
       "Resource links and information will go here"
     )
   )
 )
+
 
 server <- function(input, output, session) {
   # Get filtered data from species selection module

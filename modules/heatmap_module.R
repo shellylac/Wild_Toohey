@@ -3,7 +3,7 @@ heatmapModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
-    card_header("Species occurrence heat map"),
+    # card_header("Species occurrence heat map"),
     selectInput(
       inputId = ns('heatmap_periods'),
       label = "Select temporal period for map: ",

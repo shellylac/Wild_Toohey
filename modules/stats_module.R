@@ -3,7 +3,7 @@ statsModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
-    card_header("Occurrence trends over time"),
+    # card_header("Observation trends"),
     card_body(
       radioButtons(
         ns("plot_type"), "Period to display:",
@@ -44,8 +44,14 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
         taxa_level = taxa_group(),
         period = my_period()
         ) |>
-        mutate(class = factor(class, levels = c("Aves", "Mammalia",
-                                                "Reptilia", "Amphibia")))
+        mutate(class = case_match(class,
+                                  "Aves" ~ "Birds",
+                                  "Mammalia" ~ "Mammals",
+                                  "Reptilia" ~ "Reptiles",
+                                  "Amphibia" ~ "Amphibians"),
+               class = factor(class, levels = c("Birds", "Mammals",
+                                                "Reptiles", "Amphibians")),
+        )
 
       agg_data
     })

@@ -3,7 +3,7 @@ mapModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
-    card_header("Species locations"),
+    # card_header("Species locations"),
     layout_columns(
       col_widths = c(8, 4),
       radioButtons(

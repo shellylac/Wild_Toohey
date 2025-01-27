@@ -39,11 +39,10 @@ toohey_outline <- sf::st_read(boundary_url)
 #>
 #> Bigger things
 #> * Figures
-#> -- Get the hover text working
-#> -- remove most of the plotly buttons
-#> -- Add time of day histograms to charts page
-#> -- set colours to class colours (is this possible???)
-#> -- Remove Annual option!
+#> -- Something not working with Amphibians - and the class subselect - and the case-match!!!
+#> -- try just removing this and see if works
+#> -- Get the hover text working (add Class/taxa_level)
+
 #> * Species List
 #> -- Add module for Toohey Species List page (with links to Wikipedia)
 #> -- Do this dynamically from the dataset of occs - and add total obs count col
@@ -59,3 +58,14 @@ toohey_outline <- sf::st_read(boundary_url)
 #> * Think about download options (are they necessary!?)
 #> * Get working on mobile app!
 #> * Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
+#>
+#> Tab Names
+#> MAP
+#>  - Fauna Finder
+#>  - Critter Mapper
+#> HEATMAP
+#>  - Observation hotspots
+#>  - Wildlife by Seasons
+#> STATS
+#>  - Observation patterns
+#>  - patterns
