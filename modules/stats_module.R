@@ -8,11 +8,12 @@ statsModuleUI <- function(id) {
       radioButtons(
         ns("plot_type"), "Period to display:",
         choices = c("Annual trends" = "year",
-                    "Monthly trends" = "month"),
+                    "Monthly trends" = "month",
+                    "Daily trends" = "hour"),
         selected = "year",
         inline = TRUE
       ),
-      plotly::plotlyOutput(ns("annual_trend"))
+      plotly::plotlyOutput(ns("observation_trends"))
     )
   )
 }
@@ -31,33 +32,35 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
       rlang::sym(taxa_level())
     })
 
+    # Create a debounced version of filtered_data
+    debounced_data <- reactive({
+      filtered_data()
+    }) |> debounce(1000)  # 1000ms debounce
+
     # Important: evaluate the reactive expression with ()
     agg_tax_data <- reactive({
-
-      #taxa_group <- taxa_level()
-
       agg_data <- agg_by_period(
-        data = filtered_data(),
+        data = debounced_data(),
         taxa_level = taxa_group(),
         period = my_period()
-        )
+        ) |>
+        mutate(class = factor(class, levels = c("Aves", "Mammalia",
+                                                "Reptilia", "Amphibia")))
+
       agg_data
     })
 
     # Render the plotly scatter annual trend plot
-    output$annual_trend <- plotly::renderPlotly({
+    output$observation_trends <- plotly::renderPlotly({
       req(agg_tax_data())
 
       period_name <- input$plot_type
       taxa_group <- taxa_level()
 
-      plot_trend_year(agg_tax_data(), period_name, taxa_group)
-
       if (input$plot_type == "year" | dim(agg_tax_data())[1] < 2) {
-        # Use the extracted plotting function
-        plot_trend_year(agg_tax_data(), period_name, taxa_group)
+        plot_trend_scatter(agg_tax_data(), period_name, taxa_group)
       } else {
-        plot_trend_month(agg_tax_data(), period_name, taxa_group)
+        plot_trend_bar(agg_tax_data(), period_name, taxa_group)
       }
     })
 
