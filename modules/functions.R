@@ -28,11 +28,17 @@ plot_trend_scatter <- function(data, period_name, taxa_level) {
       }
     )
 
+  my_colors = c("Birds" = "blue",
+             "Mammals" = "red",
+             "Reptiles" = "orange",
+             "Amphibians" = "green")
+
   plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
+    colors = my_colors,
     type = 'scatter',
     mode = 'lines+markers',
     hoverinfo = 'text',
@@ -66,11 +72,17 @@ plot_trend_bar <- function(data, period_name, taxa_level) {
       }
     )
 
+  my_colors = c("Birds" = "blue",
+                "Mammals" = "red",
+                "Reptiles" = "orange",
+                "Amphibians" = "green")
+
   plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
+    colors = my_colors,
     type = 'bar',
     hoverinfo = 'text',
     hovertext = ~tooltip
