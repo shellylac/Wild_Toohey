@@ -42,6 +42,7 @@ toohey_outline <- sf::st_read(boundary_url)
 #> -- Something not working with Amphibians - and the class subselect - and the case-match!!!
 #> -- try just removing this and see if works
 #> -- Get the hover text working (add Class/taxa_level)
+#> -- Put these three figures in a vertical subplot - no user choice - users see all 3!
 
 #> * Species List
 #> -- Add module for Toohey Species List page (with links to Wikipedia)

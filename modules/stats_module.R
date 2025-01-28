@@ -43,16 +43,7 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
         data = debounced_data(),
         taxa_level = taxa_group(),
         period = my_period()
-        ) |>
-        mutate(class = case_match(class,
-                                  "Aves" ~ "Birds",
-                                  "Mammalia" ~ "Mammals",
-                                  "Reptilia" ~ "Reptiles",
-                                  "Amphibia" ~ "Amphibians"),
-               class = factor(class, levels = c("Birds", "Mammals",
-                                                "Reptiles", "Amphibians")),
         )
-
       agg_data
     })
 

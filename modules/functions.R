@@ -2,11 +2,11 @@
 agg_by_period <- function(data, taxa_level, period) {
 
   agg_data <- data |>
-    mutate(year = as.factor(lubridate::year(eventDate)),
-           month = lubridate::month(eventDate, label = TRUE),
-           hour = lubridate::hour(hms(eventTime))) |>
-    group_by(!!taxa_level, !!period) |>
-    summarise(
+    dplyr::mutate(year = as.factor(lubridate::year(eventDate)),
+                  month = lubridate::month(eventDate, label = TRUE),
+                  hour = lubridate::hour(hms(eventTime))) |>
+    dplyr::group_by(!!taxa_level, !!period) |>
+    dplyr::summarise(
       count = n(),
       .groups = "drop"
     )
@@ -28,17 +28,17 @@ plot_trend_scatter <- function(data, period_name, taxa_level) {
       }
     )
 
-  my_colors = c("Birds" = "blue",
-             "Mammals" = "red",
-             "Reptiles" = "orange",
-             "Amphibians" = "green")
+  # my_colors = c("Birds" = "blue",
+  #            "Mammals" = "red",
+  #            "Reptiles" = "orange",
+  #            "Amphibians" = "green")
 
   plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
-    colors = my_colors,
+    #colors = my_colours,
     type = 'scatter',
     mode = 'lines+markers',
     hoverinfo = 'text',
@@ -72,17 +72,17 @@ plot_trend_bar <- function(data, period_name, taxa_level) {
       }
     )
 
-  my_colors = c("Birds" = "blue",
-                "Mammals" = "red",
-                "Reptiles" = "orange",
-                "Amphibians" = "green")
+  # my_colors = c("Birds" = "blue",
+  #               "Mammals" = "red",
+  #               "Reptiles" = "orange",
+  #               "Amphibians" = "green")
 
   plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
-    colors = my_colors,
+    #colors = my_colours,
     type = 'bar',
     hoverinfo = 'text',
     hovertext = ~tooltip
@@ -113,26 +113,26 @@ plot_trend_bar <- function(data, period_name, taxa_level) {
 #   do.call(rgb, args)
 # }
 
+# out <- toohey_occs |>
+#   dplyr::mutate(year = as.factor(lubridate::year(eventDate)),
+#                 month = lubridate::month(eventDate, label = TRUE),
+#                 hour = lubridate::hour(hms(eventTime))) |>
+#   dplyr::group_by(species, year) |>
+#   dplyr::summarise(
+#     count = n(),
+#     .groups = "drop"
+#   )
+# out
 
-# Extract hour from eventTime
-data <- toohey_occs |>
-  mutate(hour = hour(hms(eventTime)))
+# Need to match factor levels and colours to taxa_level
+# Change the agg data only if taxa_level == "class"
+# Use a colour scale otherwise (does this work for single values)?
 
-# Create the Plotly bar chart
-fig <- data %>%
-  count(hour) %>%
-  plot_ly(
-    x = ~hour,
-    y = ~n,
-    type = 'bar',
-    marker = list(color = 'rgba(58,71,80,0.8)')
-  ) %>%
-  layout(
-    title = "Frequency of Observations by Hour",
-    xaxis = list(title = "Hour of Day (24-hour format)"),
-    yaxis = list(title = "Frequency"),
-    bargap = 0.2
-  )
-
-# Show the plot
-fig
+# mutate(class = case_match(class,
+#                           "Aves" ~ "Birds",
+#                           "Mammalia" ~ "Mammals",
+#                           "Reptilia" ~ "Reptiles",
+#                           "Amphibia" ~ "Amphibians"),
+#        class = factor(class, levels = c("Birds", "Mammals",
+#                                         "Reptiles", "Amphibians")),
+# )
