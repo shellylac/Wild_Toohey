@@ -16,7 +16,19 @@ library(fontawesome)
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
 toohey_occs <- readRDS(url(data_url)) |>
+  # Just a catch in case an NA species gets through
   dplyr::filter(!is.na(species)) |>
+  # Add common class names
+  dplyr::mutate(class_common = case_match(class,
+                                          "Aves" ~ "Birds",
+                                          "Mammalia" ~ "Mammals",
+                                          "Reptilia" ~ "Reptiles",
+                                          "Amphibia" ~ "Amphibians"),
+                class_common = factor(class_common,
+                                      levels = c("Birds", "Mammals",
+                                                 "Reptiles", "Amphibians")
+                )
+  ) |>
   # Add assumed wiki url where missing
   dplyr::mutate(wikipedia_url =
                   dplyr::if_else(is.na(wikipedia_url),
