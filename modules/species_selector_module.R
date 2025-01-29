@@ -39,13 +39,13 @@ speciesSelectionUI <- function(id) {
           tagList(shiny::icon("worm", style = "color: #FFA500;"), "Reptiles"),  # orange
           tagList(shiny::icon("frog", style = "color: #00FF00;"), "Amphibians")  # green
         ),
-        choiceValues = c("Aves", "Mammalia", "Reptilia", "Amphibia"),
-        selected = "Aves"
+        choiceValues = unique(toohey_occs$class_common),
+        selected = "Birds"
       ),
-      selectizeInput(ns("order"), "Order:", choices = NULL),
-      selectizeInput(ns("family"), "Family:", choices = NULL),
-      selectizeInput(ns("genus"), "Genus:", choices = NULL),
-      selectizeInput(ns("species"), "Species:", choices = NULL)
+      selectInput(ns("order"), "Order:", choices = NULL),
+      selectInput(ns("family"), "Family:", choices = NULL),
+      selectInput(ns("genus"), "Genus:", choices = NULL),
+      selectInput(ns("species"), "Species:", choices = NULL)
     )
   )
 }
@@ -72,10 +72,11 @@ speciesSelectionServer <- function(id) {
     # Update Order based on Class
     observe({
       req(input$class)
-      orders <- sort(unique(toohey_occs$order[toohey_occs$class == input$class]))
-      updateSelectizeInput(session, "order",
-                           choices = if (length(orders) == 1) orders else c("All", orders),
-                           server = TRUE
+      orders <- sort(unique(toohey_occs$order[toohey_occs$class_common == input$class]))
+      updateSelectInput(session, "order",
+                        choices = if (length(orders) == 1) orders else c("All", orders),
+                        selected = if (length(orders) == 1) orders else "All"
+                        #, server = TRUE
       )
     })
 
@@ -83,13 +84,14 @@ speciesSelectionServer <- function(id) {
     observe({
       req(input$class, input$order)
       families <- if (input$order == "All") {
-        sort(unique(toohey_occs$family[toohey_occs$class == input$class]))
+        sort(unique(toohey_occs$family[toohey_occs$class_common == input$class]))
       } else {
         sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
       }
-      updateSelectizeInput(session, "family",
-                           choices = if (length(families) == 1) families else c("All", families),
-                           server = TRUE
+      updateSelectInput(session, "family",
+                        choices = if (length(families) == 1) families else c("All", families),
+                        selected = if (length(families) == 1) families else "All"
+                        # , server = TRUE
       )
     })
 
@@ -98,16 +100,17 @@ speciesSelectionServer <- function(id) {
       req(input$class, input$order, input$family)
       genera <- if (input$family == "All") {
         if (input$order == "All") {
-          sort(unique(toohey_occs$genus[toohey_occs$class == input$class]))
+          sort(unique(toohey_occs$genus[toohey_occs$class_common == input$class]))
         } else {
           sort(unique(toohey_occs$genus[toohey_occs$order == input$order]))
         }
       } else {
         sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
       }
-      updateSelectizeInput(session, "genus",
-                           choices = if (length(genera) == 1) genera else c("All", genera),
-                           server = TRUE
+      updateSelectInput(session, "genus",
+                        choices = if (length(genera) == 1) genera else c("All", genera),
+                        selected = if (length(genera) == 1) genera else "All"
+                        #,server = TRUE
       )
     })
 
@@ -117,7 +120,7 @@ speciesSelectionServer <- function(id) {
       species <- if (input$genus == "All") {
         if (input$family == "All") {
           if (input$order == "All") {
-            sort(unique(toohey_occs$species[toohey_occs$class == input$class]))
+            sort(unique(toohey_occs$species[toohey_occs$class_common == input$class]))
           } else {
             sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
           }
@@ -127,9 +130,10 @@ speciesSelectionServer <- function(id) {
       } else {
         sort(unique(toohey_occs$species[toohey_occs$genus == input$genus]))
       }
-      updateSelectizeInput(session, "species",
-                           choices = if (length(species) == 1) species else c("All", species),
-                           server = TRUE
+      updateSelectInput(session, "species",
+                        choices = if (length(species) == 1) species else c("All", species),
+                        selected = if(length(species) == 1) species else "All"
+                        # ,server = TRUE
       )
     })
 
@@ -152,7 +156,7 @@ speciesSelectionServer <- function(id) {
         if (input$vernacular_name == 'All') return(data)
         data <- data |> filter(vernacular_name == input$vernacular_name)
       } else {
-        if (input$class != "All") data <- data |> filter(class == input$class)
+        if (input$class != "All") data <- data |> filter(class_common == input$class)
         if (input$order != "All") data <- data |> filter(order == input$order)
         if (input$family != "All") data <- data |> filter(family == input$family)
         if (input$genus != "All") data <- data |> filter(genus == input$genus)
@@ -171,7 +175,7 @@ speciesSelectionServer <- function(id) {
         if (input$genus != "All") return("genus")
         if (input$family != "All") return("family")
         if (input$order != "All") return("order")
-        return("class")
+        return("class_common")
       }
     })
 
