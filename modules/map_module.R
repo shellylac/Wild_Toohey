@@ -41,7 +41,6 @@ mapModuleServer <- function(id, filtered_data) {
     # Date filtered data
     date_filtered_data <- reactive({
 
-
       data <- debounced_data()
 
       data <- data |>
@@ -60,7 +59,7 @@ mapModuleServer <- function(id, filtered_data) {
       leaflet() |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
-        setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
+        setView(lng = 153.0586, lat = -27.545, zoom = 13.5) |>
         addScaleBar(position = "bottomleft") |>
         addLegend(
           position = "bottomright",
@@ -97,10 +96,10 @@ mapModuleServer <- function(id, filtered_data) {
       if (nrow(df) == 0 && !first_load()) {
         showNotification("No data available for current selection",
                          type = "warning",
-                         duration = 1.5,
+                         duration = NULL,
                          id = "no_data_warning")
-        leafletProxy("map") %>%
-          clearMarkers() %>%
+        leafletProxy("map") |>
+          clearMarkers() |>
           clearMarkerClusters()
       } else {
         removeNotification("no_data_warning")
@@ -152,7 +151,7 @@ mapModuleServer <- function(id, filtered_data) {
     # Reset view
     observeEvent(input$reset_view, {
       leafletProxy("map") |>
-        setView(lng = 153.0586, lat = -27.5483, zoom = 14)
+        setView(lng = 153.0586, lat = -27.545, zoom = 13.5)
     })
   })
 }
