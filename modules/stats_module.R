@@ -45,7 +45,7 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
         period = my_period()
         )
       agg_data
-    })
+    }) |> debounce(1000)  # 1000ms debounce
 
     # Render the plotly scatter annual trend plot
     output$observation_trends <- plotly::renderPlotly({
