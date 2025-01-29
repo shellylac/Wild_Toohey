@@ -47,14 +47,10 @@ toohey_outline <- sf::st_read(boundary_url)
 
 
 # These are my TO-DOS!!
-#>
-#>
-#> Bigger things
+#> in map - warning message too quick
 #> * Figures
-#> -- Something not working with Amphibians - and the class subselect - and the case-match!!!
-#> -- try just removing this and see if works
+#> -- Colours for class - vs others
 #> -- Get the hover text working (add Class/taxa_level)
-#> -- Put these three figures in a vertical subplot - no user choice - users see all 3!
 
 #> * Species List
 #> -- Add module for Toohey Species List page (with links to Wikipedia)
@@ -82,3 +78,8 @@ toohey_outline <- sf::st_read(boundary_url)
 #> STATS
 #>  - Observation patterns
 #>  - patterns
+
+
+# Things to try
+#> -- Put stats figures in a vertical subplot - no user choice - users see all 3!
+#> Move map choices to sidebar (free up space?)
