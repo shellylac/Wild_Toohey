@@ -1,3 +1,4 @@
+options(shiny.autoreload = TRUE)
 
 # Source functions
 source('./modules/functions.R')
