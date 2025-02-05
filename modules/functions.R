@@ -16,16 +16,18 @@ agg_by_period <- function(data, taxa_level, period) {
 # Create a separate plotting function
 plot_trend_scatter <- function(data, period_name, taxa_level) {
 
-  # Create a tooltip column in `data`
+  # Ensure data exists and has required columns
+  if (is.null(data) || nrow(data) == 0) return(NULL)
+
+  # Create a tooltip column
   data <- data |>
-    mutate(
-      tooltip = if (period_name == "year") {
-        paste0("Year: ", year, "<br>Count: ", count)
-      } else if (period_name == "month") {
-        paste0("Month: ", month, "<br>Count: ", count)
-      } else {
-        paste0("Hour: ", hour, "<br>Count: ", count)
-      }
+    dplyr::mutate(
+      tooltip = dplyr::case_when(
+        period_name == "year" ~ paste0("Year: ", .data[[period_name]], "<br>Count: ", count),
+        period_name == "month" ~ paste0("Month: ", .data[[period_name]], "<br>Count: ", count),
+        period_name == "hour" ~ paste0("Hour: ", .data[[period_name]], "<br>Count: ", count),
+        TRUE ~ NA_character_
+      )
     )
 
   # my_colors = c("Birds" = "blue",
@@ -33,7 +35,8 @@ plot_trend_scatter <- function(data, period_name, taxa_level) {
   #            "Reptiles" = "orange",
   #            "Amphibians" = "green")
 
-  plotly::plot_ly(
+
+  p <- plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
@@ -41,70 +44,91 @@ plot_trend_scatter <- function(data, period_name, taxa_level) {
     #colors = my_colours,
     type = 'scatter',
     mode = 'lines+markers',
-    hoverinfo = 'text',
-    hovertext = ~tooltip
-    ) |>
+    #text = ~tooltip,
+    hovertext = ~tooltip,
+    hoverinfo = 'text'
+  )
+
+  p <- p <- p |>
     plotly::layout(
-      xaxis = list(title = dplyr::if_else(period_name == "year", "Year",
-                                  dplyr::if_else(period_name == "month", "Month",
-                                          "Hour of the day"))),
+      xaxis = list(
+        title = dplyr::case_when(
+          period_name == "year" ~ "Year",
+          period_name == "month" ~ "Month",
+          period_name == "hour" ~ "Hour of the day",
+          TRUE ~ ""
+        )
+      ),
       yaxis = list(title = "Count"),
       showlegend = TRUE
     ) |>
-    plotly::config(displaylogo = FALSE,
-                   modeBarButtonsToRemove = c(
-                     'sendDataToCloud', 'autoScale2d',
-                     'toggleSpikelines','hoverClosestCartesian',
-                     'hoverCompareCartesian','zoom2d','pan2d',
-                     'select2d', 'lasso2d'))
+    plotly::config(
+      displaylogo = FALSE,
+      modeBarButtonsToRemove = c(
+        'sendDataToCloud', 'autoScale2d',
+        'toggleSpikelines', 'hoverClosestCartesian',
+        'hoverCompareCartesian', 'zoom2d', 'pan2d',
+        'select2d', 'lasso2d'
+      )
+    )
+
+  return(p)
 }
 
 plot_trend_bar <- function(data, period_name, taxa_level) {
-  # 1) Create a tooltip column in `data` (outside of the tilde environment)
+
+  # Ensure data exists and has required columns
+  if (is.null(data) || nrow(data) == 0) return(NULL)
+
+  # Create a tooltip column
   data <- data |>
-    mutate(
-      tooltip = if (period_name == "year") {
-        paste0("Year: ", year, "<br>Count: ", count)
-      } else if (period_name == "month") {
-        paste0("Month: ", month, "<br>Count: ", count)
-      } else {
-        paste0("Hour: ", hour, "<br>Count: ", count)
-      }
+    dplyr::mutate(
+      tooltip = dplyr::case_when(
+        period_name == "year" ~ paste0("Year: ", .data[[period_name]], "<br>Count: ", count),
+        period_name == "month" ~ paste0("Month: ", .data[[period_name]], "<br>Count: ", count),
+        period_name == "hour" ~ paste0("Hour: ", .data[[period_name]], "<br>Count: ", count),
+        TRUE ~ NA_character_
+      )
     )
 
-  # my_colors = c("Birds" = "blue",
-  #               "Mammals" = "red",
-  #               "Reptiles" = "orange",
-  #               "Amphibians" = "green")
-
-  plotly::plot_ly(
+  p <- plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period_name)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
     #colors = my_colours,
     type = 'bar',
-    hoverinfo = 'text',
-    hovertext = ~tooltip
-      ) |>
+    #text = ~tooltip,
+    hovertext = ~tooltip,
+    hoverinfo = 'text'
+
+  )
+
+  p <- p |>
     plotly::layout(
       xaxis = list(
-        title = dplyr::if_else(
-          period_name == "year",  "Year",
-          dplyr::if_else(period_name == "month", "Month", "Hour of day"))
-        ),
+        title = dplyr::case_when(
+          period_name == "year" ~ "Year",
+          period_name == "month" ~ "Month",
+          period_name == "hour" ~ "Hour of the day",
+          TRUE ~ ""
+        )
+      ),
       yaxis = list(title = "Count"),
       showlegend = TRUE
     ) |>
-    plotly::config(displaylogo = FALSE,
-                   modeBarButtonsToRemove = c(
-                     'sendDataToCloud', 'autoScale2d',
-                     'toggleSpikelines','hoverClosestCartesian',
-                     'hoverCompareCartesian','zoom2d','pan2d',
-                     'select2d', 'lasso2d'))
+    plotly::config(
+      displaylogo = FALSE,
+      modeBarButtonsToRemove = c(
+        'sendDataToCloud', 'autoScale2d',
+        'toggleSpikelines', 'hoverClosestCartesian',
+        'hoverCompareCartesian', 'zoom2d', 'pan2d',
+        'select2d', 'lasso2d'
+      )
+    )
+
+  return(p)
 }
-
-
 
 # Good to know
 # col2hex <- function(x, alpha = FALSE) {
