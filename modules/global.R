@@ -1,5 +1,6 @@
 
 # Load libraries
+{
 library(readr)
 library(dplyr)
 library(lubridate)
@@ -11,7 +12,8 @@ library(leaflet)
 library(leaflet.extras)
 library(plotly)
 library(fontawesome)
-
+library(grDevices)
+}
 
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
@@ -28,14 +30,7 @@ toohey_occs <- readRDS(url(data_url)) |>
                                       levels = c("Birds", "Mammals",
                                                  "Reptiles", "Amphibians")
                 )
-  ) |>
-  # Add assumed wiki url where missing
-  dplyr::mutate(wikipedia_url =
-                  dplyr::if_else(is.na(wikipedia_url),
-                                 paste0("https://en.wikipedia.org/wiki/",
-                                        gsub(" ", "_",
-                                             stringr::str_to_sentence(vernacular_name))),
-                                 wikipedia_url))
+  )
 
  # indices <- sample(nrow(toohey_occs), 5)
  # sample_data <- toohey_occs[indices, ]
@@ -46,11 +41,20 @@ boundary_url <- "./data/toohey_shapefiles/toohey_forest_boundary.shp"
 toohey_outline <- sf::st_read(boundary_url)
 
 
+# Generate the species list table
+species_list <- toohey_occs |>
+  distinct(class, order, family, genus, species, vernacular_name, wikipedia_url, image_url, class_common)
+
+
 # These are my TO-DOS!!
-#> in map - warning message too quick
 #> * Figures
+#> -- Get all 3 figures displaying as one figure - use subplot (three different datasets)
+#> -- See if the temp error that appears is removed by doing this!
 #> -- Colours for class - vs others
 #> -- Get the hover text working (add Class/taxa_level)
+#>
+#> * STRUCTURE
+#> -- Deal with this warning "Warning: Navigation containers expect a collection of `bslib::nav_panel()`/`shiny::tabPanel()`s and/or `bslib::nav_menu()`/`shiny::navbarMenu()`s. Consider using `header` or `footer` if you wish to place content above (or below) every panel's contents."
 
 #> * Species List
 #> -- Add module for Toohey Species List page (with links to Wikipedia)
@@ -67,6 +71,8 @@ toohey_outline <- sf::st_read(boundary_url)
 #> * Think about download options (are they necessary!?)
 #> * Get working on mobile app!
 #> * Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
+#> * Common Order names - use (and use latin as default - in case a new order pops that I haven't mapped to common name)
+
 #>
 #> Tab Names
 #> MAP
@@ -82,4 +88,3 @@ toohey_outline <- sf::st_read(boundary_url)
 
 # Things to try
 #> -- Put stats figures in a vertical subplot - no user choice - users see all 3!
-#> Move map choices to sidebar (free up space?)
