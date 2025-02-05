@@ -4,15 +4,15 @@ mapModuleUI <- function(id) {
 
   card(
     # card_header("Species locations"),
-    layout_columns(
-      col_widths = c(8, 4),
+    #layout_columns(
+      #col_widths = c(8, 4),
       radioButtons(
         ns("date_filter"), "Time period:",
         choices = c("Past week" = "week",
                     "Past month" = "month",
                     "Custom date range" = "custom"),
         selected = "month"
-        #,inline = TRUE
+        ,inline = TRUE
       ),
       conditionalPanel(
         condition = sprintf("input['%s'] == 'custom'", ns("date_filter")),
@@ -22,7 +22,8 @@ mapModuleUI <- function(id) {
                        min = min(toohey_occs$eventDate),
                        max = Sys.Date())
       )
-    ),
+    #)
+    ,
     actionButton(ns("reset_view"), "Reset Map View", class = "btn-sm"),
     leafletOutput(ns('map'))
   )
