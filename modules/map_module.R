@@ -95,17 +95,15 @@ mapModuleServer <- function(id, filtered_data) {
       df <- date_filtered_data()
 
       if (nrow(df) == 0 && !first_load()) {
-        showNotification("No data available for current selection",
+        showNotification(HTML("No data available for current selection.<br>Please select a wider date range."),
                          type = "warning",
-                         duration = NULL,
+                         duration = 2,
                          id = "no_data_warning")
         leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters()
       } else {
-        removeNotification("no_data_warning")
-
-          leafletProxy("map") |>
+        leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters() |>
           addAwesomeMarkers(
@@ -113,7 +111,6 @@ mapModuleServer <- function(id, filtered_data) {
             lng  = ~longitude,
             lat  = ~latitude,
             icon = ~awesomeIcons(
-              # icon        = "fa-binoculars",       # pick any icon you like
               # choose icon based on `class`
               icon = dplyr::case_when(
                 class == "Aves"     ~ "dove",  # Font Awesome icon "dove"
