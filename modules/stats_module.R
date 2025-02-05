@@ -5,6 +5,19 @@ statsModuleUI <- function(id) {
   card(
     # card_header("Observation trends"),
     card_body(
+      radioButtons(
+        ns("plot_type"), "Period to display:",
+        choices = c("Annual trends" = "year",
+                    "Monthly trends" = "month",
+                    "Daily trends" = "hour"),
+        selected = "year",
+        inline = TRUE
+      ),
+      # Use this to make size css for the figures
+      #div(
+      #style = "position: relative; min-height: 600px",
+      # plotly::plotlyOutput(ns("observation_trends"))
+      #)
       plotly::plotlyOutput(ns("observation_trends"))
     )
   )
@@ -15,74 +28,48 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
   moduleServer(id, function(input, output, session) {
 
     # Create a debounced version of filtered_data
-    debounced_data <- reactive({
-      req(filtered_data())
-      filtered_data()
-    }) |> debounce(1000)
+    # debounced_data <- reactive({
+    #   req(filtered_data())
+    #   filtered_data()
+    # }) |> debounce(500)
 
     # Aggregate the data
-    agg_year_data <- reactive({
-      req(debounced_data(), taxa_level())
-      agg_by_period(data = debounced_data(),
+    agg_tax_data <- reactive({
+      req(filtered_data(), taxa_level())
+      agg_by_period(data = filtered_data(),
                     taxa_level = taxa_level(),
-                    period = 'year'
+                    period = input$plot_type
                     )
       })
 
-    agg_month_data <- reactive({
-      req(debounced_data(), taxa_level())
-      agg_by_period(data = debounced_data(),
-                    taxa_level = taxa_level(),
-                    period = 'month'
-      )
-    })
-
-    agg_hour_data <- reactive({
-      req(debounced_data(), taxa_level())
-      agg_by_period(data = debounced_data(),
-                    taxa_level = taxa_level(),
-                    period = 'hour'
-      )
-    })
+    last_valid_plot <- reactiveVal(NULL)
 
     # Render the plot
     output$observation_trends <- plotly::renderPlotly({
+      # Add loading state
+      progress <- shiny::Progress$new()
+      on.exit(progress$close())
+      progress$set(message = "Updating plot...")
 
-      p_year <- plot_trend_scatter(agg_year_data(), period = 'year', taxa_level())
-      p_month <- plot_trend_bar(agg_month_data(), period = 'month', taxa_level())
-      p_hour <- plot_trend_bar(agg_hour_data(), period = 'hour', taxa_level())
+      # Make sure all inputs are ready
+      req(agg_tax_data(),
+          input$plot_type,
+          taxa_level(),
+          cancelOutput = TRUE)  # This prevents partial renders
 
-      combined_plot <- plotly::subplot(p_year, p_month, p_hour,
-                               # plotly::style(p_month, showlegend = FALSE),
-                               # plotly::style(p_hour, showlegend = FALSE),
-                               nrows = 3,
-                               shareY = TRUE,
-                               titleX = TRUE,
-                               titleY = FALSE,
-                               margin = 0.08) |>
-        layout(annotations = list(
-          list(
-            x = 0,             # Adjust x position (in paper coordinates)
-            y = 0.5,               # Center vertically; adjust as needed
-            text = "Count of observations",        # Your y-axis title
-            showarrow = FALSE,
-            textangle = -90,       # Rotate text for vertical alignment
-            xref = "paper",
-            yref = "paper",
-            font = list(size = 14)
-          )
-        )) |>
-        plotly::config(
-          displaylogo = FALSE,
-          modeBarButtonsToRemove = c(
-            'sendDataToCloud', 'autoScale2d',
-            'toggleSpikelines', 'hoverClosestCartesian',
-            'hoverCompareCartesian', 'zoom2d', 'pan2d',
-            'select2d', 'lasso2d'
-          )
-        )
-      combined_plot
+      period_name <- input$plot_type
 
-    })
+      new_plot <- if (input$plot_type == "year" || nrow(agg_tax_data()) < 2) {
+        plot_trend_scatter(agg_tax_data(),
+                           period = input$plot_type,
+                           taxa_level = taxa_level())
+      } else {
+        plot_trend_bar(agg_tax_data(),
+                       period = input$plot_type,
+                       taxa_level = taxa_level())
+      }
+      last_valid_plot(new_plot)
+      new_plot
+      })
   })
 }

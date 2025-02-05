@@ -139,7 +139,9 @@ speciesSelectionServer <- function(id) {
 
     # In speciesSelectionServer, add:
     selected_taxa_level <- reactive({
-      if (input$select_method == "By common name" & input$vernacular_name != 'All') {
+      if (input$select_method == "By common name" & input$vernacular_name == 'All') {
+        return("class_common")  # Default to species level for common name selection
+      } else if (input$select_method == "By common name" & input$vernacular_name != 'All') {
         return("vernacular_name")  # Default to species level for common name selection
       } else {
         # Return the lowest selected level that isn't "All"
@@ -148,6 +150,11 @@ speciesSelectionServer <- function(id) {
         if (input$order != "All") return("order")
         return("class_common")
       }
+    })
+
+    # In statsModuleServer, add: # For debugging purposes
+    observe({
+      cat("Current taxa_level:", selected_taxa_level(), "\n")
     })
 
     # Return both the filtered data and the taxonomic level
