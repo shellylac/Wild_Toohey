@@ -48,13 +48,9 @@ species_list <- toohey_occs |>
 
 # These are my TO-DOS!!
 #> * Figures
-#> -- Go back to the initial choice of figures option
-#> -- See if the temp error that appears is removed by doing this - working
-#> from this new angle.
+#> -- deal with the occasional warning about not enough data in figures!
 #> -- Colours for class - vs others
 #> -- Get the hover text working (add Class/taxa_level)
-#> -- Check functionality  - by getting taxa_level() to print to console each
-#> time user changes selection
 #>
 #> * STRUCTURE
 #> -- Deal with this warning "Warning: Navigation containers expect a collection of `bslib::nav_panel()`/`shiny::tabPanel()`s and/or `bslib::nav_menu()`/`shiny::navbarMenu()`s. Consider using `header` or `footer` if you wish to place content above (or below) every panel's contents."
