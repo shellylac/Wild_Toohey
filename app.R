@@ -11,6 +11,17 @@ source('./modules/stats_module.R')
 
 
 ui <- page_navbar(
+  tags$head(
+    tags$style(HTML("
+    .shiny-notification {
+      position: fixed !important;
+      top: 400px !important;
+      left: 500px !important;
+      z-index: 1050;
+    }
+  "))
+  ),
+
   title = "Wild Toohey Explorer",
 
   sidebar = sidebar(
