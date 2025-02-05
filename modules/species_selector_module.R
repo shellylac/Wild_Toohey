@@ -44,7 +44,6 @@ speciesSelectionUI <- function(id) {
       ),
       selectInput(ns("order"), "Order:", choices = NULL),
       selectInput(ns("family"), "Family:", choices = NULL),
-      selectInput(ns("genus"), "Genus:", choices = NULL),
       selectInput(ns("species"), "Species:", choices = NULL)
     )
   )
@@ -76,8 +75,7 @@ speciesSelectionServer <- function(id) {
       updateSelectInput(session, "order",
                         choices = if (length(orders) == 1) orders else c("All", orders),
                         selected = if (length(orders) == 1) orders else "All"
-                        #, server = TRUE
-      )
+                        )
     })
 
     # Update Family based on Order
@@ -91,50 +89,26 @@ speciesSelectionServer <- function(id) {
       updateSelectInput(session, "family",
                         choices = if (length(families) == 1) families else c("All", families),
                         selected = if (length(families) == 1) families else "All"
-                        # , server = TRUE
-      )
+                        )
     })
 
-    # Update Genus based on Family
+    # Update Species based on Family
     observe({
-      req(input$class, input$order, input$family)
-      genera <- if (input$family == "All") {
+      req(input$class, input$order, input$family) # input$genus
+      species <- if (input$family == "All") {
         if (input$order == "All") {
-          sort(unique(toohey_occs$genus[toohey_occs$class_common == input$class]))
-        } else {
-          sort(unique(toohey_occs$genus[toohey_occs$order == input$order]))
-        }
-      } else {
-        sort(unique(toohey_occs$genus[toohey_occs$family == input$family]))
-      }
-      updateSelectInput(session, "genus",
-                        choices = if (length(genera) == 1) genera else c("All", genera),
-                        selected = if (length(genera) == 1) genera else "All"
-                        #,server = TRUE
-      )
-    })
-
-    # Update Species based on Genus
-    observe({
-      req(input$class, input$order, input$family, input$genus)
-      species <- if (input$genus == "All") {
-        if (input$family == "All") {
-          if (input$order == "All") {
-            sort(unique(toohey_occs$species[toohey_occs$class_common == input$class]))
+          sort(unique(toohey_occs$species[toohey_occs$class_common == input$class]))
           } else {
             sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
-          }
+            }
         } else {
           sort(unique(toohey_occs$species[toohey_occs$family == input$family]))
         }
-      } else {
-        sort(unique(toohey_occs$species[toohey_occs$genus == input$genus]))
-      }
+
       updateSelectInput(session, "species",
                         choices = if (length(species) == 1) species else c("All", species),
-                        selected = if(length(species) == 1) species else "All"
-                        # ,server = TRUE
-      )
+                        selected = if (length(species) == 1) species else "All"
+                        )
     })
 
     # Return reactive filtered data
@@ -146,7 +120,6 @@ speciesSelectionServer <- function(id) {
         req(input$class)
         req(input$order)
         req(input$family)
-        req(input$genus)
         req(input$species)
       }
 
@@ -159,7 +132,6 @@ speciesSelectionServer <- function(id) {
         if (input$class != "All") data <- data |> filter(class_common == input$class)
         if (input$order != "All") data <- data |> filter(order == input$order)
         if (input$family != "All") data <- data |> filter(family == input$family)
-        if (input$genus != "All") data <- data |> filter(genus == input$genus)
         if (input$species != "All") data <- data |> filter(species == input$species)
       }
       data
@@ -172,7 +144,6 @@ speciesSelectionServer <- function(id) {
       } else {
         # Return the lowest selected level that isn't "All"
         if (input$species != "All") return("vernacular_name")
-        if (input$genus != "All") return("genus")
         if (input$family != "All") return("family")
         if (input$order != "All") return("order")
         return("class_common")
