@@ -27,12 +27,6 @@ statsModuleUI <- function(id) {
 statsModuleServer <- function(id, filtered_data, taxa_level) {
   moduleServer(id, function(input, output, session) {
 
-    # Create a debounced version of filtered_data
-    # debounced_data <- reactive({
-    #   req(filtered_data())
-    #   filtered_data()
-    # }) |> debounce(500)
-
     # Aggregate the data
     agg_tax_data <- reactive({
       req(filtered_data(), taxa_level())
@@ -59,15 +53,20 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
 
       period_name <- input$plot_type
 
-      new_plot <- if (input$plot_type == "year" || nrow(agg_tax_data()) < 2) {
-        plot_trend_scatter(agg_tax_data(),
-                           period = input$plot_type,
-                           taxa_level = taxa_level())
-      } else {
+      new_plot <- if (nrow(agg_tax_data()) <= 2) {
         plot_trend_bar(agg_tax_data(),
                        period = input$plot_type,
                        taxa_level = taxa_level())
-      }
+        } else if (input$plot_type == "year") {
+          plot_trend_scatter(agg_tax_data(),
+                             period = input$plot_type,
+                             taxa_level = taxa_level())
+        } else {
+          plot_trend_bar(agg_tax_data(),
+                         period = input$plot_type,
+                         taxa_level = taxa_level())
+        }
+
       last_valid_plot(new_plot)
       new_plot
       })

@@ -10,7 +10,7 @@ agg_by_period <- function(data, taxa_level, period) {
       month = lubridate::month(eventDate, label = TRUE),
       hour = as.factor(lubridate::hour(hms(eventTime)))
     ) |>
-    dplyr::group_by(!!taxa_level_sym, !!period_sym) |>
+    dplyr::group_by(!!taxa_level_sym, !!period_sym, plot_colour) |>
     dplyr::summarise(
       count = n(),
       .groups = "drop"
@@ -26,23 +26,24 @@ plot_trend_scatter <- function(data, period, taxa_level) {
   data <- data |>
     dplyr::mutate(
       tooltip = dplyr::case_when(
-        period == "year" ~ paste0("Year: ", period, "<br>Count: ", count),
-        period == "month" ~ paste0("Month: ", period, "<br>Count: ", count),
-        period == "hour" ~ paste0("Hour: ", period, "<br>Count: ", count)
+        period == "year" ~ paste0("Year: ", period,
+                                  "<br>Count: ", count,
+                                  "<br>Taxa: ", data[[1]]),
+        period == "month" ~  paste0("Year: ", period,
+                                    "<br>Count: ", count,
+                                    "<br>Taxa: ", data[[1]]),
+        period == "hour" ~  paste0("Year: ", period,
+                                   "<br>Count: ", count,
+                                   "<br>Taxa: ", data[[1]]),
       )
     )
-
-  # my_colors = c("Birds" = "blue",
-  #            "Mammals" = "red",
-  #            "Reptiles" = "orange",
-  #            "Amphibians" = "green")
-
 
   p <- plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
+    colors = ~plot_colour,
     type = 'scatter',
     mode = 'lines+markers',
     hovertext = ~tooltip,
@@ -62,6 +63,15 @@ plot_trend_scatter <- function(data, period, taxa_level) {
         showgrid = FALSE
       ),
       yaxis = list(title = "Count")
+    ) |>
+    plotly::config(
+      displaylogo = FALSE,
+      modeBarButtonsToRemove = c(
+        'sendDataToCloud', 'autoScale2d',
+        'toggleSpikelines', 'hoverClosestCartesian',
+        'hoverCompareCartesian', 'zoom2d', 'pan2d',
+        'select2d', 'lasso2d'
+      )
     )
   return(p)
 }
@@ -72,7 +82,9 @@ plot_trend_bar <- function(data, period, taxa_level) {
   data <- data |>
     dplyr::mutate(
       tooltip = dplyr::case_when(
-        period == "year" ~ paste0("Year: ", period, "<br>Count: ", count),
+        period == "year" ~ paste0("Year: ", period,
+                                  "<br>Count: ", count,
+                                  "Taxa:", ),
         period == "month" ~ paste0("Month: ", period, "<br>Count: ", count),
         period == "hour" ~ paste0("Hour: ", period, "<br>Count: ", count)
       )
@@ -83,6 +95,7 @@ plot_trend_bar <- function(data, period, taxa_level) {
     x = as.formula(paste0("~", period)),
     y = ~count,
     color = as.formula(paste0("~", taxa_level)),
+    colors = ~plot_colour,
     type = 'bar',
     hovertext = ~tooltip,
     hoverinfo = 'text',
@@ -100,7 +113,16 @@ plot_trend_bar <- function(data, period, taxa_level) {
           )
       ),
       yaxis = list(title = "Count")
+    )|>
+    plotly::config(
+      displaylogo = FALSE,
+      modeBarButtonsToRemove = c(
+        'sendDataToCloud', 'autoScale2d',
+        'toggleSpikelines', 'hoverClosestCartesian',
+        'hoverCompareCartesian', 'zoom2d', 'pan2d',
+        'select2d', 'lasso2d'
+      )
     )
+
   return(p)
 }
-

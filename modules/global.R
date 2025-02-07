@@ -29,7 +29,14 @@ toohey_occs <- readRDS(url(data_url)) |>
                 class_common = factor(class_common,
                                       levels = c("Birds", "Mammals",
                                                  "Reptiles", "Amphibians")
-                )
+                ),
+                # Add colour for trend plots (based on class_common)
+                plot_colour = case_match(class_common,
+                                         "Birds" ~ "#8080FF",
+                                         "Mammals" ~ "#FF8080",
+                                         "Reptiles" ~ "#FFD5A5",
+                                         "Amphibians" ~ "#B3FFB3")
+
   )
 
  # indices <- sample(nrow(toohey_occs), 5)
