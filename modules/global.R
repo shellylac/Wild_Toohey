@@ -56,9 +56,7 @@ species_list <- toohey_occs |>
 # These are my TO-DOS!!
 #> * Figures
 #> -- deal with the occasional warning about not enough data in figures!
-#> -- Colours for class - vs others
-#> -- Get the hover text working (add Class/taxa_level)
-#>
+
 #> * STRUCTURE
 #> -- Deal with this warning "Warning: Navigation containers expect a collection of `bslib::nav_panel()`/`shiny::tabPanel()`s and/or `bslib::nav_menu()`/`shiny::navbarMenu()`s. Consider using `header` or `footer` if you wish to place content above (or below) every panel's contents."
 
