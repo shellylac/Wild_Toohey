@@ -84,9 +84,13 @@ plot_trend_bar <- function(data, period, taxa_level) {
       tooltip = dplyr::case_when(
         period == "year" ~ paste0("Year: ", period,
                                   "<br>Count: ", count,
-                                  "Taxa:", ),
-        period == "month" ~ paste0("Month: ", period, "<br>Count: ", count),
-        period == "hour" ~ paste0("Hour: ", period, "<br>Count: ", count)
+                                  "<br>Taxa: ", data[[1]]),
+        period == "month" ~  paste0("Year: ", period,
+                                    "<br>Count: ", count,
+                                    "<br>Taxa: ", data[[1]]),
+        period == "hour" ~  paste0("Year: ", period,
+                                   "<br>Count: ", count,
+                                   "<br>Taxa: ", data[[1]]),
       )
     )
 
