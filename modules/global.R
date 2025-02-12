@@ -50,20 +50,16 @@ toohey_outline <- sf::st_read(boundary_url)
 
 # Generate the species list table
 species_list <- toohey_occs |>
-  distinct(class, order, family, genus, species, vernacular_name, wikipedia_url, image_url, class_common)
+  dplyr::group_by(class_common, class, order, family, species, vernacular_name, wikipedia_url, image_url) |>
+  count(name = "Count")
+
+
 
 
 # These are my TO-DOS!!
-#> * Figures
-#> -- deal with the occasional warning about not enough data in figures!
-
-#> * STRUCTURE
-#> -- Deal with this warning "Warning: Navigation containers expect a collection of `bslib::nav_panel()`/`shiny::tabPanel()`s and/or `bslib::nav_menu()`/`shiny::navbarMenu()`s. Consider using `header` or `footer` if you wish to place content above (or below) every panel's contents."
-
 #> * Species List
 #> -- Add module for Toohey Species List page (with links to Wikipedia)
 #> -- Do this dynamically from the dataset of occs - and add total obs count col
-#> -- Get photos for all of these - use wikitaxa repo?
 #>
 #> * Resources page (module)
 #>  -- papers, history, info, books, wildlife watching tips
