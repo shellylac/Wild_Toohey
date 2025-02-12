@@ -98,11 +98,13 @@ mapModuleServer <- function(id, filtered_data) {
         showNotification(HTML("No data available for current selection.<br>Please select a wider date range."),
                          type = "warning",
                          duration = 2,
-                         id = "no_data_warning")
+                         id = "map_warning")
         leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters()
       } else {
+        removeNotification(id = "map_warning")
+
         leafletProxy("map") |>
           clearMarkers() |>
           clearMarkerClusters() |>
