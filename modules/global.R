@@ -87,9 +87,13 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS!!
+#> * Figures
+#> -- Plot proportion of all observations (but keep Count in Hover)
+#>
 #> * Species List
-#> -- Add module for Toohey Species List page (with links to Wikipedia)
-#> -- Do this dynamically from the dataset of occs - and add total obs count col
+#> -- Get gradient colour working better (fewer gradient steps! and make it red?)
+#> -- Change column sizes and add padding around, and remove search of every col? etc
+#> -- Download button (do this through DT)
 #>
 #> * Resources page (module)
 #>  -- papers, history, info, books, wildlife watching tips
@@ -101,8 +105,6 @@ species_list <- toohey_occs |>
 #> * Think about download options (are they necessary!?)
 #> * Get working on mobile app!
 #> * Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
-#> * Common Order names - use (and use latin as default - in case a new order pops that I haven't mapped to common name)
-
 #>
 #> Tab Names
 #> MAP
@@ -114,7 +116,3 @@ species_list <- toohey_occs |>
 #> STATS
 #>  - Observation patterns
 #>  - patterns
-
-
-# Things to try
-#> -- Put stats figures in a vertical subplot - no user choice - users see all 3!
