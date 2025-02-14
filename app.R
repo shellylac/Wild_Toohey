@@ -9,6 +9,7 @@ source('./modules/species_selector_module.R')
 source('./modules/map_module.R')
 source('./modules/heatmap_module.R')
 source('./modules/stats_module.R')
+source('./modules/specieslist_module.R')
 
 
 ui <- tagList(
@@ -47,9 +48,7 @@ ui <- tagList(
 
     nav_panel(
       title = "Species List ",
-      card(
-        "Species list table with images to go here"
-      )
+      specieslistModuleUI("specieslist")
     ),
 
     nav_panel(
@@ -78,6 +77,10 @@ server <- function(input, output, session) {
   statsModuleServer("stats",
                     filtered_data = species_data$filtered_data,
                     taxa_level = species_data$taxa_level)
+  # Use species list table to get table
+  specieslistModuleServer("specieslist",
+                          species_list)
+
 }
 
 shinyApp(ui, server)
