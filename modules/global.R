@@ -88,7 +88,10 @@ species_list <- toohey_occs |>
 
 # These are my TO-DOS!!
 #> * Figures
-#> -- Plot proportion of all observations (but keep Count in Hover)
+#> -- Get proportions as % - and round the prop in the tootltip to 0 decimals
+#>
+#> * No data warning message still showing up in figures
+#> * No data warning message showing up before heatmap is generated.
 #>
 #> * Species List
 #> -- Get gradient colour working better (fewer gradient steps! and make it red?)
