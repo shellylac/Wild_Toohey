@@ -14,7 +14,10 @@ agg_by_period <- function(data, taxa_level, period) {
     dplyr::summarise(
       count = n(),
       .groups = "drop"
-    )
+    ) |>
+    dplyr::group_by(!!taxa_level_sym) |>
+    dplyr::mutate(prop = count / sum(count)) |>
+    ungroup()
   return(agg_data)
 }
 
@@ -22,26 +25,26 @@ agg_by_period <- function(data, taxa_level, period) {
 # Create a separate plotting function
 plot_trend_scatter <- function(data, period, taxa_level) {
 
-  # Create a tooltip column
+  # Create a tooltip column, being careful with grouping
   data <- data |>
     dplyr::mutate(
-      tooltip = dplyr::case_when(
-        period == "year" ~ paste0("Year: ", period,
-                                  "<br>Count: ", count,
-                                  "<br>Taxa: ", data[[1]]),
-        period == "month" ~  paste0("Year: ", period,
-                                    "<br>Count: ", count,
-                                    "<br>Taxa: ", data[[1]]),
-        period == "hour" ~  paste0("Year: ", period,
-                                   "<br>Count: ", count,
-                                   "<br>Taxa: ", data[[1]]),
+      tooltip = paste0(
+        dplyr::case_when(
+          period == "year" ~ "Year: ",
+          period == "month" ~ "Month: ",
+          period == "hour" ~ "Hour: "
+        ),
+        !!rlang::sym(period),  # Use rlang to correctly reference the period column
+        "<br>Number of observations: ", count,
+        "<br>Proportion of observations: ", prop,
+        "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
     )
 
   p <- plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period)),
-    y = ~count,
+    y = ~prop,
     color = as.formula(paste0("~", taxa_level)),
     colors = ~plot_colour,
     type = 'scatter',
@@ -62,7 +65,7 @@ plot_trend_scatter <- function(data, period, taxa_level) {
           ),
         showgrid = FALSE
       ),
-      yaxis = list(title = "Count")
+      yaxis = list(title = "Proportion of observations")
     ) |>
     plotly::config(
       displaylogo = FALSE,
@@ -78,26 +81,27 @@ plot_trend_scatter <- function(data, period, taxa_level) {
 
 plot_trend_bar <- function(data, period, taxa_level) {
 
-  # Create a tooltip column
+  # Create a tooltip column, being careful with grouping
   data <- data |>
+    dplyr::ungroup() |>  # Ungroup first to avoid grouping issues
     dplyr::mutate(
-      tooltip = dplyr::case_when(
-        period == "year" ~ paste0("Year: ", period,
-                                  "<br>Count: ", count,
-                                  "<br>Taxa: ", data[[1]]),
-        period == "month" ~  paste0("Year: ", period,
-                                    "<br>Count: ", count,
-                                    "<br>Taxa: ", data[[1]]),
-        period == "hour" ~  paste0("Year: ", period,
-                                   "<br>Count: ", count,
-                                   "<br>Taxa: ", data[[1]]),
+      tooltip = paste0(
+        dplyr::case_when(
+          period == "year" ~ "Year: ",
+          period == "month" ~ "Month: ",
+          period == "hour" ~ "Hour: "
+        ),
+        !!rlang::sym(period),  # Use rlang to correctly reference the period column
+        "<br>Number of observations: ", count,
+        "<br>Proportion of observations: ", prop,
+        "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
     )
 
   p <- plotly::plot_ly(
     data = data,
     x = as.formula(paste0("~", period)),
-    y = ~count,
+    y = ~prop,
     color = as.formula(paste0("~", taxa_level)),
     colors = ~plot_colour,
     type = 'bar',
@@ -116,7 +120,7 @@ plot_trend_bar <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour of the day",
           )
       ),
-      yaxis = list(title = "Count")
+      yaxis = list(title = "Proportion of obsevation")
     )|>
     plotly::config(
       displaylogo = FALSE,
