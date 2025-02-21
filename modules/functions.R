@@ -163,28 +163,33 @@ get_value_box_settings <- function(class_name) {
   switch(class_name,
          "All" = list(
            title = "Total species count:",
-           bg_color = "#FFFFFF",  # white
-           icon = "list"
-           ),
+           bg_color = "#FFFFFF",
+           icon = tags$div(style = "color: #000000;",
+                           shiny::icon("list"))
+         ),
          "Aves" = list(
            title = "Bird species:",
-           bg_color = "#FFFFFF",  # white
-           icon = "dove"
+           bg_color = "#FFFFFF",
+           icon = tags$div(style = "color: #8080FF;",
+                           shiny::icon("dove"))
          ),
          "Mammalia" = list(
            title = "Mammal species:",
-           bg_color = "#FFFFFF",  # white
-           icon = "paw"
+           bg_color = "#FFFFFF",
+           icon = tags$div(style = "color: #FF8080;",
+                           shiny::icon("paw"))
          ),
          "Reptilia" = list(
            title = "Reptile species:",
-           bg_color = "#FFFFFF",  # white
-           icon = "worm"
+           bg_color = "#FFFFFF",
+           icon = tags$div(style = "color: #FFA500;",
+                           shiny::icon("worm"))
          ),
          "Amphibia" = list(
            title = "Amphibian species:",
-           bg_color = "#FFFFFF",  # white
-           icon = "frog"
-         ),
+           bg_color = "#FFFFFF",
+           icon = tags$div(style = "color: #FFD5A5;",
+                           shiny::icon("frog"))
+         )
   )
 }

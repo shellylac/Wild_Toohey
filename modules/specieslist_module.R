@@ -42,7 +42,6 @@ specieslistModuleServer <- function(id, species_list) {
 
     })
 
-    # Dynamic value box with conditional formatting
     output$dynamic_value_box <- renderUI({
       box_settings <- get_value_box_settings(input$class_selection)
 
@@ -50,7 +49,7 @@ specieslistModuleServer <- function(id, species_list) {
         title = box_settings$title,
         value = species_count(),
         style = paste0("background-color: ", box_settings$bg_color, ";"),
-        showcase = fontawesome::fa_i(box_settings$icon),
+        showcase = box_settings$icon,
         full_screen = TRUE
       )
     })

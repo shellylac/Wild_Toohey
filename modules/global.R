@@ -12,6 +12,7 @@ library(leaflet)
 library(leaflet.extras)
 library(plotly)
 library(fontawesome)
+library(bsicons)
 library(grDevices)
 }
 
