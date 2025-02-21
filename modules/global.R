@@ -56,34 +56,21 @@ species_list <- toohey_occs |>
                   wikipedia_url, image_url) |>
   count(name = "Count") |>
   ungroup() |>
-  mutate(Class = dplyr::case_match(class_common,
-      "Birds" ~ as.character(shiny::icon("dove", style = "color: #0000FF;", lib = "font-awesome")),
-      "Mammals" ~ as.character(icon("paw", style = "color: #FF0000;", lib = "font-awesome")),
-      "Reptiles" ~ as.character(icon("worm", style = "color: #FFA500;", lib = "font-awesome")),
-      "Amphibians" ~ as.character(icon("frog", style = "color: #00FF00;", lib = "font-awesome")),
-           ),
-      picture = paste0("<img src=\"", image_url,
-                       "\" height=\"100\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
-                       vernacular_name, "\"></img>"
-      ),
-      Species = paste0("<p style=\"font-size:16px;\">",
-                       "<a href=\"", wikipedia_url, "\ target=\"_blank>",
-                       vernacular_name, "</a>", "<br>",
-                       "<img src=\"", image_url,
-                       "\" height=\"120\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
-                       vernacular_name, "\"></img>",
-                       "</p>"),
-      # Class = paste(class_common, class_icon),
-      Taxonomy = paste0("<p style=\"font-size:14px;\">",
-                        "<b>Class</b>: ", class, "<br>",
-                        "<b>Order</b>: ", order, "<br>",
-                        "<b>Family</b>: ", family, "<br>",
-                        "<b>Species</b>: ", species,
-                        "</p>")
-      ) |>
-  select(Class, Species, Taxonomy, Count)
-
-
+  rename(Class = class,  `Common name` = vernacular_name) |>
+  mutate(
+    Image = paste0("<img src=\"", image_url,
+                   "\" height=\"120\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
+                   `Common name`, "\"></img>", "</p>"),
+    Taxonomy = paste0("<p style=\"font-size:14px;\">",
+                      "<a href=\"", wikipedia_url, "\ target=\"_blank>",
+                      `Common name`, "</a>", "<br>",
+                      "<b>Order</b>: ", order, "<br>",
+                      "<b>Family</b>: ", family, "<br>",
+                      "<b>Species</b>: ", species,
+                      "</p>")
+  ) |>
+  mutate(Class = as.factor(Class)) |>
+  select(Class, `Common name`, Image, Taxonomy, Count)
 
 
 # These are my TO-DOS!!
