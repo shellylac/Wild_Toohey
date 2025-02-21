@@ -45,12 +45,28 @@ specieslistModuleServer <- function(id, species_list) {
     output$dynamic_value_box <- renderUI({
       box_settings <- get_value_box_settings(input$class_selection)
 
-      value_box(
-        title = box_settings$title,
-        value = species_count(),
-        style = paste0("background-color: ", box_settings$bg_color, ";"),
-        showcase = box_settings$icon,
-        full_screen = TRUE
+      # Create custom CSS for this specific value box
+      box_id <- paste0("value-box-", input$class_selection)
+
+      # Insert custom CSS
+      insertUI(
+        selector = "head",
+        where = "beforeEnd",
+        ui = tags$style(sprintf(
+          "#%s .bslib-value-box { border: 2px solid %s !important; }",
+          box_id,
+          box_settings$border_color
+        ))
+      )
+
+      div(
+        id = box_id,
+        value_box(
+          title = box_settings$title,
+          value = species_count(),
+          showcase = box_settings$icon,
+          full_screen = TRUE
+        )
       )
     })
 
