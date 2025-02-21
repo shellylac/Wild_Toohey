@@ -1,52 +1,63 @@
 # Species List Module UI
 specieslistModuleUI <- function(id) {
   ns <- NS(id)
-
   card(
-    # card_header("Toohey forest species list"),
     card_body(
+      layout_columns(
+        col_widths = c(4, 8),  # Left column takes 8/12, right column takes 4/12
+        selectInput(ns("class_selection"),
+                    "Select class:",
+                    choices = c('All',
+                                'Aves', 'Mammalia', 'Reptilia', 'Amphibia'),
+                    selected = 'All',
+                    multiple = FALSE),
+         uiOutput(ns("dynamic_value_box"))
+      ),
       DT::dataTableOutput(ns("species_list_table"))
     )
   )
 }
 
+
 # Species list Module Server
 specieslistModuleServer <- function(id, species_list) {
   moduleServer(id, function(input, output, session) {
 
+    # Reactive filtered data
+    filtered_data <- reactive({
+      req(species_list)
+      if (input$class_selection == 'All') {
+        species_list
+      } else {
+        species_list[species_list$Class == input$class_selection, ]
+      }
+    })
+
+    species_count <- reactive ({
+      if (input$class_selection == 'All') {
+        nrow(species_list)
+      } else {
+        sum(species_list$Class == input$class_selection)
+      }
+
+    })
+
+    # Dynamic value box with conditional formatting
+    output$dynamic_value_box <- renderUI({
+      box_settings <- get_value_box_settings(input$class_selection)
+
+      value_box(
+        title = box_settings$title,
+        value = species_count(),
+        style = paste0("background-color: ", box_settings$bg_color, ";"),
+        showcase = fontawesome::fa_i(box_settings$icon),
+        full_screen = TRUE
+      )
+    })
+
+
     output$species_list_table <- DT::renderDataTable({
-
-      ## Colour and values for table colour formatting
-      count_range <- range(species_list$Count)
-      breaks <- seq(1, max(count_range), 20)
-      colors <- colorRampPalette(c("white", "#6baed6"))(length(breaks) + 1)
-
-      DT::datatable(
-        species_list,
-        options = list(
-          pageLength = 10,
-          scrollX = TRUE,
-          dom = 'rtip',
-          lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All')),
-          # Disable search for Image/Taxonomy/Count
-          columnDefs = list(
-            list(searchable = FALSE, targets = c(2, 3, 4))
-          )
-        ),
-        escape = FALSE,
-        rownames = FALSE,
-        filter = 'top',
-        class = 'cell-border stripe'
-      ) |>
-        DT::formatStyle(
-          'Count',
-          backgroundColor = styleInterval(
-            breaks,
-            values = colors
-            # values = c("#ffffff", "#deebf7", "#9ecae1", "#08519c")
-          ),
-          textAlign = 'right'
-        )
+      create_DT_table(filtered_data())
     })
 
   })

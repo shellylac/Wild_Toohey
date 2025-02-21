@@ -137,4 +137,54 @@ plot_trend_bar <- function(data, period, taxa_level) {
   return(p)
 }
 
+create_DT_table <- function(species_list){
+    DT::datatable(
+      species_list,
+      options = list(
+        pageLength = 10,
+        scrollX = TRUE,
+        dom = 'rtip',
+        lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All')),
+        # Disable search for Image/Taxonomy/Count
+        columnDefs = list(
+          list(searchable = FALSE, targets = c(2, 3, 4))
+        )
+      ),
+      escape = FALSE,
+      rownames = FALSE,
+      filter = 'top',
+      class = 'cell-border stripe'
+    )
+}
 
+
+# Helper function to get value box settings
+get_value_box_settings <- function(class_name) {
+  switch(class_name,
+         "All" = list(
+           title = "Total species count:",
+           bg_color = "#FFFFFF",  # white
+           icon = "list"
+           ),
+         "Aves" = list(
+           title = "Bird species:",
+           bg_color = "#FFFFFF",  # white
+           icon = "dove"
+         ),
+         "Mammalia" = list(
+           title = "Mammal species:",
+           bg_color = "#FFFFFF",  # white
+           icon = "paw"
+         ),
+         "Reptilia" = list(
+           title = "Reptile species:",
+           bg_color = "#FFFFFF",  # white
+           icon = "worm"
+         ),
+         "Amphibia" = list(
+           title = "Amphibian species:",
+           bg_color = "#FFFFFF",  # white
+           icon = "frog"
+         ),
+  )
+}

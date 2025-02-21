@@ -54,7 +54,7 @@ toohey_outline <- sf::st_read(boundary_url)
 species_list <- toohey_occs |>
   dplyr::group_by(class_common, class, order, family, species, vernacular_name,
                   wikipedia_url, image_url) |>
-  count(name = "Count") |>
+  count(name = "Recorded sightings") |>
   ungroup() |>
   rename(Class = class,  `Common name` = vernacular_name) |>
   mutate(
@@ -69,8 +69,8 @@ species_list <- toohey_occs |>
                       "<b>Species</b>: ", species,
                       "</p>")
   ) |>
-  mutate(Class = as.factor(Class)) |>
-  select(Class, `Common name`, Image, Taxonomy, Count)
+  # mutate(Class = as.factor(Class)) |>
+  select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`)
 
 
 # These are my TO-DOS!!
