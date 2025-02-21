@@ -74,15 +74,13 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS!!
-#> * Figures
-#> -- Get proportions as % - and round the prop in the tootltip to 0 decimals
-#>
+#> * Problems
 #> * No data warning message still showing up in figures
 #> * No data warning message showing up before heatmap is generated.
 #>
 #> * Species List
 #> -- Get gradient colour working better (fewer gradient steps! and make it red?)
-#> -- Change column sizes and add padding around, and remove search of every col? etc
+#> -- Change column sizes and add padding around
 #> -- Download button (do this through DT)
 #>
 #> * Resources page (module)
@@ -106,3 +104,5 @@ species_list <- toohey_occs |>
 #> STATS
 #>  - Observation patterns
 #>  - patterns
+#>
+
