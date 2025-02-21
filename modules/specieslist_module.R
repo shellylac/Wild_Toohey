@@ -24,10 +24,14 @@ specieslistModuleServer <- function(id, species_list) {
       DT::datatable(
         species_list,
         options = list(
-          pageLength = 15,
+          pageLength = 10,
           scrollX = TRUE,
-          dom = 'lfrtip',
-          lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All'))
+          dom = 'rtip',
+          lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All')),
+          # Disable search for Image/Taxonomy/Count
+          columnDefs = list(
+            list(searchable = FALSE, targets = c(2, 3, 4))
+          )
         ),
         escape = FALSE,
         rownames = FALSE,
