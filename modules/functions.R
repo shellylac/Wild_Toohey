@@ -16,7 +16,7 @@ agg_by_period <- function(data, taxa_level, period) {
       .groups = "drop"
     ) |>
     dplyr::group_by(!!taxa_level_sym) |>
-    dplyr::mutate(prop = count / sum(count)) |>
+    dplyr::mutate(prop = (count / sum(count))*100) |>
     ungroup()
   return(agg_data)
 }
@@ -35,8 +35,8 @@ plot_trend_scatter <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour: "
         ),
         !!rlang::sym(period),  # Use rlang to correctly reference the period column
-        "<br>Number of observations: ", count,
-        "<br>Proportion of observations: ", prop,
+        "<br>Number of observations: ", format(count, big.mark = "'"),
+        "<br>Proportion of observations: ", round(prop, 0), "%",
         "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
     )
@@ -65,7 +65,8 @@ plot_trend_scatter <- function(data, period, taxa_level) {
           ),
         showgrid = FALSE
       ),
-      yaxis = list(title = "Proportion of observations")
+      yaxis = list(title = "Percentage of observations",
+                   ticksuffix = "%")
     ) |>
     plotly::config(
       displaylogo = FALSE,
@@ -92,8 +93,8 @@ plot_trend_bar <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour: "
         ),
         !!rlang::sym(period),  # Use rlang to correctly reference the period column
-        "<br>Number of observations: ", count,
-        "<br>Proportion of observations: ", prop,
+        "<br>Number of observations: ", format(count, big.mark = "'"),
+        "<br>Percentage of observations: ", round(prop, 0), "%",
         "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
     )
@@ -120,7 +121,8 @@ plot_trend_bar <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour of the day",
           )
       ),
-      yaxis = list(title = "Proportion of obsevation")
+      yaxis = list(title = "Percentage of observations",
+                   ticksuffix = "%")
     )|>
     plotly::config(
       displaylogo = FALSE,
@@ -134,3 +136,5 @@ plot_trend_bar <- function(data, period, taxa_level) {
 
   return(p)
 }
+
+
