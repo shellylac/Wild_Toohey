@@ -76,12 +76,13 @@ species_list <- toohey_occs |>
 
 # These are my TO-DOS!!
 #> * Problems
-#> * No data warning message still showing up in figures
 #> * No data warning message showing up before heatmap is generated.
+#> * Unify colours throughout!!
+#> * set a unified icon for use throughout??
 #>
 #> * Species List
-#> -- Get gradient colour working better (fewer gradient steps! and make it red?)
-#> -- Change column sizes and add padding around
+#> -- shrink height of value box - look at putting text and number on single line
+#> -- andd ScrollY - to scroll through species (not just pageination)
 #> -- Download button (do this through DT)
 #>
 #> * Resources page (module)
