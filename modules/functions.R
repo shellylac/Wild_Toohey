@@ -143,11 +143,11 @@ create_DT_table <- function(species_list){
       options = list(
         pageLength = 10,
         scrollX = TRUE,
-        dom = 'rtip',
+        dom = 'prtip',
         lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All')),
         # Disable search for Image/Taxonomy/Count
         columnDefs = list(
-          list(searchable = FALSE, targets = c(2, 3, 4))
+          list(searchable = FALSE, targets = c(0, 2, 3, 4))
         )
       ),
       escape = FALSE,

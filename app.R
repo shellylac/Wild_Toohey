@@ -22,6 +22,8 @@ ui <- tagList(
         z-index: 1050;
       }
 
+    /* Add css for containers on Patterns page */
+
       .patterns-container .card {
       height: calc(50vh - 20px);  # Half viewport height minus some padding
       margin-bottom: 20px;
@@ -31,6 +33,7 @@ ui <- tagList(
       height: calc(100% - 40px);  # Full height minus card header/footer
       overflow: auto;  # Add scrolling if content overflows
     }
+
     "))
   ),
 
@@ -38,6 +41,7 @@ ui <- tagList(
     title = "Wild Toohey Explorer",
 
     sidebar = sidebar(
+      class = "mobile-sidebar-first",
       speciesSelectionUI("species")
     ),
 
@@ -57,7 +61,7 @@ ui <- tagList(
     ),
 
    nav_panel(
-      title = "Species List ",
+      title = "Species List",
       specieslistModuleUI("specieslist")
     ),
 
@@ -78,6 +82,7 @@ ui <- tagList(
 )
 
 server <- function(input, output, session) {
+
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
