@@ -92,37 +92,25 @@ species_list <- toohey_occs |>
 
 
 
-# These are my TO-DOS!!
-#> * Problems
-#> * No data warning message showing up before heatmap is generated.
-#> * Unify colours throughout!!
-#> * set a unified icon for use throughout??
-#>
-#> * Species List
-#> -- shrink height of value box - look at putting text and number on single line
-#> -- andd ScrollY - to scroll through species (not just pageination)
-#> -- Download button (do this through DT)
+# These are my TO-DOS
+# * Get SIDEBAR to be ON TOP ALWAY
+# Data probs - carpet python and coastal carpet python both appearing
 #>
 #> * Resources page (module)
 #>  -- papers, history, info, books, wildlife watching tips
-#>  -- Add Common grouping name for taxonomic orders/families
 #>
 #> * "About this app tab" (module)
 #> * Add Links the top R nav bar (my website, my bluesky)
 #> * Prettify the app! CSS Styling and colours and images!!
-#> * Think about download options (are they necessary!?)
 #> * Get working on mobile app!
 #> * Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
 #>
-#> Tab Names
-#> MAP
-#>  - Fauna Finder
-#>  - Critter Mapper
-#> HEATMAP
-#>  - Observation hotspots
-#>  - Wildlife by Seasons
-#> STATS
-#>  - Observation patterns
-#>  - patterns
+#> ADD TESTING!?
 #>
+#> * Problems
+#> * No data warning message showing up before heatmap is generated.
+#> * set a unified icon for use throughout??
+#> * Species List
+#> -- shrink height of value box - look at putting text and number on single line
+
 
