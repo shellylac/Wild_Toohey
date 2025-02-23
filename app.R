@@ -37,16 +37,12 @@ ui <- tagList(
     ),
 
     nav_panel(
-      title = "Hotspots",
+      title = "Patterns",
+      statsModuleUI("stats"),
       heatmapModuleUI("heatmap")
     ),
 
-    nav_panel(
-      title = "Trends",
-      statsModuleUI("stats")
-    ),
-
-    nav_panel(
+   nav_panel(
       title = "Species List ",
       specieslistModuleUI("specieslist")
     ),
