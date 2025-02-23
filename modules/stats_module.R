@@ -3,6 +3,7 @@ statsModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
+    height = "80%",  # Add explicit height here
     # card_header("Observation trends"),
     card_body(
       radioButtons(

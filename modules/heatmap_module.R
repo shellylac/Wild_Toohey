@@ -3,6 +3,7 @@ heatmapModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
+    height = "80%",  # Add explicit height here
     # card_header("Species occurrence heat map"),
     selectInput(
       inputId = ns('heatmap_periods'),

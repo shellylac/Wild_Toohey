@@ -21,6 +21,16 @@ ui <- tagList(
         left: 500px !important;
         z-index: 1050;
       }
+
+      .patterns-container .card {
+      height: calc(50vh - 20px);  # Half viewport height minus some padding
+      margin-bottom: 20px;
+    }
+
+    .patterns-container .card .card-body {
+      height: calc(100% - 40px);  # Full height minus card header/footer
+      overflow: auto;  # Add scrolling if content overflows
+    }
     "))
   ),
 
@@ -38,8 +48,12 @@ ui <- tagList(
 
     nav_panel(
       title = "Patterns",
-      statsModuleUI("stats"),
-      heatmapModuleUI("heatmap")
+      div(
+        class = "patterns-container",
+        style = "height: 100vh;",  # This makes it full viewport height
+        statsModuleUI("stats"),
+        heatmapModuleUI("heatmap")
+      )
     ),
 
    nav_panel(
