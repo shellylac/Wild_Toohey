@@ -73,6 +73,11 @@ species_list <- toohey_occs |>
   # mutate(Class = as.factor(Class)) |>
   select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`)
 
+# Set Default parameters:
+DEFAULT_LAT <- -27.5483
+DEFAULT_LONG <- 153.0586
+DEFAULT_ZOOM <- 13.5
+
 
 # These are my TO-DOS!!
 #> * Problems

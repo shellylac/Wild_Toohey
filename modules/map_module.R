@@ -60,7 +60,7 @@ mapModuleServer <- function(id, filtered_data) {
       leaflet() |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
-        setView(lng = 153.0586, lat = -27.545, zoom = 13.5) |>
+        setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft") |>
         addLegend(
           position = "bottomright",
@@ -151,7 +151,7 @@ mapModuleServer <- function(id, filtered_data) {
     # Reset view
     observeEvent(input$reset_view, {
       leafletProxy("map") |>
-        setView(lng = 153.0586, lat = -27.545, zoom = 13.5)
+        setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM)
     })
   })
 }

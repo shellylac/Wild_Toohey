@@ -46,7 +46,7 @@ heatmapModuleServer <- function(id, filtered_data) {
       base_map <- leaflet() |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
-        setView(lng = 153.0586, lat = -27.5483, zoom = 14) |>
+        setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft")
 
       if (nrow(period_filtered_data()) > 0) {
@@ -103,7 +103,7 @@ heatmapModuleServer <- function(id, filtered_data) {
 
     observeEvent(input$heatmap_reset_view, {
       leafletProxy("heatmap") |>
-        setView(lng = 153.0586, lat = -27.5483, zoom = 14)
+        setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM)
     })
   })
 }
