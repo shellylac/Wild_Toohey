@@ -64,7 +64,7 @@ mapModuleServer <- function(id, filtered_data) {
         addScaleBar(position = "bottomleft") |>
         addLegend(
           position = "bottomright",
-          colors = c("blue", "red", "orange", "green"),
+          colors = c(BLUE, RED, ORANGE, GREEN),
           labels = c(
             HTML("Birds <i class='fa fa-dove'></i>"),
             HTML("Mammals <i class='fa fa-paw'></i>"),
@@ -125,10 +125,10 @@ mapModuleServer <- function(id, filtered_data) {
               library    = "fa",
               iconColor  = "white",
               markerColor = dplyr::case_when(
-                class == "Aves"     ~ "blue",
-                class == "Mammalia" ~ "red",
-                class == "Reptilia" ~ "orange",
-                class == "Amphibia" ~ "green",
+                class == "Aves"     ~ BLUE,
+                class == "Mammalia" ~ RED,
+                class == "Reptilia" ~ ORANGE,
+                class == "Amphibia" ~ GREEN,
                 TRUE                ~ "gray"
               )
             ),

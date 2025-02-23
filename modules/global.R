@@ -16,6 +16,22 @@ library(bsicons)
 library(grDevices)
 }
 
+# SETS DEFAULT colours
+BLUE = "blue"
+RED = "red"
+ORANGE = "orange"
+GREEN = "green"
+
+# STATS_BLUE = "#8080FF"
+# STATS_RED = "#FF8080"
+# STATS_ORANGE = "#FFD5A5"
+# STATS_GREEN = "#B3FFB3"
+
+# Set Default map parameters:
+DEFAULT_LAT <- -27.5483
+DEFAULT_LONG <- 153.0586
+DEFAULT_ZOOM <- 13.5
+
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
 toohey_occs <- readRDS(url(data_url)) |>
@@ -33,10 +49,10 @@ toohey_occs <- readRDS(url(data_url)) |>
                 ),
                 # Add colour for trend plots (based on class_common)
                 plot_colour = case_match(class_common,
-                                         "Birds" ~ "#8080FF",
-                                         "Mammals" ~ "#FF8080",
-                                         "Reptiles" ~ "#FFD5A5",
-                                         "Amphibians" ~ "#B3FFB3")
+                                         "Birds" ~ BLUE,
+                                         "Mammals" ~ RED,
+                                         "Reptiles" ~ ORANGE,
+                                         "Amphibians" ~ GREEN)
 
   )
 
@@ -73,10 +89,7 @@ species_list <- toohey_occs |>
   # mutate(Class = as.factor(Class)) |>
   select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`)
 
-# Set Default parameters:
-DEFAULT_LAT <- -27.5483
-DEFAULT_LONG <- 153.0586
-DEFAULT_ZOOM <- 13.5
+
 
 
 # These are my TO-DOS!!

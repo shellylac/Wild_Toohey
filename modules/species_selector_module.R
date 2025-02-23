@@ -34,10 +34,10 @@ speciesSelectionUI <- function(id) {
         inputId = ns("class"),
         label = "Class:",
         choiceNames = list(
-          tagList(shiny::icon("dove", style = "color: #0000FF;"), "Birds"), # blue
-          tagList(shiny::icon("paw", style = "color: #FF0000;"), "Mammals"), # red
-          tagList(shiny::icon("worm", style = "color: #FFA500;"), "Reptiles"),  # orange
-          tagList(shiny::icon("frog", style = "color: #00FF00;"), "Amphibians")  # green
+          tagList(shiny::icon("dove", style = paste0("color: ", BLUE, ";")), "Birds"),
+          tagList(shiny::icon("paw", style = paste0("color: ", RED, ";")), "Mammals"),
+          tagList(shiny::icon("worm", style = paste0("color: ", ORANGE, ";")), "Reptiles"),
+          tagList(shiny::icon("frog", style = paste0("color: ", GREEN, ";")), "Amphibians")
         ),
         choiceValues = unique(toohey_occs$class_common),
         selected = "Birds"
