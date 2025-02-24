@@ -41,7 +41,6 @@ ui <- tagList(
     title = "Wild Toohey Explorer",
 
     sidebar = sidebar(
-      class = "mobile-sidebar-first",
       speciesSelectionUI("species")
     ),
 
