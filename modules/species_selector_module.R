@@ -4,13 +4,15 @@ speciesSelectionUI <- function(id) {
   ns <- NS(id)
 
   tagList(
-    radioButtons(inputId = ns("select_method"), label = "Species selection method:",
-                 choiceNames = list(
-                   tagList("By common name", shiny::icon("comment")),
-                   tagList("By taxonomy", shiny::icon("sitemap"))
-                 ),
-                 choiceValues = c("By common name", "By taxonomy"),
-                 selected = "By common name"),
+    radioButtons(
+      inputId = ns("select_method"), label = "Species selection method:",
+      choiceNames = list(
+        tagList("By common name", shiny::icon("comment")),
+        tagList("By taxonomy", shiny::icon("sitemap"))
+      ),
+      choiceValues = c("By common name", "By taxonomy"),
+      selected = "By common name"
+    ),
 
     # Common name selection with search functionality
     conditionalPanel(
@@ -20,7 +22,7 @@ speciesSelectionUI <- function(id) {
         "Common name:",
         choices = NULL,
         options = list(
-          placeholder = 'Select or search for a species',
+          placeholder = "Select or search for a species",
           searchField = c("value", "label"),
           sortField = "label"
         )
@@ -62,9 +64,9 @@ speciesSelectionServer <- function(id) {
     # Initialize selection lists
     observe({
       updateSelectizeInput(session, "vernacular_name",
-                           choices = c('All', sort(unique(toohey_occs$vernacular_name))),
-                           selected = 'All',
-                           server = TRUE
+        choices = c("All", sort(unique(toohey_occs$vernacular_name))),
+        selected = "All",
+        server = TRUE
       )
     })
 
@@ -73,9 +75,9 @@ speciesSelectionServer <- function(id) {
       req(input$class)
       orders <- sort(unique(toohey_occs$order[toohey_occs$class_common == input$class]))
       updateSelectInput(session, "order",
-                        choices = if (length(orders) == 1) orders else c("All", orders),
-                        selected = if (length(orders) == 1) orders else "All"
-                        )
+        choices = if (length(orders) == 1) orders else c("All", orders),
+        selected = if (length(orders) == 1) orders else "All"
+      )
     })
 
     # Update Family based on Order
@@ -87,9 +89,9 @@ speciesSelectionServer <- function(id) {
         sort(unique(toohey_occs$family[toohey_occs$order == input$order]))
       }
       updateSelectInput(session, "family",
-                        choices = if (length(families) == 1) families else c("All", families),
-                        selected = if (length(families) == 1) families else "All"
-                        )
+        choices = if (length(families) == 1) families else c("All", families),
+        selected = if (length(families) == 1) families else "All"
+      )
     })
 
     # Update Species based on Family
@@ -98,17 +100,17 @@ speciesSelectionServer <- function(id) {
       species <- if (input$family == "All") {
         if (input$order == "All") {
           sort(unique(toohey_occs$species[toohey_occs$class_common == input$class]))
-          } else {
-            sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
-            }
         } else {
-          sort(unique(toohey_occs$species[toohey_occs$family == input$family]))
+          sort(unique(toohey_occs$species[toohey_occs$order == input$order]))
         }
+      } else {
+        sort(unique(toohey_occs$species[toohey_occs$family == input$family]))
+      }
 
       updateSelectInput(session, "species",
-                        choices = if (length(species) == 1) species else c("All", species),
-                        selected = if (length(species) == 1) species else "All"
-                        )
+        choices = if (length(species) == 1) species else c("All", species),
+        selected = if (length(species) == 1) species else "All"
+      )
     })
 
     # Return reactive filtered data
@@ -121,12 +123,16 @@ speciesSelectionServer <- function(id) {
         req(input$order)
         req(input$family)
         req(input$species)
+      } else {
+        req(input$vernacular_name)
       }
 
       data <- toohey_occs
 
       if (input$select_method == "By common name") {
-        if (input$vernacular_name == 'All') return(data)
+        if (input$vernacular_name == "All") {
+          return(data)
+        }
         data <- data |> filter(vernacular_name == input$vernacular_name)
       } else {
         if (input$class != "All") data <- data |> filter(class_common == input$class)
@@ -139,29 +145,37 @@ speciesSelectionServer <- function(id) {
 
     # In speciesSelectionServer, add:
     selected_taxa_level <- reactive({
-      if (input$select_method == "By common name" & input$vernacular_name == 'All') {
-        return("class_common")  # Default to species level for common name selection
-      } else if (input$select_method == "By common name" & input$vernacular_name != 'All') {
-        return("vernacular_name")  # Default to species level for common name selection
+      if (input$select_method == "By common name" & input$vernacular_name == "All") {
+        return("class_common") # Default to species level for common name selection
+      } else if (input$select_method == "By common name" & input$vernacular_name != "All") {
+        return("vernacular_name") # Default to species level for common name selection
       } else {
+        # Make sure all taxonomy fields are available
+        req(input$class, input$order, input$family, input$species)
+
         # Return the lowest selected level that isn't "All"
-        if (input$species != "All") return("vernacular_name")
-        if (input$family != "All") return("family")
-        if (input$order != "All") return("order")
+        if (input$species != "All") {
+          return("vernacular_name")
+        }
+        if (input$family != "All") {
+          return("family")
+        }
+        if (input$order != "All") {
+          return("order")
+        }
         return("class_common")
       }
     })
 
-    # In statsModuleServer, add: # For debugging purposes
+    # For debugging purposes
     observe({
       cat("Current taxa_level:", selected_taxa_level(), "\n")
     })
 
     # Return both the filtered data and the taxonomic level
     list(
-      filtered_data = filtered_data,  # Your existing filtered data reactive
+      filtered_data = filtered_data, # Your existing filtered data reactive
       taxa_level = selected_taxa_level
     )
-
   })
 }
