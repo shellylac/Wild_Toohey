@@ -47,6 +47,7 @@ heatmapModuleServer <- function(id, filtered_data) {
       base_map <- leaflet() |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
+        addFullscreenControl() |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft")
 
@@ -63,7 +64,7 @@ heatmapModuleServer <- function(id, filtered_data) {
             group = "heatmap_cols"
           ) |>
           addLegend(
-            position = "bottomright",
+            position = "topright",
             colors = rev(heatmap_colors),
             labels = c("High Density", "Medium-High",
                        "Medium", "Medium-Low", "Low Density"),

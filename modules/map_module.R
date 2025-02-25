@@ -60,10 +60,11 @@ mapModuleServer <- function(id, filtered_data) {
       leaflet() |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
+        addFullscreenControl() |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft") |>
         addLegend(
-          position = "bottomright",
+          position = "topright",
           colors = c(BLUE, RED, ORANGE, GREEN),
           labels = c(
             HTML("Birds <i class='fa fa-dove'></i>"),
