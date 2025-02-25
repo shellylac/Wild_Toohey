@@ -22,10 +22,10 @@ RED = "red"
 ORANGE = "orange"
 GREEN = "green"
 
-# STATS_BLUE = "#8080FF"
-# STATS_RED = "#FF8080"
-# STATS_ORANGE = "#FFD5A5"
-# STATS_GREEN = "#B3FFB3"
+STATS_BLUE = "#8080FF"
+STATS_RED = "#FF8080"
+STATS_ORANGE = "#FFD5A5"
+STATS_GREEN = "#B3FFB3"
 
 # Set Default map parameters:
 DEFAULT_LAT <- -27.5483
@@ -49,10 +49,10 @@ toohey_occs <- readRDS(url(data_url)) |>
                 ),
                 # Add colour for trend plots (based on class_common)
                 plot_colour = case_match(class_common,
-                                         "Birds" ~ BLUE,
-                                         "Mammals" ~ RED,
-                                         "Reptiles" ~ ORANGE,
-                                         "Amphibians" ~ GREEN)
+                                         "Birds" ~ STATS_BLUE,
+                                         "Mammals" ~ STATS_RED,
+                                         "Reptiles" ~ STATS_ORANGE,
+                                         "Amphibians" ~ STATS_GREEN)
 
   )
 
