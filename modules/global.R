@@ -100,7 +100,6 @@ species_list <- toohey_occs |>
 
 # These are my TO-DOS
 # * Get SIDEBAR to be ON TOP ALWAY
-# Data probs - carpet python and coastal carpet python both appearing
 #>
 #> * Resources page (module)
 #>  -- papers, history, info, books, wildlife watching tips
