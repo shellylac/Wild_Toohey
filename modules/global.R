@@ -91,7 +91,9 @@ species_list <- toohey_occs |>
                       "</p>")
   ) |>
   # mutate(Class = as.factor(Class)) |>
-  select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`)
+  select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`) |>
+  arrange(factor(Class, levels = c('Aves', 'Mammalia', 'Reptilia', 'Amphibia')),
+          `Common name`)
 
 
 
