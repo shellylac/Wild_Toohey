@@ -5,11 +5,6 @@ agg_by_period <- function(data, taxa_level, period) {
   period_sym <- rlang::sym(period)
 
   agg_data <- data |>
-    dplyr::mutate(
-      year = as.factor(lubridate::year(eventDate)),
-      month = lubridate::month(eventDate, label = TRUE),
-      hour = as.factor(lubridate::hour(hms(eventTime)))
-    ) |>
     dplyr::group_by(!!taxa_level_sym, !!period_sym, plot_colour) |>
     dplyr::summarise(
       count = n(),
@@ -20,6 +15,8 @@ agg_by_period <- function(data, taxa_level, period) {
     ungroup()
   return(agg_data)
 }
+
+
 
 
 # Create a separate plotting function

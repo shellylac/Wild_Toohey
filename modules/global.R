@@ -52,7 +52,11 @@ toohey_occs <- readRDS(url(data_url)) |>
                                          "Birds" ~ STATS_BLUE,
                                          "Mammals" ~ STATS_RED,
                                          "Reptiles" ~ STATS_ORANGE,
-                                         "Amphibians" ~ STATS_GREEN)
+                                         "Amphibians" ~ STATS_GREEN),
+                # Add formatted dates for stats plots
+                year = as.factor(lubridate::year(eventDate)),
+                month = lubridate::month(eventDate, label = TRUE),
+                hour = as.factor(lubridate::hour(hms(eventTime))),
 
   )
 
