@@ -41,7 +41,7 @@ specieslistModuleServer <- function(id, species_list) {
       } else {
         species_list[species_list$Class == input$class_selection, ]
       }
-    })
+    })  |> bindCache(input$class_selection)
 
     species_count <- reactive ({
       if (input$class_selection == 'All') {
@@ -49,7 +49,7 @@ specieslistModuleServer <- function(id, species_list) {
       } else {
         sum(species_list$Class == input$class_selection)
       }
-    })
+    }) |> bindCache(input$class_selection)
 
     output$dynamic_value_box <- renderUI({
       box_settings <- get_value_box_settings(input$class_selection)

@@ -38,7 +38,7 @@ heatmapModuleServer <- function(id, filtered_data) {
              'Summer' = {period_data |> filter(eventMonth %in% c(12, 1, 2))},
              'Autumn' = {period_data |> filter(eventMonth %in% c(3, 4, 5))},
              'Winter' = {period_data |> filter(eventMonth %in% c(6, 7, 8))})
-    })
+    }) |> bindCache(input$heatmap_periods, debounced_data())
 
     # Default leaflet.extras heatmap colors
     heatmap_colors <- c("#0000ff", "#00ffff", "#00ff00", "#ffff00", "#ff0000")

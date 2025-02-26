@@ -141,7 +141,12 @@ speciesSelectionServer <- function(id) {
         if (input$species != "All") data <- data |> filter(species == input$species)
       }
       data
-    })
+    }) |> bindCache(
+      input$select_method,
+      if(input$select_method == "By common name") input$vernacular_name else NULL,
+      if(input$select_method == "By taxonomy")
+        list(input$class, input$order, input$family, input$species) else NULL
+    )
 
     # In speciesSelectionServer, add:
     selected_taxa_level <- reactive({

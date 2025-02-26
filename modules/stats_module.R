@@ -35,7 +35,7 @@ statsModuleServer <- function(id, filtered_data, taxa_level) {
                     taxa_level = taxa_level(),
                     period = input$plot_type
                     )
-      })
+      }) |> bindCache(filtered_data(), taxa_level(), input$plot_type)
 
     last_valid_plot <- reactiveVal(NULL)
 

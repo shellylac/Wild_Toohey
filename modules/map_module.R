@@ -52,7 +52,9 @@ mapModuleServer <- function(id, filtered_data) {
              "month" = {data |> filter(eventDate >= (Sys.Date() - 30))},
              "custom" = {data |> filter(eventDate >= input$date_range[1],
                                         eventDate <= input$date_range[2])})
-    })
+    }) |>  bindCache(input$date_filter,
+                   if(input$date_filter == "custom") input$date_range else NULL,
+                   debounced_data())
 
 
     # Create base map
