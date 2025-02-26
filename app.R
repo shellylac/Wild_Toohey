@@ -18,6 +18,70 @@ ui <- tagList(
         left: 500px !important;
         z-index: 1050;
       }
+
+      /* Mobile-specific CSS to position sidebar horizontally above content */
+      @media (max-width: 991.98px) {
+        /* Make the sidebar layout display as column */
+        .bslib-sidebar-layout {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Position sidebar at the top */
+        #main_sidebar {
+          order: -1;  /* This makes the sidebar appear first */
+          width: 100% !important;
+          margin-bottom: 15px;
+          position: relative !important;
+          left: 0 !important;
+          height: auto !important;
+          transform: none !important;
+          border-right: none !important;
+          border-bottom: 1px solid rgba(0,0,0,0.1);
+          padding-bottom: 10px;
+        }
+
+        /* Make content take full width */
+        .bslib-sidebar-layout > .bslib-sidebar-content {
+          width: 100% !important;
+          margin-left: 0 !important;
+          padding-left: 0 !important;
+        }
+
+        /* Make inputs display in a row */
+        #main_sidebar .shiny-input-container {
+          display: inline-block;
+          width: auto;
+          margin-right: 10px;
+          vertical-align: top;
+        }
+
+        /* Adjust padding for sidebar content */
+        #main_sidebar .sidebar-content {
+          padding: 10px;
+          overflow-x: auto;
+          white-space: nowrap;
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        /* Adjust the width of specific inputs to fit better */
+        #main_sidebar select,
+        #main_sidebar .selectize-input {
+          width: 200px;
+        }
+
+        /* Make radio buttons display better */
+        #main_sidebar .radio {
+          display: inline-block;
+          margin-right: 10px;
+        }
+
+        /* Hide the toggle button on mobile */
+        .bslib-sidebar-toggle {
+          display: none !important;
+        }
+      }
     "))
   ),
 
