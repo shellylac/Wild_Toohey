@@ -1,4 +1,4 @@
-options(shiny.autoreload = TRUE)
+
 # Source functions
 source('./modules/functions.R')
 # Source modules
@@ -60,6 +60,7 @@ ui <- tagList(
 )
 
 server <- function(input, output, session) {
+
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
