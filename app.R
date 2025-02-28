@@ -88,6 +88,7 @@ ui <- tagList(
   page_navbar(
     title = "Wild Toohey Explorer",
     id = "navbarpage",
+
     sidebar = sidebar(
       id = 'main_sidebar',
       speciesSelectionUI("species")
@@ -116,10 +117,8 @@ ui <- tagList(
     ),
     nav_panel(
       title = "About",
-      card(
-        "Resource links and information will go here"
-      )
-    )
+      aboutModuleUI("about")
+     )
   )
 )
 
