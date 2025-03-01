@@ -33,7 +33,7 @@ ui <- tagList(
             speciesSelectionUI("species")
           ),
 
-     navset_card_tab(
+     navset_card_underline(
           id = "explorer-tabs",
           selected = "Finder",
           height = 550,
