@@ -5,13 +5,17 @@ sapply(modules, source)
 ui <- tagList(
   tags$head(
     tags$style(
-    # HTML(".shiny-notification {
-    #     position: fixed !important;
-    #     top: 400px !important;
-    #     left: 500px !important;
-    #     z-index: 1050;
-    #     }
-    #      ")
+      HTML("
+        /* Make cards fill the width of their container */
+        .card {
+          width: 100%;
+        }
+        /* Ensure map and visualizations are responsive */
+        .leaflet, .plotly, .ggplot {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      ")
     )
   ),
 
@@ -19,22 +23,29 @@ ui <- tagList(
     title = "Wild Toohey Explorer",
     id = "navbarpage",
 
-    sidebar = sidebar(
-      id = 'main_sidebar',
-      speciesSelectionUI("species")
-    ),
     nav_panel(
-      title = "Fauna Finder",
-      mapModuleUI("finder")
+      title = "Explorer",
+
+      accordion(
+          open = TRUE,  # Whether the accordion is expanded on load
+          accordion_panel(
+            "Species Selection",
+            speciesSelectionUI("species")
+          ),
+
+     navset_card_tab(
+          id = "explorer-tabs",
+          selected = "Finder",
+          height = 550,
+          full_screen = TRUE,
+          nav_panel("Finder", mapModuleUI("finder")),
+          nav_panel("Trends",       statsModuleUI("stats")),
+          nav_panel("Hotspots",     heatmapModuleUI("heatmap"))
+        )
+      )
     ),
-    nav_panel(
-      title = "Trends",
-      statsModuleUI("stats")
-    ),
-    nav_panel(
-      title = "Hotspots",
-      heatmapModuleUI("heatmap")
-    ),
+
+
     nav_panel(
       title = "Species List",
       specieslistModuleUI("specieslist")
@@ -48,12 +59,11 @@ ui <- tagList(
     nav_panel(
       title = "About",
       aboutModuleUI("about")
-     )
+    )
   )
 )
 
 server <- function(input, output, session) {
-
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
@@ -68,22 +78,7 @@ server <- function(input, output, session) {
   specieslistModuleServer("specieslist",
                           species_list)
 
-  # Observe navbar tab changes to toggle sidebar
-  observe({
-    # Define the panels that should have the sidebar closed
-    hide_sidebar_on <- c("Species List", "Fact File", "About")
-    current_tab <- input$navbarpage
-
-    # Check if the current tab should have the sidebar hidden
-    if (current_tab %in% hide_sidebar_on) {
-      # Close the sidebar
-      bslib::toggle_sidebar(id = "main_sidebar", open = FALSE)
-    } else {
-      # Open the sidebar
-      bslib::toggle_sidebar(id = "main_sidebar", open = TRUE)
-    }
-  })
+  aboutModuleServer("about")
 }
-
 
 shinyApp(ui, server)
