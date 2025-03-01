@@ -65,15 +65,15 @@ mapModuleServer <- function(id, filtered_data) {
         addFullscreenControl() |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft") |>
-        addLegend(
-          position = "topright",
-          colors = c(BLUE, RED, ORANGE, GREEN),
-          labels = c(
-            HTML("Birds <i class='fa fa-dove'></i>"),
-            HTML("Mammals <i class='fa fa-paw'></i>"),
-            HTML("Reptiles <i class='fa fa-worm'></i>"),
-            HTML("Amphibians <i class='fa fa-frog'></i>")
-          ),
+        # addLegend(
+        #   position = "topright",
+        #   colors = c(BLUE, RED, ORANGE, GREEN),
+        #   labels = c(
+        #     HTML("Birds <i class='fa fa-dove'></i>"),
+        #     HTML("Mammals <i class='fa fa-paw'></i>"),
+        #     HTML("Reptiles <i class='fa fa-worm'></i>"),
+        #     HTML("Amphibians <i class='fa fa-frog'></i>")
+        #   ),
           title = "Marker colours:",
           labFormat = labelFormat(
             prefix = "<span style='margin-top: 5px; margin-bottom: 5px;'>",
