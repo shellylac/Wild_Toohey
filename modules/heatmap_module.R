@@ -8,8 +8,8 @@ heatmapModuleUI <- function(id) {
     selectInput(
       inputId = ns('heatmap_periods'),
       label = "Select temporal period for map: ",
-      choices = c('Yearly', 'Spring', 'Summer', 'Autumn', 'Winter'),
-      selected = 'Yearly'
+      choices = c('Spring', 'Summer', 'Autumn', 'Winter'),
+      selected = 'Spring'
     ),
     actionButton(ns("heatmap_reset_view"), "Reset Map View", class = "btn-sm"),
     leafletOutput(ns('heatmap'))
@@ -33,7 +33,6 @@ heatmapModuleServer <- function(id, filtered_data) {
                eventMonth = lubridate::month(eventDate))
 
       switch(input$heatmap_periods,
-             "Yearly" = {period_data},
              'Spring' = {period_data |> filter(eventMonth %in% c(9, 10, 11))},
              'Summer' = {period_data |> filter(eventMonth %in% c(12, 1, 2))},
              'Autumn' = {period_data |> filter(eventMonth %in% c(3, 4, 5))},
