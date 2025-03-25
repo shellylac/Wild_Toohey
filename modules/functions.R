@@ -63,14 +63,24 @@ plot_trend_scatter <- function(data, period, taxa_level) {
         showgrid = FALSE
       ),
       yaxis = list(title = "Percentage of observations",
-                   ticksuffix = "%")
+                   ticksuffix = "%"),
+      legend = list(orientation = 'h',
+                    xanchor = "center",  # use center of legend as anchor
+                    x = 0.5,
+                    y = -0.3,
+                    font = list(family = "sans-serif",
+                                size = 12,
+                                color = "#000"),
+                    bgcolor = "#E2E2E2",
+                    bordercolor = "#FFFFFF",
+                    borderwidth = 2)
     ) |>
     plotly::config(
       displaylogo = FALSE,
       modeBarButtonsToRemove = c(
         'sendDataToCloud', 'autoScale2d',
         'toggleSpikelines', 'hoverClosestCartesian',
-        'hoverCompareCartesian', 'zoom2d', 'pan2d',
+        'hoverCompareCartesian', 'zoom2d',           #'pan2d', keep this in?
         'select2d', 'lasso2d'
       )
     )
@@ -119,7 +129,17 @@ plot_trend_bar <- function(data, period, taxa_level) {
           )
       ),
       yaxis = list(title = "Percentage of observations",
-                   ticksuffix = "%")
+                   ticksuffix = "%"),
+      legend = list(orientation = 'h',
+                    xanchor = "center",  # use center of legend as anchor
+                    x = 0.5,
+                    y = -0.3,
+                    font = list(family = "sans-serif",
+                                size = 12,
+                                color = "#000"),
+                    bgcolor = "#E2E2E2",
+                    bordercolor = "#FFFFFF",
+                    borderwidth = 2)
     )|>
     plotly::config(
       displaylogo = FALSE,
