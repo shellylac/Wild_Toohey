@@ -3,8 +3,7 @@ heatmapModuleUI <- function(id) {
   ns <- NS(id)
 
   card(
-    height = "80%",  # Add explicit height here
-    # card_header("Species occurrence heat map"),
+    height = "80%",
     selectInput(
       inputId = ns('heatmap_periods'),
       label = "Select temporal period for map: ",
@@ -12,20 +11,25 @@ heatmapModuleUI <- function(id) {
       selected = 'Spring'
     ),
     actionButton(ns("heatmap_reset_view"), "Reset Map View", class = "btn-sm"),
-    leafletOutput(ns('heatmap'))
+    leafletOutput(ns('heatmap')),
+    # Add a div to contain the legend above the map
+    div(
+      id = ns("heatmap_legend_container"),
+      style = "margin-bottom: 10px; text-align: center;"
+     )
   )
 }
 
 # Heatmap Module Server
 heatmapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
+    ns <- session$ns
     first_load <- reactiveVal(TRUE)
 
     # Create a debounced version of filtered_data
     debounced_data <- reactive({
       filtered_data()
     }) |> debounce(1000)  # 1000ms debounce
-
 
     period_filtered_data <- reactive({
       period_data <- debounced_data() |>
@@ -41,6 +45,41 @@ heatmapModuleServer <- function(id, filtered_data) {
 
     # Default leaflet.extras heatmap colors
     heatmap_colors <- c("#0000ff", "#00ffff", "#00ff00", "#ffff00", "#ff0000")
+    output$heatmap_legend <- renderUI({
+      # current_title <- legend_title()
+
+      tags$div(
+        style = "display: inline-block; padding: 6px 8px; background: white; background: rgba(255,255,255,0.8);
+                box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
+        # tags$div(style = "font-weight: bold; margin-bottom: 5px;", current_title),
+        tags$div(style = "font-weight: bold; margin-bottom: 5px;", "Species occurrence density"),
+        tags$div(
+          style = "display: flex; align-items: center;",
+          lapply(1:length(heatmap_colors), function(i) {
+            labels <- c("High", "Med-High", "Medium", "Med-Low", "Low")
+            tags$div(
+              style = "display: flex; align-items: center; margin-right: 10px;",
+              tags$div(
+                style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 5px;",
+                                rev(heatmap_colors)[i])
+              ),
+              tags$div(labels[i], style = "font-size: 0.8em;")
+            )
+          })
+        )
+      )
+    })
+
+    # Insert the legend into the container
+    observe({
+      insertUI(
+        selector = paste0("#", ns("heatmap_legend_container")),
+        where = "beforeEnd",
+        ui = uiOutput(ns("heatmap_legend")),
+        immediate = TRUE,
+        session = session
+      )
+    })
 
     output$heatmap <- renderLeaflet({
       base_map <- leaflet() |>
@@ -57,19 +96,12 @@ heatmapModuleServer <- function(id, filtered_data) {
             lng = ~longitude, lat = ~latitude,
             intensity = 1,
             blur = 20,
-            max = 0.7,          # Reduced max to make colors more intense
-            radius = 20,        # Increased radius to make points more visible
-            minOpacity = 0.7,   # Increased minimum opacity
+            max = 0.7,
+            radius = 20,
+            minOpacity = 0.7,
             group = "heatmap_cols"
-          ) |>
-          addLegend(
-            position = "topright",
-            colors = rev(heatmap_colors),
-            labels = c("High Density", "Medium-High",
-                       "Medium", "Medium-Low", "Low Density"),
-            title = "Species Occurrence Density",
-            opacity = 0.8
           )
+        # Removed the legend from the map
       }
       base_map
     })
@@ -93,9 +125,9 @@ heatmapModuleServer <- function(id, filtered_data) {
             lng = ~longitude, lat = ~latitude,
             intensity = 1,
             blur = 20,
-            max = 0.7,          # Reduced max to make colors more intense
-            radius = 20,        # Increased radius to make points more visible
-            minOpacity = 0.7,   # Increased minimum opacity
+            max = 0.7,
+            radius = 20,
+            minOpacity = 0.7,
             group = "heatmap_cols"
           )
       }
