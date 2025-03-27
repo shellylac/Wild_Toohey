@@ -36,7 +36,7 @@ ui <- tagList(
      navset_card_underline(
           id = "explorer-tabs",
           selected = "Finder",
-          height = 550,
+          height = 650,
           full_screen = TRUE,
           nav_panel("Finder", mapModuleUI("finder")),
           nav_panel("Trends",       statsModuleUI("stats")),
