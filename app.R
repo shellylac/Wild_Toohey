@@ -20,8 +20,13 @@ ui <- tagList(
   ),
 
   page_navbar(
-    title = "Wild Toohey Explorer",
+    title = "Wild Toohey",
     id = "navbarpage",
+
+    nav_panel(
+      title = "Home",
+      homeModuleUI("home")
+      ),
 
     nav_panel(
       title = "Explorer",
@@ -64,6 +69,9 @@ ui <- tagList(
 )
 
 server <- function(input, output, session) {
+  # Initialise the home module
+  homeModuleServer("home")
+
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
