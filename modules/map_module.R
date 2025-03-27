@@ -28,13 +28,21 @@ mapModuleUI <- function(id) {
     # )
     ,
     actionButton(ns("reset_view"), "Reset Map View", class = "btn-sm"),
-    leafletOutput(ns("map"))
+    leafletOutput(ns("map")),
+    # Add a div to contain the legend below the map
+    div(
+      id = ns("findermap_legend_container"),
+      style = "margin-bottom: 10px; text-align: center;"
+    )
   )
 }
 
 # Map Module Server
 mapModuleServer <- function(id, filtered_data) {
   moduleServer(id, function(input, output, session) {
+    # Add this line to get the namespace function
+    ns <- session$ns
+
     first_load <- reactiveVal(TRUE)
 
     # Create a debounced version of filtered_data
@@ -70,7 +78,7 @@ mapModuleServer <- function(id, filtered_data) {
     )
 
 
-    # Create base map
+    # Create base map ----
     output$map <- renderLeaflet({
       leaflet() |>
         addTiles() |>
@@ -78,22 +86,6 @@ mapModuleServer <- function(id, filtered_data) {
         addFullscreenControl() |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft") |>
-        # addLegend(
-        #   position = "topright",
-        #   colors = c(BLUE, RED, ORANGE, GREEN),
-        #   labels = c(
-        #     HTML("Birds <i class='fa fa-dove'></i>"),
-        #     HTML("Mammals <i class='fa fa-paw'></i>"),
-        #     HTML("Reptiles <i class='fa fa-worm'></i>"),
-        #     HTML("Amphibians <i class='fa fa-frog'></i>")
-        #   ),
-        #   title = "Marker colours:",
-        #   labFormat = labelFormat(
-        #     prefix = "<span style='margin-top: 5px; margin-bottom: 5px;'>",
-        #     suffix = "</span>"
-        #   ),
-        #   opacity = 0.7
-        # ) |>
         addEasyButton(easyButton(
           states = list(
             easyButtonState(
@@ -106,7 +98,7 @@ mapModuleServer <- function(id, filtered_data) {
         ))
     })
 
-    # Update map
+    # Update map ----
     observeEvent(date_filtered_data(), {
       df <- date_filtered_data()
 
@@ -154,7 +146,7 @@ mapModuleServer <- function(id, filtered_data) {
               "Scientific name: ", species, "<br/>",
               "Date: ", eventDate, "<br/>",
               "Source: ", dataResourceName, "<br/>",
-              "<a href='", google_maps_url, "' target='_blank'>View in Google Maps</a>"
+              "<a href='", google_maps_url, "' target='_blank'>Navigate here with Google Maps</a>"
             ),
             clusterOptions = markerClusterOptions()
           )
@@ -162,6 +154,50 @@ mapModuleServer <- function(id, filtered_data) {
 
 
       first_load(FALSE)
+    })
+
+    # dynamically add legend below the map ----
+    output$findermap_legend <- renderUI({
+      colors <- c(BLUE, RED, ORANGE, GREEN)
+      labels <- c(
+        "<i class='fa fa-dove'></i>",
+        "<i class='fa fa-paw'></i>",
+        "<i class='fa fa-worm'></i>",
+        "<i class='fa fa-frog'></i>"
+      )
+
+      legend_items <- lapply(1:length(colors), function(i) {
+        tags$div(
+          style = "display: flex; align-items: center; margin-right: 10px;",
+          tags$div(
+            style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 5px;", colors[i])
+          ),
+          tags$div(HTML(labels[i]), style = "font-size: 0.8em;")
+        )
+      })
+
+      tags$div(
+        # Grey background to legend
+        style = "display: inline-block; padding: 6px 8px; background: #e0e0e0; background: rgba(224,224,224,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
+        # This would be the legend title - if needed
+        # tags$div(style = "font-weight: bold; font-size: 1.0em; margin-bottom: 5px;", "Marker colours"),
+        tags$div(
+          style = "display: flex; align-items: center;",
+          legend_items
+        )
+      )
+    })
+
+    # Insert the legend into the container
+    observe({
+      insertUI(
+        selector = paste0("#", ns("findermap_legend_container")),
+        where = "beforeEnd",
+        ui = uiOutput(ns("findermap_legend")),
+        immediate = TRUE,
+        session = session
+      )
     })
 
 
