@@ -99,22 +99,24 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS
-# * Get SIDEBAR to be ON TOP ALWAY
+#> * Species List - too much white space !!
+#> * "About this app tab"
+#>  - fix up what it says there.
+#>  - METHODS - Data (ALA/iNat) - QA on data (latest two weeks not as QA'd)
+#>  - TRENDS - interpreting patterns (occurrence is biased by people's behaviour - etc)
+#> * Add Footer with Links the top R nav bar (my website, my bluesky)
+#> * Prettify the app! CSS Styling and colours and images!!
 #>
 #> * Resources page (module)
 #>  -- papers, history, info, books, wildlife watching tips
+#>  -- ALA / iNat - sign ups and about
 #>
-#> * "About this app tab" (module)
-#> * Add Links the top R nav bar (my website, my bluesky)
-#> * Prettify the app! CSS Styling and colours and images!!
-#> * Get working on mobile app!
-#> * Think about whether the leaflet popups should be on hover (maybe just add some info text - 'click on points for info')
 #>
-#> ADD TESTING!?
 #>
+#> ADD testing!?
+#> Refactor code - streamline and make use of functions and constants (unified icon?)
 #> * Problems
 #> * No data warning message showing up before heatmap is generated.
-#> * set a unified icon for use throughout??
 #> * Species List
 #> -- shrink height of value box - look at putting text and number on single line
 
