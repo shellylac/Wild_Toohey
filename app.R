@@ -69,7 +69,9 @@ server <- function(input, output, session) {
 
   # Pass filtered data to other modules
   mapModuleServer("finder", species_data$filtered_data)
-  heatmapModuleServer("heatmap", species_data$filtered_data)
+  heatmapModuleServer("heatmap",
+                      filtered_data = species_data$filtered_data,
+                      taxa_level = species_data$taxa_level)
   statsModuleServer("stats",
                     filtered_data = species_data$filtered_data,
                     taxa_level = species_data$taxa_level)

@@ -16,7 +16,31 @@ agg_by_period <- function(data, taxa_level, period) {
   return(agg_data)
 }
 
+# Convert factor class_common names to string - process
+process_name_data <- function(name_data) {
+  if (length(name_data) == 4) {
+    return("All")
+  } else if (is.factor(name_data)) {
+    return(paste(as.character(name_data), collapse = ", "))
+  } else {
+    return(name_data)
+  }
+}
 
+# Use taxa_level() to determine current taxa or species
+get_taxa_name <- function(data, taxa_level){
+
+  # Convert string column names to symbols
+  taxa_level_sym <- rlang::sym(taxa_level)
+
+  name_data <- data |>
+    dplyr::select(!!taxa_level_sym) |>
+    dplyr::distinct(!!taxa_level_sym) |>
+    dplyr::pull(!!taxa_level_sym)
+
+  selected_taxa_name <- process_name_data(name_data)
+  return(selected_taxa_name)
+}
 
 
 # Create a separate plotting function

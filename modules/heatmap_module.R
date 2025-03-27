@@ -21,7 +21,7 @@ heatmapModuleUI <- function(id) {
 }
 
 # Heatmap Module Server
-heatmapModuleServer <- function(id, filtered_data) {
+heatmapModuleServer <- function(id, filtered_data, taxa_level) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     first_load <- reactiveVal(TRUE)
@@ -45,18 +45,27 @@ heatmapModuleServer <- function(id, filtered_data) {
 
     # Default leaflet.extras heatmap colors
     heatmap_colors <- c("#0000ff", "#00ffff", "#00ff00", "#ffff00", "#ff0000")
+
+    # Create custom HTML legend outside of the map ----
+    legend_title <- reactive({
+      req(filtered_data(), taxa_level())
+      name <- get_taxa_name(filtered_data(), taxa_level())
+      name
+     })
+
     output$heatmap_legend <- renderUI({
-      # current_title <- legend_title()
+      current_title <- legend_title()
 
       tags$div(
         style = "display: inline-block; padding: 6px 8px; background: white; background: rgba(255,255,255,0.8);
                 box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
-        # tags$div(style = "font-weight: bold; margin-bottom: 5px;", current_title),
-        tags$div(style = "font-weight: bold; margin-bottom: 5px;", "Species occurrence density"),
+        tags$div(style = "font-weight: bold; font-size: 1.0em; margin-bottom: 5px;",
+                 paste0("Occurrence density - ", current_title)
+                 ),
         tags$div(
           style = "display: flex; align-items: center;",
           lapply(1:length(heatmap_colors), function(i) {
-            labels <- c("High", "Med-High", "Medium", "Med-Low", "Low")
+            labels <- c("High", "Med-High", "Med", "Med-Low", "Low")
             tags$div(
               style = "display: flex; align-items: center; margin-right: 10px;",
               tags$div(
