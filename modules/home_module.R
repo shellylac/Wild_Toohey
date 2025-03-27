@@ -10,7 +10,7 @@ homeModuleUI <- function(id) {
       card_header(
         div(
           style = "display: flex; align-items: center; justify-content: center;",
-          tags$img(src = "./www/toohey_logo_temp.png", height = "120px", alt = "Wild Toohey Logo"),
+          tags$img(src = "toohey_logo_temp.png", height = "120px", alt = "Wild Toohey Logo"),
           h1("Wild Toohey", style = "margin-left: 20px;")
         )
       ),
@@ -70,15 +70,17 @@ homeModuleUI <- function(id) {
       )
     ),
 
-    # Getting started section
     div(
-      style = "margin-top: 30px;",
+      style = "margin-top: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;",
       h4("Getting started with Wild Toohey is easy:"),
-      tags$ol(
-        tags$li(strong("Select a species"), " - Use the Explorer tab to filter species sightings by common name or by taxonomy."),
-        tags$li(strong("View observations"), " - View the occurrence map in the ", em("Finder"), " map to reveal where species have been spotted."),
-        tags$li(strong("Discover patterns"), " - Explore historical ", em("Trends"), " and spatial ", em("Hotspots"), " for your chosen taxa."),
-        tags$li(strong("Browse the catalog"), " - Check out the ", em("Species List"), " tab to see picture all recorded wildlife.")
+      div(
+        style = "text-align: left; display: inline-block;",
+        tags$ol(
+          tags$li(strong("Select a species"), " - Use the Explorer tab to filter species sightings by common name or by taxonomy."),
+          tags$li(strong("View observations"), " - View the occurrence map in the ", em("Finder"), " map to reveal where species have been spotted."),
+          tags$li(strong("Discover patterns"), " - Explore historical ", em("Trends"), " and spatial ", em("Hotspots"), " for your chosen taxa."),
+          tags$li(strong("Browse the catalog"), " - Check out the ", em("Species List"), " tab to see picture all recorded wildlife.")
+        )
       )
     ),
 
@@ -97,13 +99,13 @@ homeModuleUI <- function(id) {
 }
 
 # Home Module Server
-homeModuleServer <- function(id) {
+# Home Module Server
+homeModuleServer <- function(id, parent_session) {  # Add parent_session parameter
   moduleServer(id, function(input, output, session) {
     # Handle click on Get Started button
     observeEvent(input$get_started, {
-      # Switch to the Explorer tab
-      # We need to use session$sendCustomMessage to communicate with the parent session
-      session$sendCustomMessage("updateNavPage", "Explorer")
+      # Switch to the Explorer tab using the parent session
+      parent_session$sendCustomMessage("switch-tab", "Explorer")
     })
   })
 }

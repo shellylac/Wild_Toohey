@@ -16,7 +16,13 @@ ui <- tagList(
           height: 100% !important;
         }
       ")
-    )
+    ),
+
+    tags$script(HTML("
+      Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
+        $('a[data-value=\"' + tabName + '\"]').tab('show');
+      });
+    "))
   ),
 
   page_navbar(
@@ -70,7 +76,7 @@ ui <- tagList(
 
 server <- function(input, output, session) {
   # Initialise the home module
-  homeModuleServer("home")
+  homeModuleServer("home", session)
 
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
