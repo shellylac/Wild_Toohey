@@ -12,7 +12,7 @@ heatmapModuleUI <- function(id) {
     ),
     actionButton(ns("heatmap_reset_view"), "Reset Map View", class = "btn-sm"),
     leafletOutput(ns('heatmap')),
-    # Add a div to contain the legend above the map
+    # Add a div to contain the legend below the map
     div(
       id = ns("heatmap_legend_container"),
       style = "margin-bottom: 10px; text-align: center;"
@@ -57,9 +57,10 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
       current_title <- legend_title()
 
       tags$div(
-        style = "display: inline-block; padding: 6px 8px; background: white; background: rgba(255,255,255,0.8);
-                box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
-        tags$div(style = "font-weight: bold; font-size: 1.0em; margin-bottom: 5px;",
+        # Grey background to legend
+        style = "display: inline-block; padding: 6px 8px; background: #e0e0e0; background: rgba(224,224,224,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
+        tags$div(style = "font-weight: bold; font-size: 0.8em; margin-bottom: 2px;",
                  paste0("Occurrence density - ", current_title)
                  ),
         tags$div(
@@ -69,10 +70,10 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
             tags$div(
               style = "display: flex; align-items: center; margin-right: 10px;",
               tags$div(
-                style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 5px;",
+                style = sprintf("width: 12px; height: 12px; background: %s; margin-right: 3px;",
                                 rev(heatmap_colors)[i])
               ),
-              tags$div(labels[i], style = "font-size: 0.8em;")
+              tags$div(labels[i], style = "font-size: 0.7em;")
             )
           })
         )
