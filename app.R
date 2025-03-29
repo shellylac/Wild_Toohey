@@ -29,6 +29,9 @@ ui <- tagList(
     title = "Wild Toohey",
     id = "navbarpage",
 
+    # Set the initial tab to "Explorer" or any other tab ID
+    selected = "Home",
+
     nav_panel(
       title = "Home",
       homeModuleUI("home")
@@ -61,6 +64,7 @@ ui <- tagList(
       title = "Species List",
       specieslistModuleUI("specieslist")
     ),
+
     nav_panel(
       title = "Fact File",
       card(
@@ -95,6 +99,7 @@ server <- function(input, output, session) {
                           species_list)
 
   aboutModuleServer("about")
+
 }
 
 shinyApp(ui, server)
