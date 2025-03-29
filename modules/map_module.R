@@ -35,12 +35,17 @@ mapModuleUI <- function(id) {
 }
 
 # Map Module Server
-mapModuleServer <- function(id, filtered_data) {
+mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # Debounce the species-filtered data to avoid repeated re-renders
     debounced_data <- reactive({
+      # React to the update trigger if provided
+      if (!is.null(update_trigger)) {
+        update_trigger()
+      }
+
       filtered_data()
     }) |> debounce(1000)
 

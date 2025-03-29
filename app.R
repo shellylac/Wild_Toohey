@@ -82,11 +82,25 @@ server <- function(input, output, session) {
   # Initialise the home module
   homeModuleServer("home", session)
 
+  # Create a reactive value to trigger map updates
+  map_update_trigger <- reactiveVal(0)
+
+  # Observe tab changes
+  observeEvent(input$navbarpage, {
+    if (input$navbarpage == "Explorer") {
+      # Increment trigger to force map update
+      map_update_trigger(map_update_trigger() + 1)
+    }
+  })
+
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
   # Pass filtered data to other modules
-  mapModuleServer("finder", species_data$filtered_data)
+  mapModuleServer("finder",
+                  filtered_data = species_data$filtered_data,
+                  update_trigger = map_update_trigger)
+
   heatmapModuleServer("heatmap",
                       filtered_data = species_data$filtered_data,
                       taxa_level = species_data$taxa_level)
