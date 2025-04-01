@@ -183,17 +183,15 @@ create_DT_table <- function(species_list){
       species_list,
       options = list(
         pageLength = 10,
+        dom = "frtip",
+        pagingType = "simple",  # Shows first/previous/pages/next/last buttons
         scrollX = TRUE,
-        dom = 'prtip',
-        lengthMenu = list(c(15, 25, 50, -1), c('15', '25', '50', 'All')),
-        # Disable search for Image/Taxonomy/Count
         columnDefs = list(
-          list(searchable = FALSE, targets = c(0, 2, 3, 4))
+         list(visible = FALSE, targets = 0) # Don't render the 'Class' column - zero indexing
         )
       ),
-      escape = FALSE,
-      rownames = FALSE,
-      filter = 'top',
+      escape = FALSE, # allow HTML in the table
+      rownames = FALSE, # don't show row numbers
       class = 'cell-border stripe'
     )
 }
