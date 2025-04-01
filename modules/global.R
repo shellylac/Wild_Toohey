@@ -83,8 +83,9 @@ species_list <- toohey_occs |>
                    "\" height=\"120\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
                    `Common name`, "\"></img>", "</p>"),
     Taxonomy = paste0("<p style=\"font-size:14px;\">",
-                      "<a href=\"", wikipedia_url, "\ target=\"_blank>",
+                      "<a href=\"", wikipedia_url, "\" target=\"_blank\">",
                       `Common name`, "</a>", "<br>",
+                      "<b>Order</b>: ", Class, "<br>",
                       "<b>Order</b>: ", order, "<br>",
                       "<b>Family</b>: ", family, "<br>",
                       "<b>Species</b>: ", species,
@@ -99,7 +100,8 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS
-#> * Species List - too much white space !!
+#> Add "Most recent occurrence" to date options in map
+#> Fix up dodgy photos for some reptiles - and check outhers
 #> * "About this app tab"
 #>  - fix up what it says there.
 #>  - METHODS - Data (ALA/iNat) - QA on data (latest two weeks not as QA'd)
