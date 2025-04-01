@@ -13,13 +13,13 @@ specieslistModuleUI <- function(id) {
                     multiple = FALSE),
         # Wrap the value box in a div with max-width
         div(
-          style = "max-height: 100px;",  # Adjust this value as needed
+          style = "max-height: 80px;",  # Adjust this value as needed
           uiOutput(ns("dynamic_value_box"))
         )
       ),
       # Add download button with some styling
       div(
-        style = "display: flex; justify-content: flex-end; margin-top: 20px;, margin-bottom: 15px;",
+        style = "display: flex; justify-content: flex-end; margin-top: 15px;, margin-bottom: 15px;",
         downloadButton(ns("download_data"), "Download Species List",
                        class = "btn-sm")
       ),
@@ -43,6 +43,7 @@ specieslistModuleServer <- function(id, species_list) {
       }
     })  |> bindCache(input$class_selection)
 
+
     species_count <- reactive ({
       if (input$class_selection == 'All') {
         nrow(species_list)
@@ -50,6 +51,7 @@ specieslistModuleServer <- function(id, species_list) {
         sum(species_list$Class == input$class_selection)
       }
     }) |> bindCache(input$class_selection)
+
 
     output$dynamic_value_box <- renderUI({
       box_settings <- get_value_box_settings(input$class_selection)
@@ -62,7 +64,7 @@ specieslistModuleServer <- function(id, species_list) {
         ui = tags$style(sprintf(
           "#%s .bslib-value-box {
           border: 2px solid %s !important;
-          max-height: 100px !important;
+          max-height: 80px !important;
           }",
           box_id,
           box_settings$border_color
