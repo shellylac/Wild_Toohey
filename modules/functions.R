@@ -56,7 +56,7 @@ plot_trend_scatter <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour: "
         ),
         !!rlang::sym(period),  # Use rlang to correctly reference the period column
-        "<br>Number of observations: ", format(count, big.mark = "'"),
+        "<br>Number of observations: ", format(count, big.mark = ","),
         "<br>Proportion of observations: ", round(prop, 0), "%",
         "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
@@ -124,7 +124,7 @@ plot_trend_bar <- function(data, period, taxa_level) {
           period == "hour" ~ "Hour: "
         ),
         !!rlang::sym(period),  # Use rlang to correctly reference the period column
-        "<br>Number of observations: ", format(count, big.mark = "'"),
+        "<br>Number of observations: ", format(count, big.mark = ","),
         "<br>Percentage of observations: ", round(prop, 0), "%",
         "<br>Taxa: ", !!rlang::sym(taxa_level)  # Use rlang to correctly reference the taxa column
       )
