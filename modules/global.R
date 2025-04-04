@@ -88,8 +88,8 @@ species_list <- toohey_occs |>
                       "<b>Order</b>: ", Class, "<br>",
                       "<b>Order</b>: ", order, "<br>",
                       "<b>Family</b>: ", family, "<br>",
-                      "<b>Species</b>: ", species,
-                      "</p>")
+                      "<b>Species</b>: <em>", species,
+                      "</em></p>")
   ) |>
   # mutate(Class = as.factor(Class)) |>
   select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`) |>
