@@ -157,13 +157,10 @@ create_footer <- function() {
 
 
 # These are my TO-DOS
-#> Add "Most recent occurrence" to date options in map
-#> Fix up dodgy photos for some reptiles - and check outhers
 #> * "About this app tab"
 #>  - fix up what it says there.
 #>  - METHODS - Data (ALA/iNat) - QA on data (latest two weeks not as QA'd)
 #>  - TRENDS - interpreting patterns (occurrence is biased by people's behaviour - etc)
-#> * Add Footer with Links the top R nav bar (my website, my bluesky)
 #> * Prettify the app! CSS Styling and colours and images!!
 #>
 #> * Resources page (module)
@@ -176,7 +173,3 @@ create_footer <- function() {
 #> Refactor code - streamline and make use of functions and constants (unified icon?)
 #> * Problems
 #> * No data warning message showing up before heatmap is generated.
-#> * Species List
-#> -- shrink height of value box - look at putting text and number on single line
-
-
