@@ -15,6 +15,20 @@ ui <- tagList(
           width: 100% !important;
           height: 100% !important;
         }
+
+        /* Footer styling */
+        .panel-content {
+          display: flex;
+          flex-direction: column;
+          min-height: calc(100vh - 56px); /* Adjust based on your navbar height */
+        }
+        .panel-body {
+          flex: 1;
+        }
+        .site-footer {
+          margin-top: auto;
+        }
+
       ")
     ),
 
@@ -34,49 +48,67 @@ ui <- tagList(
 
     nav_panel(
       title = "Home",
-      homeModuleUI("home")
-      ),
+      div(class = "panel-content",
+          div(class = "panel-body", homeModuleUI("home")),
+          div(class = "site-footer", create_footer())
+      )
+    ),
 
     nav_panel(
       title = "Explorer",
-
-      accordion(
-          open = TRUE,  # Whether the accordion is expanded on load
-          accordion_panel(
-            "Species Selection",
-            speciesSelectionUI("species")
+      div(class = "panel-content",
+          div(class = "panel-body",
+              accordion(
+                open = TRUE,
+                accordion_panel(
+                  "Species Selection",
+                  speciesSelectionUI("species")
+                ),
+                navset_card_underline(
+                  id = "explorer-tabs",
+                  selected = "Finder",
+                  height = 650,
+                  full_screen = TRUE,
+                  nav_panel("Finder", mapModuleUI("finder")),
+                  nav_panel("Trends", statsModuleUI("stats")),
+                  nav_panel("Hotspots", heatmapModuleUI("heatmap"))
+                )
+              )
           ),
-
-     navset_card_underline(
-          id = "explorer-tabs",
-          selected = "Finder",
-          height = 650,
-          full_screen = TRUE,
-          nav_panel("Finder", mapModuleUI("finder")),
-          nav_panel("Trends",       statsModuleUI("stats")),
-          nav_panel("Hotspots",     heatmapModuleUI("heatmap"))
-        )
+          div(class = "site-footer", create_footer())
       )
     ),
 
 
+    # Species List panel with footer
     nav_panel(
       title = "Species List",
-      specieslistModuleUI("specieslist")
-    ),
-
-    nav_panel(
-      title = "Fact File",
-      card(
-        "Resource links and information will go here"
+      div(class = "panel-content",
+          div(class = "panel-body", specieslistModuleUI("specieslist")),
+          div(class = "site-footer", create_footer())
       )
     ),
+
+    # Fact File panel with footer
+    nav_panel(
+      title = "Fact File",
+      div(class = "panel-content",
+          div(class = "panel-body", factFileModuleUI("factfile")),
+          div(class = "site-footer", create_footer())
+      )
+    ),
+
+    # About panel with footer
     nav_panel(
       title = "About",
-      aboutModuleUI("about")
+      div(class = "panel-content",
+          div(class = "panel-body", aboutModuleUI("about")),
+          div(class = "site-footer", create_footer())
+      )
     )
   )
 )
+
 
 server <- function(input, output, session) {
   # Initialise the home module
@@ -111,6 +143,8 @@ server <- function(input, output, session) {
   # Use species list table to get table
   specieslistModuleServer("specieslist",
                           species_list)
+
+  factFileModuleServer("factfile")
 
   aboutModuleServer("about")
 
