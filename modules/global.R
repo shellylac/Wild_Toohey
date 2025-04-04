@@ -30,7 +30,7 @@ STATS_GREEN = "#B3FFB3"
 # Set Default map parameters:
 DEFAULT_LAT <- -27.5483
 DEFAULT_LONG <- 153.0586
-DEFAULT_ZOOM <- 13.5
+DEFAULT_ZOOM <- 13
 
 # Read in the occurrence data
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
