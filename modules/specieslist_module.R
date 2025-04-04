@@ -5,22 +5,22 @@ specieslistModuleUI <- function(id) {
     card_body(
       layout_columns(
         col_widths = c(4, 8),  # Left column takes 8/12, right column takes 4/12
-        selectInput(ns("class_selection"),
-                    "Select class:",
-                    choices = c('All',
-                                'Aves', 'Mammalia', 'Reptilia', 'Amphibia'),
-                    selected = 'All',
-                    multiple = FALSE),
-        # Wrap the value box in a div with max-width
+       # Wrap the value box in a div with max-width
         div(
           style = "max-height: 80px;",  # Adjust this value as needed
           uiOutput(ns("dynamic_value_box"))
-        )
+        ),
+       selectInput(ns("class_selection"),
+                   "Filter species list by class:",
+                   choices = c('All',
+                               'Aves', 'Mammalia', 'Reptilia', 'Amphibia'),
+                   selected = 'All',
+                   multiple = FALSE)
       ),
       # Add download button with some styling
       div(
         style = "display: flex; justify-content: flex-end; margin-top: 15px;, margin-bottom: 15px;",
-        downloadButton(ns("download_data"), "Download Species List",
+        downloadButton(ns("download_data"), "Download species list",
                        class = "btn-sm")
       ),
       DT::dataTableOutput(ns("species_list_table"))
@@ -91,7 +91,7 @@ specieslistModuleServer <- function(id, species_list) {
       },
       content = function(file) {
         # Get the filtered data and clean it for CSV format
-        data_to_download <- filtered_data() %>%
+        data_to_download <- species_list %>%
           dplyr::select(-Image) %>%  # Remove the Image column
           dplyr::mutate(
             Taxonomy = gsub("<.*?>", "", Taxonomy)  # Remove HTML tags
