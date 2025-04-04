@@ -10,6 +10,7 @@ mapModuleUI <- function(id) {
       choices = c(
         "Past week" = "week",
         "Past month" = "month",
+        "Latest sighting" = "latest",
         "Custom date range" = "custom"
       ),
       selected = "month",
@@ -61,6 +62,9 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
              },
              "month" = {
                data |> dplyr::filter(eventDate >= (Sys.Date() - 30))
+             },
+             "latest" = {
+               data |> dplyr::filter(eventDate == max(eventDate)) |> dplyr::slice(1)
              },
              "custom" = {
                data |> dplyr::filter(
@@ -141,7 +145,7 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
             popup = ~ paste0(
               "<a href='", wikipedia_url, "' target='_blank'><b>",
               vernacular_name, "</b></a><br/>",
-              "Scientific name: ", species, "<br/>",
+              "Scientific name: <em>", species, "</em><br/>",
               "Date: ", eventDate, "<br/>",
               "Source: ", dataResourceName, "<br/>",
               "<a href='", google_maps_url,
