@@ -40,7 +40,7 @@ homeModuleUI <- function(id) {
             )
           ),
           card_body(
-            p("Use verified sightings of birds, mammals, reptiles, and amphibians in the forest to guide you to your own special wildlife encounter.")
+            p("Use verified sightings of birds, mammals, reptiles, and amphibians to guide you to your own special wildlife encounter.")
           )
         ),
         card(
@@ -52,7 +52,7 @@ homeModuleUI <- function(id) {
             )
           ),
           card_body(
-            p("Use historical distributions and patterns to discover wildlife hotspots, and the best locations, seasons, and times of day to see different species.")
+            p("Use historical distributions to discover wildlife hotspots, and the best seasons and times of day to see different species.")
           )
         ),
         card(
@@ -64,7 +64,7 @@ homeModuleUI <- function(id) {
             )
           ),
           card_body(
-            p("View a complete species list of wildlife sightings, with images, taxonomic information, and observation counts.")
+            p("View a species list of wildlife sightings, with images, taxonomic information, and observation counts.")
           )
         )
       )
@@ -72,14 +72,14 @@ homeModuleUI <- function(id) {
 
     div(
       style = "margin-top: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;",
-      h4("Getting started with Wild Toohey is easy:"),
+      h4("Get started with Wild Toohey:"),
       div(
         style = "text-align: left; display: inline-block;",
         tags$ol(
-          tags$li(strong("Select a species"), " - Use the Explorer tab to filter species sightings by common name or by taxonomy."),
-          tags$li(strong("View observations"), " - View the occurrence map in the ", em("Finder"), " map to reveal where species have been spotted."),
-          tags$li(strong("Discover patterns"), " - Explore historical ", em("Trends"), " and spatial ", em("Hotspots"), " for your chosen taxa."),
-          tags$li(strong("Browse the catalog"), " - Check out the ", em("Species List"), " tab to see picture all recorded wildlife.")
+          tags$li(strong("Select a species"), ": use the Explorer tab to filter species sightings by common name or by taxonomy."),
+          tags$li(strong("View observations"), ": view species sightings in the ", em("Finder"), " map."),
+          tags$li(strong("Discover patterns"), ": explore past ", em("Trends"), " and spatial ", em("Hotspots"), " for your chosen taxa."),
+          tags$li(strong("View the Species List"), ": view species images and information for all species.")
         )
       )
     ),
