@@ -89,14 +89,14 @@ ui <- tagList(
       )
     ),
 
-    # Fact File panel with footer
-    nav_panel(
-      title = "Fact File",
-      div(class = "panel-content",
-          div(class = "panel-body", factFileModuleUI("factfile")),
-          div(class = "site-footer", create_footer())
-      )
-    ),
+    # # Fact File panel with footer - Leave for now
+    # nav_panel(
+    #   title = "Fact File",
+    #   div(class = "panel-content",
+    #       div(class = "panel-body", factFileModuleUI("factfile")),
+    #       div(class = "site-footer", create_footer())
+    #   )
+    # ),
 
     # About panel with footer
     nav_panel(
@@ -144,7 +144,8 @@ server <- function(input, output, session) {
   specieslistModuleServer("specieslist",
                           species_list)
 
-  factFileModuleServer("factfile")
+  # Leave out fact file for now
+  # factFileModuleServer("factfile")
 
   aboutModuleServer("about")
 
