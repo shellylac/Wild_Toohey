@@ -99,17 +99,7 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS
-#> * "About this app tab"
-#>  - fix up what it says there.
-#>  - METHODS - Data (ALA/iNat) - QA on data (latest two weeks not as QA'd)
-#>  - TRENDS - interpreting patterns (occurrence is biased by people's behaviour - etc)
 #> * Prettify the app! CSS Styling and colours and images!!
-#>
-#> * Resources page (module)
-#>  -- papers, history, info, books, wildlife watching tips
-#>  -- ALA / iNat - sign ups and about
-#>
-#>
 #>
 #> ADD testing!?
 #> Refactor code - streamline and make use of functions and constants (unified icon?)
