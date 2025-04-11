@@ -27,21 +27,8 @@ Wild Toohey accesses ALA databases to extract records of species occurrence with
         h3("Interpreting trends and hotspots"),
         p("The data for Wild Toohey come from community-submitted records of species sightings. It is important to recognise that the patterns seen in the annual, monthly and daily trend figures and in the hotspot maps do not solely reflect wildlife locations and movements. These patterns are also shaped by human behaviours, such as the times of day or week when people typically visit the forest or submit their wildlife sightings, and areas of the forest that are more or less visited. Additionally, external factors and events, can significantly impact trends by altering the frequency and timing of forest visits and sightings. For example, spikes of recorded sightings for many species during 2021 likely stem from COVID lockdowns in that year facilitating increased local visits to Toohey Forest. Keeping these factors in mind will help you more accurately interpret the wildlife trends and hotspots displayed by Wild Toohey."),
 
-        h3("Using This App"),
-        p("The Wild Toohey Explorer allows you to:"),
-        tags$ul(
-          tags$li("Filter observations by taxonomy or common name"),
-          tags$li("Visualize wildlife locations on interactive maps"),
-          tags$li("Identify biodiversity hotspots across different seasons"),
-          tags$li("Analyze wildlife observation trends over time"),
-          tags$li("Browse the comprehensive species catalog")
-        ),
-
-        h3("Community Science"),
-        p("We believe in the power of community science. If you've observed wildlife in Toohey Forest and would like to contribute your sightings, please consider submitting your observations to the Atlas of Living Australia or iNaturalist."),
-
         h3("Contact"),
-        p("Have questions, feedback, or suggestions? Get in touch with us:"),
+        p("Have questions, feedback, or suggestions? Get in touch:"),
         p(
           tags$b("Email: "), "wildtoohey@gmail.com"
         )
@@ -51,11 +38,11 @@ Wild Toohey accesses ALA databases to extract records of species occurrence with
     card(
       card_header("Acknowledgments"),
       card_body(
-        p("We gratefully acknowledge the traditional owners of the land on which Toohey Forest stands, and pay our respects to Elders past, present, and emerging."),
+        p("Wild Toohey gratefully acknowledges the traditional owners of the land on which Toohey Forest stands,including the Turrbal and Yuggera Peoples. We pay our respects to the peoples, their culture, and Elders past, present, and emerging."),
 
-        p("Special thanks to all the citizen scientists, researchers, and organizations who have contributed data and expertise to this project."),
+        p("Wild Toohey thanks to all the citizen scientists, researchers, and organizations who have recoorded wildlife sightings and contributed data to make this project possible."),
 
-        p("This application was developed using R Shiny with several open-source packages including bslib, leaflet, plotly, and DT.")
+        p("Wild Toohey is proudly built with R Shiny and open-source tools, including bslib, leaflet, plotly, and DT.")
       )
     )
   )

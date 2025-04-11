@@ -10,7 +10,7 @@ homeModuleUI <- function(id) {
       card_header(
         div(
           style = "display: flex; align-items: center; justify-content: center;",
-          tags$img(src = "toohey_logo_temp.png", height = "120px", alt = "Wild Toohey Logo"),
+          tags$img(src = "wildtoohey_logo2.png", height = "120px", alt = "Wild Toohey Logo"),
           h1("Wild Toohey", style = "margin-left: 20px;")
         )
       ),
@@ -77,7 +77,7 @@ homeModuleUI <- function(id) {
         style = "text-align: left; display: inline-block;",
         tags$ol(
           tags$li(strong("Select a species"), ": use the Explorer tab to filter species sightings by common name or by taxonomy."),
-          tags$li(strong("View observations"), ": view species sightings in the ", em("Finder"), " map."),
+          tags$li(strong("View observations"), ": view the locations of species sightings on the ", em("Finder"), " interactive map."),
           tags$li(strong("Discover patterns"), ": explore past ", em("Trends"), " and spatial ", em("Hotspots"), " for your chosen taxa."),
           tags$li(strong("View the Species List"), ": view species images and information for all species.")
         )
