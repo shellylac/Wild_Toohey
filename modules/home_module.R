@@ -5,15 +5,16 @@ homeModuleUI <- function(id) {
   ns <- NS(id)
 
   div(
-    # Header card
+    # Logo section
+    div(
+      style = "display: flex; align-items: center; justify-content: center; margin: 30px 0 40px 0; padding: 15px;",
+      div(
+        style = "padding: 10px; border-radius: 8px; background-color: rgba(255, 255, 255, 0.8);",
+        tags$img(src = "wildtoohey_logo2.png", height = "150px", alt = "Wild Toohey Logo")
+      )
+    ),
+
     card(
-      card_header(
-        div(
-          style = "display: flex; align-items: center; justify-content: center;",
-          tags$img(src = "wildtoohey_logo2.png", height = "150px", alt = "Wild Toohey Logo"),
-          # h1("Wild Toohey", style = "margin-left: 20px;")
-        )
-      ),
       card_body(
         div(
           style = "text-align: center; margin-bottom: 20px;",
