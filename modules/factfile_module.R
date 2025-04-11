@@ -100,7 +100,7 @@ factFileModuleUI <- function(id) {
 
     # Header section with background image
     div(
-      style = "position: relative; min-height: 250px; margin-bottom: 2rem; border-radius: 10px; overflow: hidden;",
+      style = "position: relative; min-height: 150px; margin-bottom: 2rem; border-radius: 10px; overflow: hidden;",
       div(
         style = "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('/api/placeholder/1200/400') center/cover; filter: brightness(0.7);",
         # Placeholder for when you have an actual image: "background: url('toohey_forest_panorama.jpg') center/cover;"
@@ -108,8 +108,8 @@ factFileModuleUI <- function(id) {
       div(
         style = "position: relative; padding: 3rem 2rem; text-align: center; color: white;",
         h1("Toohey Forest Fact File", style = "font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);"),
-        p("Discover the rich history, diverse ecosystem, and conservation efforts of one of Brisbane's most cherished natural spaces",
-          style = "font-size: 1.2rem; max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);")
+        # p("Discover the rich history, diverse ecosystem, and conservation efforts of one of Brisbane's most cherished natural spaces",
+        #   style = "font-size: 1.2rem; max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);")
       )
     ),
 
@@ -120,13 +120,18 @@ factFileModuleUI <- function(id) {
         title = span(icon("book-open"), "History"),
         div(
           class = "timeline-item",
+          span(class = "timeline-year", "Kaggur-madul"),
+          p("Toohey Forest and the Mt Gravatt area was traditionally home to the Turrbal and Yuggera Peoples, who called it 'kaggur-madul' meaning 'the place of echidna'. The Turrbal and Yuggera peoples used its rich resources for food, shelter, ceremonies, and cultural practices, with significant sites like bora rings and burial caves still present today.")
+        ),
+        div(
+          class = "timeline-item",
           span(class = "timeline-year", "1872"),
           p("James Toohey, an Irish settler, acquires the land which would later become Toohey Forest.")
         ),
         div(
           class = "timeline-item",
           span(class = "timeline-year", "Late 1800s"),
-          p("The area is cleared for agriculture and timber harvesting, significantly altering the natural landscape.")
+          p("The area is cleared for agriculture and timber harvesting, significantly altering the natural landscape. Logan Road and Kessels Road, originally tracks used by Aboriginal people, became key transportation routes for droving livestock, coaches, and drays")
         ),
         div(
           class = "timeline-item",
@@ -135,8 +140,13 @@ factFileModuleUI <- function(id) {
         ),
         div(
           class = "timeline-item",
-          span(class = "timeline-year", "Mid-20th Century"),
-          p("Toohey Forest is officially recognized and protected as a nature reserve, marking the beginning of conservation efforts.")
+          span(class = "timeline-year", "1944"),
+          p("Toohey Forest is officially recognized and protected as a nature reserve under the Brisbane City Council's 'Green Belt Proposal', marking the beginning of conservation efforts.")
+        ),
+        div(
+          class = "timeline-item",
+          span(class = "timeline-year", "1975"),
+          p("The first students enrol in the newly constructed Griffith University, marking the university's establishment within the Toohey Forest area.")
         ),
         div(
           class = "timeline-item",

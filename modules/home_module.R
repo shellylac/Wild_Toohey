@@ -10,8 +10,8 @@ homeModuleUI <- function(id) {
       card_header(
         div(
           style = "display: flex; align-items: center; justify-content: center;",
-          tags$img(src = "wildtoohey_logo2.png", height = "120px", alt = "Wild Toohey Logo"),
-          h1("Wild Toohey", style = "margin-left: 20px;")
+          tags$img(src = "wildtoohey_logo2.png", height = "150px", alt = "Wild Toohey Logo"),
+          # h1("Wild Toohey", style = "margin-left: 20px;")
         )
       ),
       card_body(
