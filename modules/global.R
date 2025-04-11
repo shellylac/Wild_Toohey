@@ -99,6 +99,9 @@ species_list <- toohey_occs |>
 
 
 # These are my TO-DOS
+#> Update data - do ALA update
+#> species - list arrange by obs count then alphabetical
+#> Add value boxes - most likely to see and least likely seen
 #> * Prettify the app! CSS Styling and colours and images!!
 #>
 #> ADD testing!?
