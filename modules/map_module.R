@@ -81,7 +81,7 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
 
     # Initialize the map
     output$map <- renderLeaflet({
-      leaflet() |>
+      leaflet(options = leafletOptions(attributionControl=FALSE)) |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
         addFullscreenControl() |>

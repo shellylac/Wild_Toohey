@@ -92,7 +92,7 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
     })
 
     output$heatmap <- renderLeaflet({
-      base_map <- leaflet() |>
+      base_map <- leaflet(options = leafletOptions(attributionControl=FALSE)) |>
         addTiles() |>
         addProviderTiles(providers$CartoDB.Positron) |>
         addFullscreenControl() |>
