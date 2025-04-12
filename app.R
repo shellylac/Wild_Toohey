@@ -44,10 +44,10 @@ ui <- tagList(
     id = "navbarpage",
 
     # Set the initial tab to "Explorer" or any other tab ID
-    selected = "Home",
+    selected = bsicons::bs_icon("house-fill"),
 
     nav_panel(
-      title = "Home",
+      title = bsicons::bs_icon("house-fill"),
       div(class = "panel-content",
           div(class = "panel-body", homeModuleUI("home")),
           div(class = "site-footer", create_footer())
