@@ -93,18 +93,7 @@ species_list <- toohey_occs |>
   ) |>
   # mutate(Class = as.factor(Class)) |>
   select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`) |>
-  arrange(factor(Class, levels = c('Aves', 'Mammalia', 'Reptilia', 'Amphibia')),
+  arrange(desc(`Recorded sightings`),
+          factor(Class, levels = c('Aves', 'Mammalia', 'Reptilia', 'Amphibia')),
           `Common name`)
 
-
-
-# These are my TO-DOS
-#> Update data - do ALA update
-#> species - list arrange by obs count then alphabetical
-#> Add value boxes - most likely to see and least likely seen
-#> * Prettify the app! CSS Styling and colours and images!!
-#>
-#> ADD testing!?
-#> Refactor code - streamline and make use of functions and constants (unified icon?)
-#> * Problems
-#> * No data warning message showing up before heatmap is generated.

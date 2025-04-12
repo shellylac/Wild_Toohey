@@ -239,7 +239,7 @@ get_value_box_settings <- function(class_name) {
 }
 
 
-# Footer function to generate a consistent footer for all nav_panel ----
+# Footer function to generate a consistent footer for all nav_panel
 create_footer <- function() {
   div(
     style = "margin-top: 30px; padding: 15px 10px; border-top: 1px solid #eee; text-align: center; background-color: #f8f9fa;",
