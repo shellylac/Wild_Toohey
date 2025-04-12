@@ -6,7 +6,7 @@ heatmapModuleUI <- function(id) {
     height = "80%",
     selectInput(
       inputId = ns('heatmap_periods'),
-      label = "Select temporal period for map: ",
+      label = "Select season: ",
       choices = c('Spring', 'Summer', 'Autumn', 'Winter'),
       selected = 'Spring'
     ),
