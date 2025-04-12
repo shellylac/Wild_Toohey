@@ -1,0 +1,13 @@
+name: Wild-Toohey
+title: Wild-Toohey
+username: shellylac
+account: shellylac
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14504721
+bundleId: 10102369
+url: https://shellylac.shinyapps.io/Wild-Toohey/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: no_modules/grid_heatmap_attempt.R|no_modules/server.R|no_modules/TO_DO_LIST.R|no_modules/ui.R|www/leaves.png|www/toohey_background.jpg|www/toohey_logo_temp.png|AI_suggestions_background
