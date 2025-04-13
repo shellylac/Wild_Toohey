@@ -248,15 +248,14 @@ create_footer <- function() {
     div(
       style = "display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px;",
 
-      # GitHub Link - simplified for mobile
+      # Contact Information - simplified for mobile
       a(
-        href = "https://github.com/shellylac/Wild_Toohey",
-        target = "_blank",
+        href = "mailto:wildtoohey@gmail.com",
         div(
           style = "display: inline-flex; align-items: center; padding: 8px 12px; color: #333; text-decoration: none; background-color: #fff; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);",
-          icon("github", style = "font-size: 1.2rem; margin-right: 6px;"),
-          span("View Code"),
-          title = "View the source code for this application on GitHub"
+          icon("envelope", style = "font-size: 1.2rem; margin-right: 6px;"),
+          span("Contact"),
+          title = "Email us with questions or feedback"
         )
       ),
 
@@ -272,14 +271,15 @@ create_footer <- function() {
         )
       ),
 
-      # Contact Information - simplified for mobile
+      # GitHub Link - simplified for mobile
       a(
-        href = "mailto:wildtoohey@gmail.com",
+        href = "https://github.com/shellylac/Wild_Toohey",
+        target = "_blank",
         div(
           style = "display: inline-flex; align-items: center; padding: 8px 12px; color: #333; text-decoration: none; background-color: #fff; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);",
-          icon("envelope", style = "font-size: 1.2rem; margin-right: 6px;"),
-          span("Contact"),
-          title = "Email us with questions or feedback"
+          icon("github", style = "font-size: 1.2rem; margin-right: 6px;"),
+          span("View Code"),
+          title = "View the source code for this application on GitHub"
         )
       )
     ),
