@@ -88,7 +88,11 @@ ui <- tagList(
                   height = 650,
                   full_screen = TRUE,
                   nav_panel("Finder", mapModuleUI("finder")),
-                  nav_panel("Trends", statsModuleUI("stats")),
+                  nav_panel("Trends",
+                            card(
+                              full_screen = TRUE,   # Only this card can be expanded
+                              statsModuleUI("stats"))
+                            ),
                   nav_panel("Hotspots", heatmapModuleUI("heatmap"))
                 )
               )
