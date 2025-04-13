@@ -86,7 +86,6 @@ ui <- tagList(
                   id = "explorer-tabs",
                   selected = "Finder",
                   height = 650,
-                  full_screen = TRUE,
                   nav_panel("Finder", mapModuleUI("finder")),
                   nav_panel("Trends",
                             card(
