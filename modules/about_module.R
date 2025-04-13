@@ -5,9 +5,10 @@ aboutModuleUI <- function(id) {
   ns <- NS(id)
 
   tagList(
-    div(style = "text-align: center; margin-bottom: 20px;",
-        h2(em("Toohey Forest holds a special place in my heart!"), style = "font-size: 1.2em;"),
-        p("As a Tarragindi local, I grew up with the forest right in my backyard, and have spent countless hours exploring and enjoying this unique bushland island. I adore its quiet natural beauty and feel especially privileged by the wildlife encounters I've had — although I know firsthand how surprisingly challenging it can be to spot these amazing creatures!"),
+    div(style = "text-align: left; margin-bottom: 20px;",
+        h2(em("Toohey Forest holds a very special place in my heart!"),
+           style = "font-size: 1.4em; text-align: center"),
+        p("As a Tarragindi local, I grew up with the forest right in my backyard, and have spent countless hours exploring and enjoying this unique bushland island. I adore its quiet natural beauty and feel especially fortunate for every wildlife encounter in the forest. Yet I also know firsthand how surprisingly challenging it can be to spot its amazing creatures!"),
         p("Wild Toohey was inspired by my desire to make wildlife spotting easier and more rewarding, not just for myself but for everyone who loves Toohey Forest."),
         p("With Wild Toohey, you have instant access to everything you need for memorable wildlife experiences: interactive maps of recent and historic sightings, detailed charts showing annual, monthly, and daily wildlife trends, maps of seasonal wildlife hotspots, a species list complete with images, taxonomy, and links to wikipedia.")
     ),
@@ -67,7 +68,7 @@ aboutModuleUI <- function(id) {
     card(
       card_header(
         bsicons::bs_icon("envelope-fill", size = "1.5rem"),
-        span("Contact Us", class = "ms-2")
+        span("Get in touch!", class = "ms-2")
       ),
       card_body(
         p("Have suggestions or comments? We'd love to hear from you!"),
