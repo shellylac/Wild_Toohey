@@ -45,10 +45,15 @@ ui <- tagList(
     ),
 
     tags$script(HTML("
-      Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
-        $('a[data-value=\"' + tabName + '\"]').tab('show');
-      });
-    "))
+    Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
+    // First switch the tab
+    $('a[data-value=\"' + tabName + '\"]').tab('show');
+
+    // Then scroll to the top of the page
+    window.scrollTo(0, 0);
+    });
+                     ")
+                )
   ),
 
   page_navbar(
