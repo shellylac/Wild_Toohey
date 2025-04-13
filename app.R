@@ -29,6 +29,18 @@ ui <- tagList(
           margin-top: auto;
         }
 
+        .rounded-accordion .accordion-button {
+        border-radius: 0.375rem;
+      }
+      .rounded-accordion .accordion-item {
+        border-radius: 0.375rem;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+      }
+      .rounded-accordion .accordion-item:last-of-type {
+        margin-bottom: 0;
+      }
+
       ")
     ),
 
@@ -60,6 +72,7 @@ ui <- tagList(
           div(class = "panel-body",
               accordion(
                 open = TRUE,
+                class = "rounded-accordion", # Add a class for custom styling
                 accordion_panel(
                   "Species Selection",
                   speciesSelectionUI("species")
