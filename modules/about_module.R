@@ -13,19 +13,21 @@ aboutModuleUI <- function(id) {
     ),
 
     div(
+      style = "margin-bottom: 2rem;", # Add more space below the accordion
       # Feature sections as accordions
       accordion(
         id = ns("about_accordion"),
         multiple = TRUE, # Allow multiple panels to be open simultaneously if user wants
         open = FALSE, # All closed by default
+        class = "rounded-accordion", # Add a class for custom styling
 
         # DATA ACCORDION PANEL ----
         accordion_panel(
           title = div(
             bsicons::bs_icon("clipboard-data-fill", size = "1.5rem"),
-            span("Data Source", class = "ms-2")
+            span("About the data", class = "ms-2")
           ),
-          value = "data_source",
+          value = "about_the_data",
           p("The data behind Wild Toohey comes from the ",
             a(href = "https://www.ala.org.au/about-ala/", "Atlas of Living Australia (ALA)"),
             ", a collaborative, digital, open infrastructure that pulls together Australian biodiversity data from multiple sources including scientific surveys, citizen science contributions, and historical sources, making it accessible and reusable. The ALA aggregates data from multiple databases, including iNaturalist, eBird, BirdLife Australia, FrogID, Koala Count, WildNet, and many others."
@@ -57,6 +59,21 @@ aboutModuleUI <- function(id) {
           value = "acknowledgements",
           p("Wild Toohey gratefully acknowledges and pays respect to the traditional owners of the land on which Toohey Forest stands, including the Turrbal and Yuggera peoples, their culture, and their Elders past, present, and emerging. We respect their continuing culture and the contribution they make to life in Brisbane."),
           p("Wild Toohey would like to thank all the citizen scientists, researchers, and organizations who have recorded wildlife sightings and contributed data to make this project possible.")
+        )
+      )
+    ),
+
+    # Add contact card below the accordion
+    card(
+      card_header(
+        bsicons::bs_icon("envelope-fill", size = "1.5rem"),
+        span("Contact Us", class = "ms-2")
+      ),
+      card_body(
+        p("Have suggestions or comments? We'd love to hear from you!"),
+        p(
+          "Email: ",
+          a(href = "mailto:wildtoohey@gmail.com", "wildtoohey@gmail.com")
         )
       )
     )
