@@ -77,7 +77,7 @@ ui <- tagList(
           div(class = "panel-body",
               accordion(
                 open = TRUE,
-                class = "rounded-accordion", # Add a class for custom styling
+
                 accordion_panel(
                   "Species Selection",
                   speciesSelectionUI("species")
