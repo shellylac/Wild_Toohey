@@ -43,7 +43,7 @@ aboutModuleUI <- function(id) {
         accordion_panel(
           title = div(
             bsicons::bs_icon("bar-chart-fill", size = "1.5rem"),
-            span("Interpreting trends and hotspots", class = "ms-2")
+            span("Interpreting the data", class = "ms-2")
           ),
           value = "trends",
           p("The data for Wild Toohey come from community-submitted records of species sightings."),
