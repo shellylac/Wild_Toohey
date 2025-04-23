@@ -117,15 +117,6 @@ ui <- tagList(
       )
     ),
 
-    # # Fact File panel with footer - Leave for now
-    # nav_panel(
-    #   title = "Fact File",
-    #   div(class = "panel-content",
-    #       div(class = "panel-body", factFileModuleUI("factfile")),
-    #       div(class = "site-footer", create_footer())
-    #   )
-    # ),
-
     # About panel with footer
     nav_panel(
       title = "About",
@@ -168,15 +159,9 @@ server <- function(input, output, session) {
                     filtered_data = species_data$filtered_data,
                     taxa_level = species_data$taxa_level)
 
-  # Use species list table to get table
-  specieslistModuleServer("specieslist",
-                          species_list)
-
-  # Leave out fact file for now
-  # factFileModuleServer("factfile")
+  specieslistModuleServer("specieslist", species_list)
 
   aboutModuleServer("about")
-
 }
 
 shinyApp(ui, server)
