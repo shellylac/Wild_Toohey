@@ -16,6 +16,11 @@ ui <- tagList(
           height: 100% !important;
         }
 
+        /* Ensure maps don't shrink when user choose custom date range */
+        .leaflet-container {
+        min-height: 500px !important;
+        }
+
         /* Footer styling */
         .panel-content {
           display: flex;
@@ -31,15 +36,17 @@ ui <- tagList(
 
         .rounded-accordion .accordion-button {
         border-radius: 0.375rem;
-      }
-      .rounded-accordion .accordion-item {
+        }
+
+        .rounded-accordion .accordion-item {
         border-radius: 0.375rem;
         overflow: hidden;
         margin-bottom: 0.5rem;
-      }
-      .rounded-accordion .accordion-item:last-of-type {
+        }
+
+        .rounded-accordion .accordion-item:last-of-type {
         margin-bottom: 0;
-      }
+        }
 
       ")
     ),
