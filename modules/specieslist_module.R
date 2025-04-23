@@ -4,7 +4,7 @@ specieslistModuleUI <- function(id) {
   card(
     card_body(
       layout_columns(
-        col_widths = c(4, 8),  # Left column takes 8/12, right column takes 4/12
+        col_widths = c(4, 8),  # Left column takes 4/12, right column takes 8/12
        # Wrap the value box in a div with max-width
         div(
           style = "max-height: 80px;",  # Adjust this value as needed
@@ -23,7 +23,12 @@ specieslistModuleUI <- function(id) {
         downloadButton(ns("download_data"), "Download species list",
                        class = "btn-sm")
       ),
-      DT::dataTableOutput(ns("species_list_table"))
+
+      div(
+        class = "datatable-container",
+        style = "min-height: 450px; max-height: 600px; overflow-y: auto;",
+        DT::dataTableOutput(ns("species_list_table"))
+      )
     )
   )
 }
@@ -103,7 +108,8 @@ specieslistModuleServer <- function(id, species_list) {
 
     output$species_list_table <- DT::renderDataTable({
       create_DT_table(filtered_data())
-    })
+      })
+
 
   })
 }
