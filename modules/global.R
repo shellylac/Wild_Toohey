@@ -75,7 +75,7 @@ toohey_outline <- sf::st_read(boundary_url)
 species_list <- toohey_occs |>
   dplyr::group_by(class_common, class, order, family, species, vernacular_name,
                   wikipedia_url, image_url) |>
-  count(name = "Recorded sightings") |>
+  count(name = "Sightings") |>
   ungroup() |>
   rename(Class = class,  `Common name` = vernacular_name) |>
   mutate(
@@ -85,15 +85,16 @@ species_list <- toohey_occs |>
     Taxonomy = paste0("<p style=\"font-size:14px;\">",
                       "<a href=\"", wikipedia_url, "\" target=\"_blank\">",
                       `Common name`, "</a>", "<br>",
-                      "<b>Order</b>: ", Class, "<br>",
+                      "<b>Class</b>: ", Class, "<br>",
                       "<b>Order</b>: ", order, "<br>",
                       "<b>Family</b>: ", family, "<br>",
                       "<b>Species</b>: <em>", species,
                       "</em></p>")
   ) |>
   # mutate(Class = as.factor(Class)) |>
-  select(Class, `Common name`, Image, Taxonomy, `Recorded sightings`) |>
-  arrange(desc(`Recorded sightings`),
+  arrange(desc(`Sightings`),
           factor(Class, levels = c('Aves', 'Mammalia', 'Reptilia', 'Amphibia')),
-          `Common name`)
+          `Common name`) |>
+  select(Class, Taxonomy, Image, `Sightings`)
+
 
