@@ -18,7 +18,7 @@ ui <- tagList(
 
         /* Ensure maps don't shrink when user choose custom date range */
         .leaflet-container {
-        min-height: 500px !important;
+        min-height: 400px !important;
         }
 
         /* Footer styling */
@@ -58,8 +58,8 @@ ui <- tagList(
 
     // Then scroll to the top of the page
     window.scrollTo(0, 0);
-    });
-                     ")
+    });"
+                     )
                 )
   ),
 
@@ -96,7 +96,7 @@ ui <- tagList(
                   nav_panel("Finder", mapModuleUI("finder")),
                   nav_panel("Trends",
                             card(
-                              full_screen = TRUE,   # Only this card can be expanded
+                              full_screen = TRUE,   # This card can be expanded independently
                               statsModuleUI("stats"))
                             ),
                   nav_panel("Hotspots", heatmapModuleUI("heatmap"))
