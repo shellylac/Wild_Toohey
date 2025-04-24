@@ -4,52 +4,7 @@ sapply(modules, source)
 
 ui <- tagList(
   tags$head(
-    tags$style(
-      HTML("
-        /* Make cards fill the width of their container */
-        .card {
-          width: 100%;
-        }
-        /* Ensure map and visualizations are responsive */
-        .leaflet, .plotly, .ggplot {
-          width: 100% !important;
-          height: 100% !important;
-        }
-
-        /* Ensure maps don't shrink when user choose custom date range */
-        .leaflet-container {
-        min-height: 400px !important;
-        }
-
-        /* Footer styling */
-        .panel-content {
-          display: flex;
-          flex-direction: column;
-          min-height: calc(100vh - 56px); /* Adjust based on your navbar height */
-        }
-        .panel-body {
-          flex: 1;
-        }
-        .site-footer {
-          margin-top: auto;
-        }
-
-        .rounded-accordion .accordion-button {
-        border-radius: 0.375rem;
-        }
-
-        .rounded-accordion .accordion-item {
-        border-radius: 0.375rem;
-        overflow: hidden;
-        margin-bottom: 0.5rem;
-        }
-
-        .rounded-accordion .accordion-item:last-of-type {
-        margin-bottom: 0;
-        }
-
-      ")
-    ),
+    tags$link(rel = "stylesheet", type = "text/css", href = "wt_custom.css"),
 
     tags$script(HTML("
     Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
