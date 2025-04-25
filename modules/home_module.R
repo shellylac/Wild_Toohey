@@ -48,11 +48,12 @@ homeModuleUI <- function(id) {
       style = "margin-top: 30px; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;",
       h4("How to get started with Wild Toohey:"),
       div(
-        # style = "text-align: left; display: inline-block;",
-        style = "color: var(--wt-text-dark); border-bottom: 2px solid var(--wt-secondary); padding-bottom: 8px; display: inline-block;"),
+        style = "color: var(--wt-text-dark); border-bottom: 2px solid var(--wt-secondary); padding-bottom: 8px; display: inline-block;"
+        ),
       div(
-        style = "text-align: left; display: inline-block; background-color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);",
+        style = "text-align: left; display: inline-block; background-color: white; padding: 10px 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);",
         tags$ol(
+          # style="list-style-type:none",
           tags$li(strong("Select a species"), ": in the Explorer tab by common name or taxonomy."),
           tags$li(strong("View sightings"), ": in the Finder interactive map."),
           tags$li(strong("Discover patterns"), ": explore past Trends and spatial Hotspots."),
