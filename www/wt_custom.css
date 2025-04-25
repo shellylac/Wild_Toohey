@@ -55,7 +55,7 @@ body {
   transition: transform 0.2s, box-shadow 0.2s;
   background-color: var(--wt-bg-card);
   overflow: hidden;
-  margin-bottom: 1.0rem;
+  margin-bottom: 0.8rem;
 }
 
 .card:hover {
@@ -68,17 +68,30 @@ body {
   color: var(--wt-text-dark);
   font-weight: 500;
   border-bottom: none;
-  padding: 1rem 1.25rem;
+  padding: 1rem 1.1rem;
 }
 
 .card-body {
-  padding: 1.5rem;
+  padding: 0.8rem;
+}
+
+.intro-card {
+ text-align: center;
+ margin-bottom: 15px;
+ border-left: 4px solid var(--wt-primary);
+ border-right: 4px solid var(--wt-primary);
+}
+
+.about-intro-card {
+ margin-bottom: 15px;
+ border-left: 4px solid var(--wt-primary);
+ border-right: 4px solid var(--wt-primary);
 }
 
 /* Feature cards on home page */
 .feature-card {
   text-align: center;
-  min-height: 180px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
 }
@@ -136,7 +149,7 @@ body {
   border: 1px solid var(--wt-border);
 }
 
-/* Value boxes
+/* Value boxes*/
 .bslib-value-box {
   background-color: var(--wt-bg-card) !important;
   border-radius: 8px !important;
@@ -148,7 +161,7 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
 }
-*/
+
 
 /* Button styling */
 .btn-primary {
