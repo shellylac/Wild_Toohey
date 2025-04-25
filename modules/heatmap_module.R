@@ -58,8 +58,8 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
 
       tags$div(
         # Grey background to legend
-        style = "display: inline-block; padding: 6px 8px; background: #e0e0e0; background: rgba(224,224,224,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
+        style = "display: inline-block; padding: 5px 6px; background: #e0e0e0; background: rgba(224,224,224,0.8);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2); border-radius: 5px;",
         tags$div(style = "font-weight: bold; font-size: 0.8em; margin-bottom: 2px;",
                  paste0("Occurrence density - ", current_title)
                  ),
@@ -70,10 +70,10 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
             tags$div(
               style = "display: flex; align-items: center; margin-right: 10px;",
               tags$div(
-                style = sprintf("width: 12px; height: 12px; background: %s; margin-right: 3px;",
+                style = sprintf("width: 10px; height: 10px; background: %s; margin-right: 1px;",
                                 rev(heatmap_colors)[i])
               ),
-              tags$div(labels[i], style = "font-size: 0.7em;")
+              tags$div(labels[i], style = "font-size: 0.6em;")
             )
           })
         )

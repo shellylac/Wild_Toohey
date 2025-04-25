@@ -30,7 +30,7 @@ mapModuleUI <- function(id) {
     # Container for the custom legend
     div(
       id = ns("findermap_legend_container"),
-      style = "margin-bottom: 10px; text-align: center;"
+      style = "margin-bottom: 8px; text-align: center;"
     )
   )
 }
@@ -168,17 +168,17 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
 
       legend_items <- lapply(seq_along(colors), function(i) {
         tags$div(
-          style = "display: flex; align-items: center; margin-right: 10px;",
+          style = "display: flex; align-items: center; margin-right: 8px;",
           tags$div(
-            style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 5px;", colors[i])
+            style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 3px;", colors[i])
           ),
           tags$div(HTML(labels[i]), style = "font-size: 0.8em;")
         )
       })
 
       tags$div(
-        style = "display: inline-block; padding: 6px 8px; background: #e0e0e0; background: rgba(224,224,224,0.8);
-          box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;",
+        style = "display: inline-block; padding: 5px 6px; background: #e0e0e0; background: rgba(224,224,224,0.8);
+          box-shadow: 0 0 10px rgba(0,0,0,0.2); border-radius: 5px;",
         tags$div(
           style = "display: flex; align-items: center;",
           legend_items
