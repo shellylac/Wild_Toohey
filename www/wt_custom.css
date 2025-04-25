@@ -1,41 +1,259 @@
-/* Make cards fill the width of their container */
+/* Wild Toohey - Enhanced Nature Theme */
+
+/* Color variables */
+:root {
+  --wt-primary: #465c47;      /* Forest green */
+  --wt-secondary: #7d9883;    /* Light green */
+  --wt-accent: #567258;       /* Bright green */
+  --wt-earth: #795548;        /* Brown */
+  --wt-bg-light: #F5F8EE;     /* Light off-white with green tint */
+  --wt-bg-card: #ffffff;      /* Card backgrounds */
+  --wt-text-dark: #212121;    /* Main text */
+  --wt-text-muted: #757575;   /* Secondary text */
+  --wt-border: #E0E0E0;       /* Light border */
+}
+
+/* Base styling */
+body {
+  background-color: var(--wt-bg-light);
+  /* This inserts wavy line background SVG graphic on each page - don't use this for now.
+  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20,20 Q30,10 40,20 T60,20 T80,20" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,40 Q30,30 40,40 T60,40 T80,40" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,60 Q30,50 40,60 T60,60 T80,60" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,80 Q30,70 40,80 T60,80 T80,80" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/></svg>');
+  */
+  color: var(--wt-text-dark);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: var(--wt-primary) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-link {
+  color: #F5F8EE !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-bottom: 3px solid #F5F8EE !important;
+}
+
+/* Enhanced card styling */
 .card {
-    width: 100%;
-  }
-  /* Ensure map and visualizations are responsive */
-  .leaflet, .plotly, .ggplot {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  /* Ensure maps don't shrink when user choose custom date range */
-  .leaflet-container {
-  min-height: 400px !important;
-  }
-
-  /* Footer styling */
-  .panel-content {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 56px); /* Adjust based on your navbar height */
-  }
-  .panel-body {
-    flex: 1;
-  }
-  .site-footer {
-    margin-top: auto;
-  }
-
-  .rounded-accordion .accordion-button {
-  border-radius: 0.375rem;
-  }
-
-  .rounded-accordion .accordion-item {
-  border-radius: 0.375rem;
+  width: 100%;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: var(--wt-bg-card);
   overflow: hidden;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.0rem;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-dark);
+  font-weight: 500;
+  border-bottom: none;
+  padding: 1rem 1.25rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Feature cards on home page */
+.feature-card {
+  text-align: center;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card .card-header {
+  background-color: var(--wt-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.feature-card .card-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/* Accordion styling */
+.accordion {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border: none;
+  margin-bottom: 4px;
+}
+
+.rounded-accordion .accordion-button {
+  border-radius: 8px;
+  background-color: var(--wt-bg-light);
+  color: var(--wt-text-dark);
+  font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-dark);
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+}
+
+/* Map and visualization containers */
+.leaflet-container,
+.plotly,
+.ggplot {
+  width: 100% !important;
+  min-height: 400px !important;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--wt-border);
+}
+
+/* Value boxes
+.bslib-value-box {
+  background-color: var(--wt-bg-card) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bslib-value-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+}
+*/
+
+/* Button styling */
+.btn-primary {
+  background-color: var(--wt-primary);
+  border-color: var(--wt-primary);
+}
+
+.btn-primary:hover {
+  background-color: #175616;
+  border-color: #175616;
+}
+
+.btn-sm {
+  border-radius: 4px;
+}
+
+/* Table styling */
+.datatable-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dataTable thead th {
+  background-color: var(--wt-secondary) !important;
+  color: var(--wt-text-dark) !important;
+  border-bottom: none !important;
+}
+
+.dataTable tbody tr:hover {
+  background-color: rgba(129, 199, 132, 0.1) !important;
+}
+
+/* Footer styling */
+.site-footer {
+  background-color: var(--wt-bg-light);
+  padding: 1.0rem 0;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: var(--wt-text-dark);
+  text-decoration: none;
+  margin: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  color: var(--wt-primary);
+}
+
+/* Ensure maps don't shrink */
+.leaflet-container {
+  min-height: 400px !important;
+}
+
+/* Panel content layout */
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 56px); /* Adjust based on navbar height */
+}
+
+.panel-body {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* Tabs styling */
+.nav-underline .nav-link {
+  color: var(--wt-text-dark);
+  font-weight: 500;
+}
+
+.nav-underline .nav-link.active {
+  color: var(--wt-primary);
+  border-bottom-color: var(--wt-primary);
+}
+
+/* Logo container styling */
+.logo-container {
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+              url('data:image/svg+xml;utf8,<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M20,20 Q40,0 60,20 T100,20 T140,20 T180,20" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,60 Q40,40 60,60 T100,60 T140,60 T180,60" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,100 Q40,80 60,100 T100,100 T140,100 T180,100" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,140 Q40,120 60,140 T100,140 T140,140 T180,140" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,180 Q40,160 60,180 T100,180 T140,180 T180,180" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/></svg>');
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .panel-body {
+    padding: 1rem;
   }
 
-  .rounded-accordion .accordion-item:last-of-type {
-  margin-bottom: 0;
+  .card-body {
+    padding: 1rem;
   }
+
+  .logo-container {
+    margin: 15px 0 20px 0;
+  }
+}

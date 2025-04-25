@@ -7,6 +7,7 @@ homeModuleUI <- function(id) {
   div(
     # Logo section
     div(
+      class = "logo-container",
       style = "display: flex; align-items: center; justify-content: center; margin: 30px 0 40px 0; padding: 15px;",
       div(
         style = "padding: 10px; border-radius: 8px; background-color: rgba(255, 255, 255, 0.8);",
@@ -14,15 +15,18 @@ homeModuleUI <- function(id) {
       )
     ),
 
-    card(
-      card_body(
-        div(
-          style = "text-align: center; margin-bottom: 20px;",
-          h3("Love wildlife? Love Toohey Forest?", style = "font-size: 1.2em;"),
-          h3("Then you'll love Wild Toohey", style = "font-size: 1.2em;"),
-          p("Wild Toohey harnesses publicly available species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants."),
-          p("So grab your bino's and let Wild Toohey guide you to your next wildlife encounter!")
-        )
+   card(
+     class = "intro-card",
+     card_body(
+       div(
+         style = "text-align: center; margin-bottom: 20px;",
+         h3("Love wildlife? Love Toohey Forest?",
+            style = "font-size: 1.4em; color: var(--wt-primary); margin-bottom: 0.5rem;"),
+         h3("Then you'll love Wild Toohey",
+            style = "font-size: 1.4em; color: var(--wt-primary); margin-bottom: 1.5rem;"),
+         p("Wild Toohey harnesses publicly available species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants."),
+         p("So grab your bino's and let Wild Toohey guide you to your next wildlife encounter!")
+       )
       )
     ),
 
@@ -34,16 +38,21 @@ homeModuleUI <- function(id) {
         "Get Started",
         icon = icon("arrow-right"),
         class = "btn-lg btn-primary",
-        style = "margin-top: 20px;"
+        # style = "margin-top: 20px;"
+        style = "margin-top: 20px; padding: 10px 24px; font-weight: 600; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.2s ease;"
+
       )
     ),
 
 
    div(
       style = "margin-top: 30px; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;",
-     h4("How to get started with Wild Toohey:"),
+      h4("How to get started with Wild Toohey:"),
       div(
-        style = "text-align: left; display: inline-block;",
+        # style = "text-align: left; display: inline-block;",
+        style = "color: var(--wt-text-dark); border-bottom: 2px solid var(--wt-secondary); padding-bottom: 8px; display: inline-block;"),
+      div(
+        style = "text-align: left; display: inline-block; background-color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);",
         tags$ol(
           tags$li(strong("Select a species"), ": in the Explorer tab by common name or taxonomy."),
           tags$li(strong("View sightings"), ": in the Finder interactive map."),
@@ -60,6 +69,7 @@ homeModuleUI <- function(id) {
        width = "250px",
        fill = FALSE,
        card(
+         class = "feature-card",
          card_header(
            div(
              class = "d-flex align-items-center",
@@ -72,6 +82,7 @@ homeModuleUI <- function(id) {
          )
        ),
        card(
+         class = "feature-card",
          card_header(
            div(
              class = "d-flex align-items-center",
@@ -84,6 +95,7 @@ homeModuleUI <- function(id) {
          )
        ),
        card(
+         class = "feature-card",
          card_header(
            div(
              class = "d-flex align-items-center",
