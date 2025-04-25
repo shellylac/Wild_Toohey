@@ -7,7 +7,6 @@ aboutModuleUI <- function(id) {
   tagList(
     card(
       class = "about-intro-card",
-      style = "border-left: 4px solid var(--wt-primary);",
       card_body(
         div(
           style = "text-align: left; margin-bottom: 20px;",

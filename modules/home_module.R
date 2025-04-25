@@ -19,7 +19,6 @@ homeModuleUI <- function(id) {
      class = "intro-card",
      card_body(
        div(
-         style = "text-align: center; margin-bottom: 20px;",
          h3("Love wildlife? Love Toohey Forest?",
             style = "font-size: 1.4em; color: var(--wt-primary); margin-bottom: 0.5rem;"),
          h3("Then you'll love Wild Toohey",
