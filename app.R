@@ -19,7 +19,10 @@ ui <- tagList(
   ),
 
   page_navbar(
-    title = "Wild Toohey",
+    title = span(
+      style = "color: #F5F8EE;",
+      "Wild Toohey"
+    ),
     id = "navbarpage",
 
     # Set the initial tab to "Explorer" or any other tab ID
