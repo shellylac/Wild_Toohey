@@ -81,7 +81,7 @@ specieslistModuleServer <- function(id, species_list) {
           title = box_settings$title,
           value = species_count(),
           showcase = box_settings$icon,
-          full_screen = TRUE
+          full_screen = FALSE
         )
       )
     })
