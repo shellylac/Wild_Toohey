@@ -9,6 +9,7 @@
   --wt-bg-light: #F5F8EE;     /* Light off-white with green tint */
   --wt-bg-card: #ffffff;      /* Card backgrounds */
   --wt-text-dark: #212121;    /* Main text */
+  --wt-text-light: #F5F8EE;     /* Light off-white with green tint */
   --wt-text-muted: #757575;   /* Secondary text */
   --wt-border: #E0E0E0;       /* Light border */
 }
@@ -16,9 +17,6 @@
 /* Base styling */
 body {
   background-color: var(--wt-bg-light);
-  /* This inserts wavy line background SVG graphic on each page - don't use this for now.
-  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20,20 Q30,10 40,20 T60,20 T80,20" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,40 Q30,30 40,40 T60,40 T80,40" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,60 Q30,50 40,60 T60,60 T80,60" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/><path d="M20,80 Q30,70 40,80 T60,80 T80,80" stroke="%2381C784" stroke-width="1" fill="none" opacity="0.1"/></svg>');
-  */
   color: var(--wt-text-dark);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
@@ -31,7 +29,7 @@ body {
 }
 
 .navbar .nav-link {
-  color: #F5F8EE !important;
+  color: var(--wt-text-light) !important;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -43,7 +41,7 @@ body {
 
 .navbar .nav-link.active {
   background-color: rgba(255, 255, 255, 0.2) !important;
-  border-bottom: 3px solid #F5F8EE !important;
+  border-bottom: 3px solid var(--wt-text-light) !important;
 }
 
 /* Enhanced card styling */
@@ -100,6 +98,7 @@ body {
   background-color: var(--wt-primary);
   color: white;
   font-weight: 600;
+  padding: 0.75rem 1.25rem;
 }
 
 .feature-card .card-body {
@@ -107,6 +106,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  padding: 0.75rem;
 }
 
 /* Accordion styling */
@@ -123,15 +123,16 @@ body {
 
 .rounded-accordion .accordion-button {
   border-radius: 8px;
-  background-color: var(--wt-bg-light);
-  color: var(--wt-text-dark);
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-light);
   font-weight: 500;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: var(--wt-secondary);
-  color: var(--wt-text-dark);
+  background-color: var(--wt-accent);
+  color: var(--wt-text-light);
 }
+
 
 .accordion-button:focus {
   box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
@@ -142,7 +143,7 @@ body {
 .plotly,
 .ggplot {
   width: 100% !important;
-  min-height: 400px !important;
+  min-height: 300px !important;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -189,7 +190,7 @@ body {
 /* Target the actual classes DT uses */
 table.dataTable thead th {
   background-color: var(--wt-secondary) !important;
-  color: #F5F8EE !important;
+  color: var(--wt-text-light) !important;
   border-bottom: none !important;
 }
 
@@ -268,7 +269,7 @@ table.dataTable.dataTables_info {
 
 /* Ensure maps don't shrink */
 .leaflet-container {
-  min-height: 400px !important;
+  min-height: 300px !important;
 }
 
 /* Panel content layout */
@@ -285,7 +286,7 @@ table.dataTable.dataTables_info {
 
 /* Tabs styling */
 .nav-underline .nav-link {
-  color: var(--wt-text-dark);
+  color: var(--wt-text-light);
   font-weight: 500;
 }
 
@@ -296,8 +297,7 @@ table.dataTable.dataTables_info {
 
 /* Logo container styling */
 .logo-container {
-  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
-              url('data:image/svg+xml;utf8,<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M20,20 Q40,0 60,20 T100,20 T140,20 T180,20" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,60 Q40,40 60,60 T100,60 T140,60 T180,60" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,100 Q40,80 60,100 T100,100 T140,100 T180,100" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,140 Q40,120 60,140 T100,140 T140,140 T180,140" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/><path d="M20,180 Q40,160 60,180 T100,180 T140,180 T180,180" stroke="%2381C784" stroke-width="2" fill="none" opacity="0.2"/></svg>');
+  background: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
