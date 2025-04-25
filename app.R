@@ -29,7 +29,7 @@ ui <- tagList(
       title = bsicons::bs_icon("house-fill"),
       div(class = "panel-content",
           div(class = "panel-body", homeModuleUI("home")),
-          div(class = "site-footer", create_footer())
+          div(create_footer())
       )
     ),
 
@@ -58,7 +58,7 @@ ui <- tagList(
                 )
               )
           ),
-          div(class = "site-footer", create_footer())
+          div(create_footer())
       )
     ),
 
@@ -68,7 +68,7 @@ ui <- tagList(
       title = "Species List",
       div(class = "panel-content",
           div(class = "panel-body", specieslistModuleUI("specieslist")),
-          div(class = "site-footer", create_footer())
+          div(create_footer())
       )
     ),
 
@@ -77,7 +77,7 @@ ui <- tagList(
       title = "About",
       div(class = "panel-content",
           div(class = "panel-body", aboutModuleUI("about")),
-          div(class = "site-footer", create_footer())
+          div(create_footer())
       )
     )
   )

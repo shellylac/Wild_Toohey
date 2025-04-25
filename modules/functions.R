@@ -240,61 +240,62 @@ get_value_box_settings <- function(class_name) {
 
 
 # Footer function to generate a consistent footer for all nav_panel
+# Enhanced footer function
 create_footer <- function() {
   div(
-    style = "margin-top: 10px; padding: 15px 10px; border-top: 1px solid #eee; text-align: center; background-color: #f8f9fa;",
+    class = "site-footer",
 
-    # Links section - using flexbox with wrap
+    # Links section
     div(
-      style = "display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px;",
+      class = "footer-links-container",
 
-      # Contact Information - simplified for mobile
+      # Contact Information
       a(
         href = "mailto:wildtoohey@gmail.com",
+        class = "footer-link",
         div(
-          style = "display: inline-flex; align-items: center; padding: 8px 12px; color: #333; text-decoration: none; background-color: #fff; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);",
-          icon("envelope", style = "font-size: 1.2rem; margin-right: 6px;"),
+          icon("envelope", class = "footer-link-icon"),
           span("Contact"),
           title = "Email us with questions or feedback"
         )
       ),
 
-      # iNaturalist Link - simplified for mobile
+      # iNaturalist Link
       a(
         href = "https://www.inaturalist.org",
         target = "_blank",
+        class = "footer-link",
         div(
-          style = "display: inline-flex; align-items: center; padding: 8px 12px; color: #333; text-decoration: none; background-color: #fff; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);",
-          icon("leaf", style = "font-size: 1.2rem; margin-right: 6px;"),
+          icon("leaf", class = "footer-link-icon"),
           span("Log Sightings"),
           title = "Contribute your wildlife sightings from Toohey Forest to iNaturalist"
         )
       ),
 
-      # GitHub Link - simplified for mobile
+      # GitHub Link
       a(
         href = "https://github.com/shellylac/Wild_Toohey",
         target = "_blank",
+        class = "footer-link",
         div(
-          style = "display: inline-flex; align-items: center; padding: 8px 12px; color: #333; text-decoration: none; background-color: #fff; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);",
-          icon("github", style = "font-size: 1.2rem; margin-right: 6px;"),
+          icon("github", class = "footer-link-icon"),
           span("View Code"),
           title = "View the source code for this application on GitHub"
         )
       )
     ),
 
-    # Copyright information - simplified
-    p(
-      style = "margin: 10px 0 0 0; font-size: 0.85rem; color: #666;",
-      paste("© ", format(Sys.Date(), "%Y"), " Wild Toohey")
-    ),
-
-    # Data attribution - on separate line for mobile
-    p(
-      style = "margin: 5px 0 0 0; font-size: 0.8rem; color: #888;",
-      "Data sourced from Atlas of Living Australia"
+    # Copyright and attribution info
+    div(
+      class = "footer-copyright-container",
+      p(
+        class = "footer-copyright",
+        paste("© ", format(Sys.Date(), "%Y"), " Wild Toohey")
+      ),
+      p(
+        class = "footer-attribution",
+        "Data sourced from Atlas of Living Australia"
+      )
     )
   )
 }
-

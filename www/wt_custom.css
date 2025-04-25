@@ -184,8 +184,19 @@ body {
 
 /* Footer styling */
 .site-footer {
+  margin-top: 10px;
+  padding: 20px 15px;
+  border-top: 1px solid var(--wt-border);
+  text-align: center;
   background-color: var(--wt-bg-light);
-  padding: 1.0rem 0;
+}
+
+.footer-links-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 .footer-link {
@@ -205,6 +216,33 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
   color: var(--wt-primary);
+}
+
+.footer-link-icon {
+  font-size: 1.2rem;
+  margin-right: 8px;
+  color: var(--wt-primary);
+}
+
+.footer-copyright-container {
+  background-color: white;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.footer-copyright {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: var(--wt-text-dark);
+}
+
+.footer-attribution {
+  margin: 5px 0 0 0;
+  font-size: 0.8rem;
+  color: var(--wt-text-muted);
 }
 
 /* Ensure maps don't shrink */
