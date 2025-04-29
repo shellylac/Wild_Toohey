@@ -11,7 +11,7 @@ homeModuleUI <- function(id) {
       style = "display: flex; align-items: center; justify-content: center; margin: 30px 0 40px 0; padding: 15px;",
       div(
         style = "padding: 10px; border-radius: 8px; background-color: rgba(255, 255, 255, 0.8);",
-        tags$img(src = "wildtoohey_logo2.png", height = "150px", alt = "Wild Toohey Logo")
+        tags$img(src = "wildtoohey_logo_ma_2.png", width = "200px", alt = "Wild Toohey Logo")
       )
     ),
 
