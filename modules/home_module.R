@@ -16,10 +16,10 @@ homeModuleUI <- function(id) {
      card_body(
        div(
          h3("Love wildlife? Love Toohey Forest?",
-            style = "font-size: 1.4em; color: var(--wt-primary); margin-bottom: 0.5rem;"),
+            style = "font-size: 1.4em; font-weight: bold; color: var(--wt-primary); margin-bottom: 0.5rem;"),
          h3("Then you'll love Wild Toohey",
-            style = "font-size: 1.4em; color: var(--wt-primary); margin-bottom: 1.5rem;"),
-         p("Wild Toohey harnesses publicly available species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants."),
+            style = "font-size: 1.4em; font-weight: bold; color: var(--wt-primary); margin-bottom: 1.5rem;"),
+         p("Wild Toohey harnesses public species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants."),
          p("So grab your bino's and let Wild Toohey guide you to your next wildlife encounter!")
        )
       )
@@ -33,30 +33,30 @@ homeModuleUI <- function(id) {
         "Get Started",
         icon = icon("arrow-right"),
         class = "btn-lg btn-primary",
-        # style = "margin-top: 20px;"
         style = "margin-top: 20px; padding: 10px 24px; font-weight: 600; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.2s ease;"
 
       )
     ),
 
-
+   # Updated code for the "How to get started" section
    div(
-      style = "margin-top: 30px; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;",
-      h4("How to get started with Wild Toohey:"),
-      div(
-        style = "color: var(--wt-text-dark); border-bottom: 2px solid var(--wt-secondary); padding-bottom: 8px; display: inline-block;"
-        ),
-      div(
-        style = "text-align: left; display: inline-block; background-color: white; padding: 10px 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);",
-        tags$ol(
-          # style="list-style-type:none",
-          tags$li(strong("Select a species"), ": in the Explorer tab by common name or taxonomy."),
-          tags$li(strong("View sightings"), ": in the Finder interactive map."),
-          tags$li(strong("Discover patterns"), ": explore past Trends and spatial Hotspots."),
-          tags$li(strong("View the Species List"), ": for species images and information.")
-        )
-      )
-    ),
+     class = "how-to-container",
+     card(
+       class = "how-to-card",
+       card_header(
+         class = "how-to-header",
+         h4("How to get started with Wild Toohey:", class = "how-to-title")
+       ),
+       card_body(
+         tags$ol(
+           tags$li(strong("Select a species"), ": in the Explorer tab by common name or taxonomy."),
+           tags$li(strong("View sightings"), ": in the Finder interactive map."),
+           tags$li(strong("Discover patterns"), ": explore past Trends and spatial Hotspots."),
+           tags$li(strong("View the Species List"), ": for species images and information.")
+         )
+       )
+     )
+   ),
 
    # Feature cards section
    div(
@@ -69,7 +69,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("binoculars-fill", size = "1.5rem"),
+             bsicons::bs_icon("binoculars", size = "1.5rem",  color="#f9a03f"),
              span("Find Wildlife", class = "ms-2")
            )
          ),
@@ -82,7 +82,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("map-fill", size = "1.5rem"),
+             bsicons::bs_icon("map", size = "1.5rem",  color="#f9a03f"),
              span("Get historical insights", class = "ms-2")
            )
          ),
@@ -95,7 +95,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("book-fill", size = "1.5rem"),
+             bsicons::bs_icon("book", size = "1.5rem", color="#f9a03f"),
              span("Species Catalog", class = "ms-2")
            )
          ),
