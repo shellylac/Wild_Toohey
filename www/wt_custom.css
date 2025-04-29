@@ -43,12 +43,6 @@ body::before {
 }
 
 
-/* Add a semi-transparent background to content containers
-.panel-body, .site-footer {
-  background-color: rgba(245, 248, 238, 0.85);
-}
- */
-
 /* Navbar styling */
 .navbar {
   background-color: var(--wt-primary) !important;
@@ -70,6 +64,33 @@ body::before {
   background-color: rgba(255, 255, 255, 0.2) !important;
   border-bottom: 3px solid var(--wt-text-light) !important;
 }
+
+/* Logo styling */
+.wt-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto 30px;
+  max-width: 450px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: var(--wt-bg-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 4px solid var(--wt-accent);
+}
+
+.wt-logo-container:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.wt-logo-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
 
 /* Enhanced card styling */
 .card {
@@ -103,14 +124,12 @@ body::before {
 .intro-card {
  text-align: center;
  margin-bottom: 15px;
- border-left: 4px solid var(--wt-primary);
- border-right: 4px solid var(--wt-primary);
+ border: 4px solid var(--wt-accent);
 }
 
 .about-intro-card {
  margin-bottom: 15px;
- border-left: 4px solid var(--wt-primary);
- border-right: 4px solid var(--wt-primary);
+ border: 4px solid var(--wt-accent);
 }
 
 /* Feature cards on home page */
@@ -247,7 +266,7 @@ table.dataTable.dataTables_info {
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .footer-link {
@@ -259,7 +278,7 @@ table.dataTable.dataTables_info {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   color: var(--wt-text-dark);
   text-decoration: none;
-  margin: 0.25rem;
+  margin: 0.20rem;
   transition: all 0.2s ease;
 }
 
