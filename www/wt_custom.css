@@ -42,13 +42,6 @@ body::before {
   pointer-events: none; /* So it doesn't interfere with clicks */
 }
 
-/*
-.accent-mark {
-  color: var(--wt-accent);
-  font-weight: bold;
-}
-*/
-
 /* Navbar styling */
 .navbar {
   background-color: var(--wt-primary) !important;
@@ -94,7 +87,7 @@ body::before {
   background-color: var(--wt-bg-card);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 4px solid var(--wt-earth); /* Changed to earth color */
+  border: 2px solid var(--wt-secondary);
 }
 
 .wt-logo-container:hover {
@@ -140,13 +133,11 @@ body::before {
 .intro-card {
  text-align: center;
  margin-bottom: 15px;
- border: 4px solid var(--wt-earth);
 }
 
 /* About module specific styling */
 .about-intro-card {
   margin-bottom: 15px;
-  border: 4px solid var(--wt-earth);
   background-color: var(--wt-bg-card);
   border-radius: 8px;
   overflow: hidden;
@@ -381,12 +372,6 @@ table.dataTable.no-footer {
   border-bottom: 2px solid var(--wt-border);
 }
 
-/* Add bottom border (hack the no-footer class) - not working
-table.dataTable.dataTables_info {
-  padding-top: 0.5rem;
-}
- */
-
 
 /* Footer styling */
 .site-footer {
@@ -439,17 +424,11 @@ table.dataTable.dataTables_info {
 
 .footer-copyright {
   margin: 5px 0;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--wt-text-light);
   text-shadow: 1.2px 1.2px var(--wt-text-dark);
 }
 
-.footer-attribution {
-  margin: 5px 0 0 0;
-  font-size: 0.8rem;
-  color: var(--wt-text-light);
-  text-shadow: 1.2px 1.2px var(--wt-text-dark);
-}
 
 /* Ensure maps don't shrink */
 .leaflet-container {
@@ -465,29 +444,23 @@ table.dataTable.dataTables_info {
 
 .panel-body {
   flex: 1;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
 }
 
 /* Tabs styling */
 .nav-underline .nav-link {
-  color: var(--wt-text-light);
-  font-weight: 500;
+  color: var(--wt-text-dark);
+  font-size: 1.0rem;
 }
 
 .nav-underline .nav-link.active {
-  color: var(--wt-primary);
-  border-bottom-color: var(--wt-primary);
+  color: var(--wt-text-light);
+  border-bottom-color: var(--wt-accent);
+  font-size: 1.0rem;
 }
 
-/* Logo container styling
-.logo-container {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-*/
 
-/* Responsive adjustments */
+/* Responsive adjustments
 @media (max-width: 768px) {
   .panel-body {
     padding: 1rem;
@@ -501,3 +474,4 @@ table.dataTable.dataTables_info {
     margin: 15px 0 20px 0;
   }
 }
+*/
