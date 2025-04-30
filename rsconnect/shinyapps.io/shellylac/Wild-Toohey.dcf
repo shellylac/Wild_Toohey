@@ -5,7 +5,7 @@ account: shellylac
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14504721
-bundleId: 10161969
+bundleId: 10175906
 url: https://shellylac.shinyapps.io/Wild-Toohey/
 version: 1
 asMultiple: FALSE
