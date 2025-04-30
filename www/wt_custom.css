@@ -143,9 +143,39 @@ body::before {
  border: 4px solid var(--wt-earth);
 }
 
+/* About module specific styling */
 .about-intro-card {
- margin-bottom: 15px;
- border: 4px solid var(--wt-earth);
+  margin-bottom: 15px;
+  border: 4px solid var(--wt-earth);
+  background-color: var(--wt-bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.about-intro-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.about-intro-text {
+  display: block;
+  text-align: center;
+  border-bottom: 2px solid var(--wt-accent);
+  padding-bottom: 5px;
+  margin: 0 auto 1rem auto;
+  color: var(--wt-primary);
+  font-weight: 400;
+  width: fit-content;
+}
+
+/* Accordion panel content for about module */
+.about-accordion-content {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  padding: 15px;  /* Add explicit padding */
 }
 
 /* How-to-get-started card styling */
@@ -227,21 +257,67 @@ body::before {
   margin-bottom: 4px;
 }
 
+.accordion .accordion-header {
+  color: var(--wt-primary);
+}
+
 .rounded-accordion .accordion-button {
   border-radius: 8px;
-  background-color: var(--wt-secondary);
+  background-color: var(--wt-primary);
   color: var(--wt-text-light);
   font-weight: 500;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: var(--wt-accent);
-  color: var(--wt-text-light);
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-dark);
 }
-
 
 .accordion-button:focus {
   box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+}
+
+/* Control accordion arrow colors */
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23F5F8EE'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212121'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Contact card styling */
+.contact-card {
+  margin-top: 1rem;
+}
+
+.contact-card-header {
+  background-color: var(--wt-primary);
+  padding: 1rem;
+  color: var(--wt-text-light);
+}
+
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+
+/* Link styling in the about module */
+.about-link {
+  color: var(--wt-primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid var(--wt-accent);
+}
+
+.about-link:hover {
+  color: var(--wt-accent);
+  text-decoration: underline;
 }
 
 /* Map and visualization containers */
