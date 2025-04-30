@@ -291,10 +291,6 @@ create_footer <- function() {
       p(
         class = "footer-copyright",
         paste("© ", format(Sys.Date(), "%Y"), " Wild Toohey")
-      ),
-      p(
-        class = "footer-attribution",
-        "Data sourced from Atlas of Living Australia"
       )
     )
   )
