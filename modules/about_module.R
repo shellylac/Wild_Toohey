@@ -11,7 +11,7 @@ aboutModuleUI <- function(id) {
       card_body(
         div(
           h3(
-            em("Toohey Forest holds a very special place in my heart!"),
+            em("Toohey Forest holds a special place in my heart!"),
             class = "about-intro-text"
           ),
 
@@ -131,9 +131,9 @@ aboutModuleUI <- function(id) {
       card_body(
         class = "contact-content",
         p(
-          strong("Have suggestions or comments? We'd love to hear from you!"),
+          "Have suggestions or comments? We'd love to hear from you!",
           br(),
-          strong("Email: "),
+          "Email: ",
           a(
             href = "mailto:wildtoohey@gmail.com",
             "wildtoohey@gmail.com",

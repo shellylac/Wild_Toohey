@@ -16,11 +16,13 @@ homeModuleUI <- function(id) {
      card_body(
        div(
          h3("Love wildlife? Love Toohey Forest?",
-            style = "font-size: 1.4em; font-weight: bold; color: var(--wt-primary); margin-bottom: 0.5rem;"),
-         h3("Then you'll love Wild Toohey",
-            style = "font-size: 1.4em; font-weight: bold; color: var(--wt-primary); margin-bottom: 1.5rem;"),
-         p("Wild Toohey harnesses public species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants."),
-         p("So grab your bino's and let Wild Toohey guide you to your next wildlife encounter!")
+            br(),
+            "Then you'll love Wild Toohey",
+            class="about-intro-text"
+            ),
+         p("Wild Toohey harnesses public species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants.",
+           br(),
+           "So grab your bino's and let Wild Toohey guide you to your next wildlife encounter!")
        )
       )
     ),
