@@ -42,9 +42,18 @@ ui <- tagList(
           div(class = "panel-body",
               accordion(
                 open = TRUE,
+                class = "rounded-accordion",
 
                 accordion_panel(
-                  "Species Selection",
+                  title = div(
+                    bsicons::bs_icon(
+                      "pencil-fill",
+                      size = "1.5rem",
+                      color = "#f9a03f"
+                    ),
+                    span("Species selection", class = "ms-2")
+                  ),
+                  value = "Species Selection",
                   speciesSelectionUI("species")
                 ),
                 navset_card_underline(
