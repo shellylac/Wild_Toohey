@@ -1,0 +1,65 @@
+/* Base value box styling (enhancing what you already have) */
+.bslib-value-box {
+  background-color: var(--wt-bg-card) !important;
+  border-radius: 8px !important;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;*/
+  /* transition: transform 0.2s, box-shadow 0.2s; 8?
+}
+
+/* Species list specific value box */
+.species-value-box {
+  display: flex;
+  align-items: center;
+}
+
+/* Updated value box styling */
+.no-hover {
+  /* Remove all hover effects */
+  transition: none !important;
+}
+
+.no-hover:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Override the bslib-value-box shadow and hover */
+.no-hover .bslib-value-box {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.no-hover .bslib-value-box:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Responsive adjustments for medium screens */
+@media (min-width: 768px) and (max-width: 992px) {
+  .species-value-box {
+    flex-direction: column !important;
+    align-items: left !important;
+    text-align: left !important;
+    padding: 0.75rem !important;
+    box-shadow: none !important;
+  }
+
+  .species-value-box .bslib-value-box-showcase {
+    margin-bottom: 0.75rem !important;
+    margin-right: 0 !important;
+  }
+
+  .species-value-box .bslib-value-box-value {
+    font-size: 1.5rem !important;
+  }
+
+  .species-value-box .bslib-value-box-title {
+    font-size: 0.9rem !important;
+  }
+
+  /* Container adjustments */
+  .value-box-container {
+    margin-bottom: 1rem;
+  }
+}
+

@@ -1,12 +1,13 @@
 # These are my TO-DOS
-#> * No data warning message showing up before heatmap is generated.
-#>
-#> * Prettify the app! CSS Styling and colours and images!!
-#>  --- remove all the UI styling to a css file
-#>  --- add a bespoke bslib theme
-#>
-#> ADD RENV for package management
-#> ADD testing!?
+#> Organise CSS file and see if there are superfluous things in there
 #> Refactor code - streamline and make use of functions and constants (unified icon?)
+#> Remove things in comments
+#> README file update
+#> Remove no_modules code and other prelim files
+
+
+#> LATER LIST
+#> ADD RENV for package management
+#> ADD testing
 
 
