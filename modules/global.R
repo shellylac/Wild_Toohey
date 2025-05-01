@@ -16,7 +16,7 @@ library(bsicons)
 library(grDevices)
 }
 
-# SETS DEFAULT colours
+# SETS DEFAULT colours ----
 BLUE = "blue"
 RED = "red"
 ORANGE = "orange"
@@ -27,12 +27,12 @@ STATS_RED = "#FF8080"
 STATS_ORANGE = "#FFD5A5"
 STATS_GREEN = "#B3FFB3"
 
-# Set Default map parameters:
+# Set Default map parameters ----
 DEFAULT_LAT <- -27.5483
 DEFAULT_LONG <- 153.0586
 DEFAULT_ZOOM <- 13
 
-# Read in the occurrence data
+# Read in the occurrence data ----
 data_url <- "https://raw.githubusercontent.com/shellylac/ALA_Toohey_Data/main/output_data/toohey_species_occurrences.rds"
 toohey_occs <- readRDS(url(data_url)) |>
   # Just a catch in case an NA species gets through
@@ -56,22 +56,16 @@ toohey_occs <- readRDS(url(data_url)) |>
                 # Add formatted dates for stats plots
                 year = as.factor(lubridate::year(eventDate)),
                 month = lubridate::month(eventDate, label = TRUE),
-                hour = as.factor(lubridate::hour(hms(eventTime))),
+                hour = as.factor(lubridate::hour(hms(eventTime)))
+                )
 
-  )
 
- # indices <- sample(nrow(toohey_occs), 5)
- # sample_data <- toohey_occs[indices, ]
- # constructive::construct(sample_data)
-
-# Read in the toohey shapefile
+# Read in the toohey shapefile ----
 boundary_url <- "./data/toohey_shapefiles/toohey_forest_boundary.shp"
 toohey_outline <- sf::st_read(boundary_url)
 
 
 # Generate the species list table ----
-## Colour and values for table colour formatting
-
 species_list <- toohey_occs |>
   dplyr::group_by(class_common, class, order, family, species, vernacular_name,
                   wikipedia_url, image_url) |>
@@ -79,9 +73,6 @@ species_list <- toohey_occs |>
   ungroup() |>
   rename(Class = class,  `Common name` = vernacular_name) |>
   mutate(
-    Image = paste0("<img src=\"", image_url,
-                   "\" height=\"120\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
-                   `Common name`, "\"></img>", "</p>"),
     Taxonomy = paste0("<p style=\"font-size:14px;\">",
                       "<a href=\"", wikipedia_url, "\" target=\"_blank\">",
                       `Common name`, "</a>", "<br>",
@@ -89,12 +80,14 @@ species_list <- toohey_occs |>
                       "<b>Order</b>: ", order, "<br>",
                       "<b>Family</b>: ", family, "<br>",
                       "<b>Species</b>: <em>", species,
-                      "</em></p>")
+                      "</em></p>"),
+    Image = paste0("<img src=\"", image_url,
+                   "\" height=\"120\" data-toggle=\"tooltip\" data-placement=\"center\" title=\"",
+                   `Common name`, "\"></img>", "</p>")
   ) |>
-  # mutate(Class = as.factor(Class)) |>
-  arrange(desc(`Sightings`),
+  arrange(desc(Sightings),
           factor(Class, levels = c('Aves', 'Mammalia', 'Reptilia', 'Amphibia')),
           `Common name`) |>
-  select(Class, Taxonomy, Image, `Sightings`)
+  select(Class, Taxonomy, Image, Sightings)
 
 

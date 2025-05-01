@@ -111,7 +111,6 @@ heatmapModuleServer <- function(id, filtered_data, taxa_level) {
             minOpacity = 0.7,
             group = "heatmap_cols"
           )
-        # Removed the legend from the map
       }
       base_map
     })

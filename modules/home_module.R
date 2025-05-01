@@ -18,7 +18,7 @@ homeModuleUI <- function(id) {
          h3("Love wildlife? Love Toohey Forest?",
             br(),
             "Then you'll love Wild Toohey",
-            class="about-intro-text"
+            class = "about-intro-text"
             ),
          p("Wild Toohey harnesses public species occurrence data to help you get up close and personal to Toohey Forest's diverse wildlife inhabitants.",
            br(),
@@ -51,10 +51,10 @@ homeModuleUI <- function(id) {
        ),
        card_body(
          tags$ol(
-           tags$li(strong("Select a species"), ": in the Explorer tab by common name or taxonomy."),
-           tags$li(strong("View sightings"), ": in the Finder interactive map."),
-           tags$li(strong("Discover patterns"), ": explore past Trends and spatial Hotspots."),
-           tags$li(strong("View the Species List"), ": for species images and information.")
+           tags$li(strong("Select a species:"), "in the Explorer tab by common name or taxonomy."),
+           tags$li(strong("View sightings:"), "in the Finder interactive map."),
+           tags$li(strong("Discover patterns:"), "explore past Trends and spatial Hotspots."),
+           tags$li(strong("View the Species List:"), "for species images and information.")
          )
        )
      )
@@ -71,7 +71,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("binoculars", size = "1.5rem",  color="#f9a03f"),
+             bsicons::bs_icon("binoculars", size = "1.5rem",  color = "#f9a03f"),
              span("Find Wildlife", class = "ms-2")
            )
          ),
@@ -84,7 +84,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("map", size = "1.5rem",  color="#f9a03f"),
+             bsicons::bs_icon("map", size = "1.5rem",  color = "#f9a03f"),
              span("Get historical insights", class = "ms-2")
            )
          ),
@@ -97,7 +97,7 @@ homeModuleUI <- function(id) {
          card_header(
            div(
              class = "d-flex align-items-center",
-             bsicons::bs_icon("book", size = "1.5rem", color="#f9a03f"),
+             bsicons::bs_icon("book", size = "1.5rem", color = "#f9a03f"),
              span("Species Catalog", class = "ms-2")
            )
          ),
@@ -114,12 +114,15 @@ homeModuleUI <- function(id) {
 }
 
 # Home Module Server
-homeModuleServer <- function(id, parent_session) {  # Add parent_session parameter
+# Need to add "parent_session" parameter for the Get Started button functionality
+homeModuleServer <- function(id, parent_session) {
+
   moduleServer(id, function(input, output, session) {
     # Handle click on Get Started button
     observeEvent(input$get_started, {
       # Switch to the Explorer tab using the parent session
       parent_session$sendCustomMessage("switch-tab", "Explorer")
     })
+
   })
 }

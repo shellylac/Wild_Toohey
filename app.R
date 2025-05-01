@@ -1,4 +1,4 @@
-# Load all functions, global and module scripts
+# Load all functions, global.R and module scripts
 modules <- list.files("./modules", pattern = "\\.R$", full.names = TRUE)
 sapply(modules, source)
 
@@ -6,6 +6,7 @@ ui <- tagList(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "wt_custom.css"),
 
+    # This script is for the Get Started button functionality
     tags$script(HTML("
     Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
     // First switch the tab
@@ -20,14 +21,15 @@ ui <- tagList(
 
   page_navbar(
     title = span(
-      style = "color: #F5F8EE;",
+      style = "color: #F5F8EE;", #--wt-text-light
       "Wild Toohey"
     ),
     id = "navbarpage",
 
-    # Set the initial tab to "Explorer" or any other tab ID
+    # Set the initial tab to Home (icon)
     selected = bsicons::bs_icon("house-fill"),
 
+    # Home panel with footer
     nav_panel(
       title = bsicons::bs_icon("house-fill"),
       div(class = "panel-content",
@@ -36,6 +38,7 @@ ui <- tagList(
       )
     ),
 
+    # Explorer panel with footer
     nav_panel(
       title = "Explorer",
       div(class = "panel-content",
@@ -76,7 +79,9 @@ ui <- tagList(
     nav_panel(
       title = "Species List",
       div(class = "panel-content",
-          div(class = "panel-body", specieslistModuleUI("specieslist")),
+          div(class = "panel-body",
+              specieslistModuleUI("specieslist")
+              ),
           div(create_footer())
       )
     ),
@@ -85,7 +90,9 @@ ui <- tagList(
     nav_panel(
       title = "About",
       div(class = "panel-content",
-          div(class = "panel-body", aboutModuleUI("about")),
+          div(class = "panel-body",
+              aboutModuleUI("about")
+              ),
           div(create_footer())
       )
     )
@@ -111,7 +118,7 @@ server <- function(input, output, session) {
   # Get filtered data from species selection module
   species_data <- speciesSelectionServer("species")
 
-  # Pass filtered data to other modules
+  # Pass filtered data to other data modules
   mapModuleServer("finder",
                   filtered_data = species_data$filtered_data,
                   update_trigger = map_update_trigger)
@@ -119,6 +126,7 @@ server <- function(input, output, session) {
   heatmapModuleServer("heatmap",
                       filtered_data = species_data$filtered_data,
                       taxa_level = species_data$taxa_level)
+
   statsModuleServer("stats",
                     filtered_data = species_data$filtered_data,
                     taxa_level = species_data$taxa_level)

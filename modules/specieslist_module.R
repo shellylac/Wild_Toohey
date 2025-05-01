@@ -14,8 +14,9 @@ specieslistModuleUI <- function(id) {
     card_body(
       layout_columns(
         col_widths = c(4, 8),  # Left column takes 4/12, right column takes 8/12
-        # Wrap the value box in a div with max-width
+
         uiOutput(ns("dynamic_value_box")),
+
         selectInput(ns("class_selection"),
                     "Filter species list by class:",
                     choices = c('All',
@@ -23,12 +24,15 @@ specieslistModuleUI <- function(id) {
                     selected = 'All',
                     multiple = FALSE)
       ),
-      # Add download button with some styling
+
+      # Add download button
       div(
         style = "display: flex; justify-content: flex-end;",
         downloadButton(ns("download_data"), "Download species list",
                        class = "btn-sm")
       ),
+
+      # Add div with DT table
 
       div(
         class = "datatable-container",
@@ -43,7 +47,7 @@ specieslistModuleUI <- function(id) {
 specieslistModuleServer <- function(id, species_list) {
   moduleServer(id, function(input, output, session) {
 
-    # Reactive filtered data
+    # Reactive filtered table data
     filtered_data <- reactive({
       req(species_list)
       if (input$class_selection == 'All') {
@@ -54,6 +58,7 @@ specieslistModuleServer <- function(id, species_list) {
     })  |> bindCache(input$class_selection)
 
 
+    # Reactive filtered species counts
     species_count <- reactive ({
       if (input$class_selection == 'All') {
         nrow(species_list)
@@ -63,10 +68,14 @@ specieslistModuleServer <- function(id, species_list) {
     }) |> bindCache(input$class_selection)
 
 
+    # Produce the dynamic value box
     output$dynamic_value_box <- renderUI({
+
       box_settings <- get_value_box_settings(input$class_selection)
+
       # Create custom CSS for this specific value box
       box_id <- paste0("value-box-", input$class_selection)
+
       # Insert custom CSS
       insertUI(
         selector = "head",
@@ -91,7 +100,7 @@ specieslistModuleServer <- function(id, species_list) {
       )
     })
 
-    # Add download handler
+    # Add download handler (Currently set to download whole list - not filtered list)
     output$download_data <- downloadHandler(
       filename = function() {
         paste0("toohey_species_list_",
@@ -111,6 +120,7 @@ specieslistModuleServer <- function(id, species_list) {
       }
     )
 
+    # Render the table
     output$species_list_table <- DT::renderDataTable({
       create_DT_table(filtered_data())
     })

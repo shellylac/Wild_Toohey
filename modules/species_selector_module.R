@@ -143,12 +143,12 @@ speciesSelectionServer <- function(id) {
       data
     }) |> bindCache(
       input$select_method,
-      if(input$select_method == "By common name") input$vernacular_name else NULL,
-      if(input$select_method == "By taxonomy")
+      if (input$select_method == "By common name") input$vernacular_name else NULL,
+      if (input$select_method == "By taxonomy")
         list(input$class, input$order, input$family, input$species) else NULL
     )
 
-    # In speciesSelectionServer, add:
+    # This is mainly for debugging purposes:
     selected_taxa_level <- reactive({
       if (input$select_method == "By common name" & input$vernacular_name == "All") {
         return("class_common") # Default to species level for common name selection
@@ -172,14 +172,14 @@ speciesSelectionServer <- function(id) {
       }
     })
 
-    # For debugging purposes
+    # Print the results to the console
     observe({
       cat("Current taxa_level:", selected_taxa_level(), "\n")
     })
 
     # Return both the filtered data and the taxonomic level
     list(
-      filtered_data = filtered_data, # Your existing filtered data reactive
+      filtered_data = filtered_data,
       taxa_level = selected_taxa_level
     )
   })

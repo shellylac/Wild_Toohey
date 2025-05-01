@@ -1,5 +1,3 @@
-# modules/map_module.R
-
 # Map Module UI
 mapModuleUI <- function(id) {
   ns <- NS(id)
@@ -25,8 +23,11 @@ mapModuleUI <- function(id) {
                      max   = Sys.Date()
       )
     ),
+
     actionButton(ns("reset_view"), "Reset Map View", class = "btn-sm"),
+
     leafletOutput(ns("map")),
+
     # Container for the custom legend
     div(
       id = ns("findermap_legend_container"),
@@ -42,6 +43,7 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
 
     # Debounce the species-filtered data to avoid repeated re-renders
     debounced_data <- reactive({
+
       # React to the update trigger if provided
       if (!is.null(update_trigger)) {
         update_trigger()

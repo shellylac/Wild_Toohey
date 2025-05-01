@@ -1,5 +1,3 @@
-# modules/about_module.R
-
 # About Module UI
 aboutModuleUI <- function(id) {
   ns <- NS(id)

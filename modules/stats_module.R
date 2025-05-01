@@ -4,7 +4,6 @@ statsModuleUI <- function(id) {
 
   card(
     height = "80%",  # Add explicit height here
-    # card_header("Observation trends"),
     card_body(
       radioButtons(
         ns("plot_type"), "Period to display:",
@@ -14,11 +13,6 @@ statsModuleUI <- function(id) {
         selected = "year",
         inline = TRUE
       ),
-      # Use this to make size css for the figures
-      #div(
-      #style = "position: relative; min-height: 600px",
-      # plotly::plotlyOutput(ns("observation_trends"))
-      #)
       plotly::plotlyOutput(ns("observation_trends"))
     )
   )
