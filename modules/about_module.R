@@ -86,7 +86,7 @@ aboutModuleUI <- function(id) {
               "It is important to recognise that the patterns in annual, monthly and daily trends and hotspots do not solely reflect wildlife locations and movements. These patterns are also shaped by human behaviours, such as preferred visiting times, more or less frequented areas of the forest, and particular species that people seek out."
             ),
             p(
-              "Additionally, external factors and events can also impact trends by altering visitation patterns. For example, COVID lockdowns in 2021 likely increased local visits, causing spikes in reported sightings. Keeping these factors in mind will help you more accurately interpret the wildlife trends and hotspots displayed by Wild Toohey."
+              "Additionally, external factors and events can also impact trends by altering visitation patterns. For example, COVID lockdowns in 2020-21 likely increased local visits, causing spikes in reported sightings. Keeping these factors in mind will help you more accurately interpret the wildlife trends and hotspots displayed by Wild Toohey."
             )
           )
         ),
