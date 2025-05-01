@@ -74,7 +74,7 @@ specieslistModuleServer <- function(id, species_list) {
         ui = tags$style(sprintf(
           "#%s .bslib-value-box {
           border: 2px solid %s !important;
-          max-height: 80px !important;
+          max-height: 100px !important;
           }",
           box_id,
           box_settings$border_color
