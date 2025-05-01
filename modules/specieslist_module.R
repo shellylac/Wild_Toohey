@@ -8,20 +8,20 @@ specieslistModuleUI <- function(id) {
         "Species list filter",
         class = "ms-2",
         style = "font-size:1rem; font-weight:500;"
-        )
-      ),
+      )
+    ),
 
     card_body(
       layout_columns(
         col_widths = c(4, 8),  # Left column takes 4/12, right column takes 8/12
-       # Wrap the value box in a div with max-width
-       uiOutput(ns("dynamic_value_box")),
-       selectInput(ns("class_selection"),
-                   "Filter species list by class:",
-                   choices = c('All',
-                               'Aves', 'Mammalia', 'Reptilia', 'Amphibia'),
-                   selected = 'All',
-                   multiple = FALSE)
+        # Wrap the value box in a div with max-width
+        uiOutput(ns("dynamic_value_box")),
+        selectInput(ns("class_selection"),
+                    "Filter species list by class:",
+                    choices = c('All',
+                                'Aves', 'Mammalia', 'Reptilia', 'Amphibia'),
+                    selected = 'All',
+                    multiple = FALSE)
       ),
       # Add download button with some styling
       div(
@@ -38,7 +38,6 @@ specieslistModuleUI <- function(id) {
     )
   )
 }
-
 
 # Species list Module Server
 specieslistModuleServer <- function(id, species_list) {
@@ -83,7 +82,6 @@ specieslistModuleServer <- function(id, species_list) {
       )
       div(
         id = box_id,
-        # class = "d-flex flex-column flex-lg-row align-items-center justify-content-between",
         value_box(
           title = box_settings$title,
           value = species_count(),
@@ -115,7 +113,7 @@ specieslistModuleServer <- function(id, species_list) {
 
     output$species_list_table <- DT::renderDataTable({
       create_DT_table(filtered_data())
-      })
+    })
 
 
   })

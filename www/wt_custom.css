@@ -42,6 +42,7 @@ body::before {
   pointer-events: none; /* So it doesn't interfere with clicks */
 }
 
+
 /* Navbar styling */
 .navbar {
   background-color: var(--wt-primary) !important;
@@ -469,21 +470,3 @@ table.dataTable.no-footer {
   font-size: 1.0rem;
 }
 
-
-
-/* Responsive adjustments
-@media (max-width: 768px) {
-  .panel-body {
-    padding: 1rem;
-  }
-
-  .card-body {
-    padding: 1rem;
-  }
-
-  .logo-container {
-    margin: 15px 0 20px 0;
-  }
-}
-
-*/
