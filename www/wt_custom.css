@@ -88,7 +88,7 @@ body::before {
   background-color: var(--wt-bg-card);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 2px solid var(--wt-secondary);
+  border: 3px solid var(--wt-secondary);
 }
 
 .wt-logo-container:hover {
