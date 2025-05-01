@@ -135,6 +135,14 @@ body::before {
  margin-bottom: 15px;
 }
 
+/* Species list page*/
+.card-header-splist {
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-dark);
+  border-bottom: none;
+  padding: 1rem 1.1rem;
+}
+
 /* About module specific styling */
 .about-intro-card {
   margin-bottom: 15px;
@@ -358,13 +366,15 @@ body::before {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding-bottom: 1.0rem;
+  border: 1px solid var(--wt-secondary);
 }
 
 /* Target the actual classes DT uses */
 table.dataTable thead th {
-  background-color: var(--wt-secondary) !important;
+  background-color: var(--wt-primary) !important;
   color: var(--wt-text-light) !important;
-  border-bottom: none !important;
+  /* border-bottom: none !important;*/
+  border: 2px solid var(--wt-secondary) !important;
 }
 
 /* Add bottom border (hack the no-footer class) */
@@ -460,6 +470,7 @@ table.dataTable.no-footer {
 }
 
 
+
 /* Responsive adjustments
 @media (max-width: 768px) {
   .panel-body {
@@ -474,4 +485,5 @@ table.dataTable.no-footer {
     margin: 15px 0 20px 0;
   }
 }
+
 */

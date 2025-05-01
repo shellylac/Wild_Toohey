@@ -2,14 +2,20 @@
 specieslistModuleUI <- function(id) {
   ns <- NS(id)
   card(
+    card_header(
+      bsicons::bs_icon("funnel-fill", size = "1.5rem", color = "#f9a03f"),
+      span(
+        "Species list filter",
+        class = "ms-2",
+        style = "font-size:1rem; font-weight:500;"
+        )
+      ),
+
     card_body(
       layout_columns(
         col_widths = c(4, 8),  # Left column takes 4/12, right column takes 8/12
        # Wrap the value box in a div with max-width
-        div(
-          style = "max-height: 80px;",  # Adjust this value as needed
-          uiOutput(ns("dynamic_value_box"))
-        ),
+       uiOutput(ns("dynamic_value_box")),
        selectInput(ns("class_selection"),
                    "Filter species list by class:",
                    choices = c('All',
@@ -19,7 +25,7 @@ specieslistModuleUI <- function(id) {
       ),
       # Add download button with some styling
       div(
-        style = "display: flex; justify-content: flex-end; margin-top: 15px;, margin-bottom: 15px;",
+        style = "display: flex; justify-content: flex-end;",
         downloadButton(ns("download_data"), "Download species list",
                        class = "btn-sm")
       ),
@@ -77,6 +83,7 @@ specieslistModuleServer <- function(id, species_list) {
       )
       div(
         id = box_id,
+        # class = "d-flex flex-column flex-lg-row align-items-center justify-content-between",
         value_box(
           title = box_settings$title,
           value = species_count(),
