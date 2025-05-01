@@ -37,7 +37,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.7; /* Lower value = more transparent (adjust as needed) */
+  opacity: 0.6; /* Lower value = more transparent (adjust as needed) */
   z-index: -1; /* Place behind all content */
   pointer-events: none; /* So it doesn't interfere with clicks */
 }
@@ -367,20 +367,16 @@ body::before {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding-bottom: 1.0rem;
-  border: 1px solid var(--wt-secondary);
+  /* border: 1px solid var(--wt-secondary); */
 }
 
 /* Target the actual classes DT uses */
 table.dataTable thead th {
-  background-color: var(--wt-primary) !important;
-  color: var(--wt-text-light) !important;
-  /* border-bottom: none !important;*/
-  border: 2px solid var(--wt-secondary) !important;
-}
-
-/* Add bottom border (hack the no-footer class) */
-table.dataTable.no-footer {
-  border-bottom: 2px solid var(--wt-border);
+  background-color: var(--wt-secondary) !important;
+  color: var(--wt-text-dark) !important;
+  border-bottom: none !important;
+  /* border: 2px solid var(--wt-secondary) !important;*/
+  font-size: 1.3rem;
 }
 
 
@@ -461,12 +457,12 @@ table.dataTable.no-footer {
 /* Tabs styling */
 .nav-underline .nav-link {
   color: var(--wt-text-dark);
-  font-size: 1.0rem;
+  font-size: 1.1rem;
 }
 
 .nav-underline .nav-link.active {
   color: var(--wt-text-light);
   border-bottom-color: var(--wt-accent);
-  font-size: 1.0rem;
+  font-size: 1.1rem;
 }
 

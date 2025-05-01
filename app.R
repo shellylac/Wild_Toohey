@@ -50,11 +50,12 @@ ui <- tagList(
                 accordion_panel(
                   title = div(
                     bsicons::bs_icon(
-                      "pencil-fill",
+                      "pencil",
                       size = "1.5rem",
                       color = "#f9a03f"
                     ),
-                    span("Species selection", class = "ms-2")
+                    span("Species selection",
+                         style = "font-size: 1.1rem")
                   ),
                   value = "Species Selection",
                   speciesSelectionUI("species")
@@ -64,9 +65,12 @@ ui <- tagList(
                   selected = "Finder",
                   height = 650,
                   full_screen = TRUE,
-                  nav_panel("Finder", mapModuleUI("finder")),
-                  nav_panel("Trends", statsModuleUI("stats")),
-                  nav_panel("Hotspots", heatmapModuleUI("heatmap"))
+                  nav_panel("Finder",
+                            mapModuleUI("finder")),
+                  nav_panel("Trends",
+                            statsModuleUI("stats")),
+                  nav_panel("Hotspots",
+                            heatmapModuleUI("heatmap"))
                 )
               )
           ),

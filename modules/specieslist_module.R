@@ -3,11 +3,13 @@ specieslistModuleUI <- function(id) {
   ns <- NS(id)
   card(
     card_header(
-      bsicons::bs_icon("funnel-fill", size = "1.5rem", color = "#f9a03f"),
+      bsicons::bs_icon("funnel",
+                       size = "1.8rem",
+                       color = "#f9a03f"
+                       ),
       span(
         "Species list filter",
-        class = "ms-2",
-        style = "font-size:1rem; font-weight:500;"
+        style = "font-size: 1.1rem"
       )
     ),
 
@@ -39,6 +41,7 @@ specieslistModuleUI <- function(id) {
         style = "min-height: 450px; max-height: 600px; overflow-y: auto;",
         DT::dataTableOutput(ns("species_list_table"))
       )
+
     )
   )
 }
@@ -83,7 +86,7 @@ specieslistModuleServer <- function(id, species_list) {
         ui = tags$style(sprintf(
           "#%s .bslib-value-box {
           border: 2px solid %s !important;
-          max-height: 100px !important;
+          max-height: 70px !important;
           }",
           box_id,
           box_settings$border_color
