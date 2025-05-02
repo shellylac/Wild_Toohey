@@ -1,6 +1,8 @@
 # Wild Toohey: A shiny app for wildlife spotting in Toohey Forest
 
-![Wild Toohey Logo](www/wildtoohey_logo_ma_2.png)
+<p align="center">
+  <img src="www/wildtoohey_logo_ma_2.png" alt="Wild Toohey Logo" width="300"/>
+</p>
 
 ## Why Wild Toohey?
 
