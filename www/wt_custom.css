@@ -14,6 +14,7 @@
   --wt-border: #E0E0E0;       /* Light border */
 }
 
+/*.......................................*/
 /* Base styling */
 /* Update body with pseudo-element for controllable transparency */
 body {
@@ -42,6 +43,17 @@ body::before {
   pointer-events: none; /* So it doesn't interfere with clicks */
 }
 
+/* Panel content layout */
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 56px); /* Adjust based on navbar height */
+}
+
+.panel-body {
+  flex: 1;
+  /* padding: 1.5rem; */
+}
 
 /* Navbar styling */
 .navbar {
@@ -76,30 +88,59 @@ body::before {
 }
 
 
-/* Logo styling */
-.wt-logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto 30px;
-  max-width: 450px;
-  padding: 10px;
-  border-radius: 12px;
-  background-color: var(--wt-bg-card);
+/* Tabs styling */
+.nav-underline .nav-link {
+  color: var(--wt-text-dark);
+  font-size: 1.1rem;
+}
+
+.nav-underline .nav-link.active {
+  color: var(--wt-text-light);
+  border-bottom-color: var(--wt-accent);
+  font-size: 1.1rem;
+}
+
+
+
+/* Accordion styling */
+.accordion {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-  border: 3px solid var(--wt-secondary);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.wt-logo-container:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
+.accordion-item {
+  border: none;
+  margin-bottom: 4px;
 }
 
-.wt-logo-img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
+.accordion .accordion-header {
+  color: var(--wt-primary);
+}
+
+.rounded-accordion .accordion-button {
+  border-radius: 8px;
+  background-color: var(--wt-primary);
+  color: var(--wt-text-light);
+  font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--wt-secondary);
+  color: var(--wt-text-dark);
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+}
+
+/* Control accordion arrow colors */
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23F5F8EE'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212121'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 /* Enhanced card styling */
@@ -131,51 +172,38 @@ body::before {
   padding: 0.8rem;
 }
 
-.intro-card {
- text-align: center;
- margin-bottom: 15px;
-}
+/*..................................*/
+/* HOME PAGE CSS */
 
-/* Species list page*/
-.card-header-splist {
-  background-color: var(--wt-secondary);
-  color: var(--wt-text-dark);
-  border-bottom: none;
-  padding: 1rem 1.1rem;
-}
-
-/* About module specific styling */
-.about-intro-card {
-  margin-bottom: 15px;
+/* Logo styling */
+.wt-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto 30px;
+  max-width: 450px;
+  padding: 10px;
+  border-radius: 12px;
   background-color: var(--wt-bg-card);
-  border-radius: 8px;
-  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 3px solid var(--wt-secondary);
 }
 
-.about-intro-card:hover {
+.wt-logo-container:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
 
-.about-intro-text {
-  display: block;
-  text-align: center;
-  border-bottom: 2px solid var(--wt-accent);
-  padding-bottom: 5px;
-  margin: 0 auto 1rem auto;
-  color: var(--wt-primary);
-  font-weight: 400;
-  width: fit-content;
+.wt-logo-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
-/* Accordion panel content for about module */
-.about-accordion-content {
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
-  padding: 15px;  /* Add explicit padding */
+.intro-card {
+ text-align: center;
+ margin-bottom: 15px;
 }
 
 /* How-to-get-started card styling */
@@ -245,45 +273,78 @@ body::before {
   padding: 0.75rem;
 }
 
-/* Accordion styling */
-.accordion {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.accordion-item {
-  border: none;
-  margin-bottom: 4px;
-}
-
-.accordion .accordion-header {
-  color: var(--wt-primary);
-}
-
-.rounded-accordion .accordion-button {
-  border-radius: 8px;
+/* Button styling */
+.btn-primary {
   background-color: var(--wt-primary);
-  color: var(--wt-text-light);
-  font-weight: 500;
+  border: 2px solid var(--wt-accent);
 }
 
-.accordion-button:not(.collapsed) {
+.btn-primary:hover {
+  background-color: var(--wt-primary);
+  border: 5px solid var(--wt-accent);
+}
+
+.btn-sm {
+  border-radius: 4px;
+}
+
+
+/*..................................*/
+/* SPECIES LIST page*/
+.card-header-splist {
   background-color: var(--wt-secondary);
   color: var(--wt-text-dark);
+  border-bottom: none;
+  padding: 1rem 1.1rem;
 }
 
-.accordion-button:focus {
-  box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+/* Value boxes*/
+.bslib-value-box {
+  background-color: var(--wt-bg-card) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Control accordion arrow colors */
-.accordion-button::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23F5F8EE'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+.bslib-value-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
 }
 
-.accordion-button:not(.collapsed)::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212121'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+
+/*..................................*/
+/* ABOUT PAGE styling */
+.about-intro-card {
+  margin-bottom: 15px;
+  background-color: var(--wt-bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.about-intro-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.about-intro-text {
+  display: block;
+  text-align: center;
+  border-bottom: 2px solid var(--wt-accent);
+  padding-bottom: 5px;
+  margin: 0 auto 1rem auto;
+  color: var(--wt-primary);
+  font-weight: 400;
+  width: fit-content;
+}
+
+/* Accordion panel content for about module */
+.about-accordion-content {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  padding: 15px;  /* Add explicit padding */
 }
 
 /* Contact card styling */
@@ -305,7 +366,6 @@ body::before {
   text-align: center;
 }
 
-
 /* Link styling in the about module */
 .about-link {
   color: var(--wt-primary);
@@ -320,6 +380,7 @@ body::before {
   text-decoration: underline;
 }
 
+/*........................................*/
 /* Map and visualization containers */
 .leaflet-container,
 .plotly,
@@ -332,35 +393,14 @@ body::before {
   border: 1px solid var(--wt-border);
 }
 
-/* Value boxes*/
-.bslib-value-box {
-  background-color: var(--wt-bg-card) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.bslib-value-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+/* Ensure maps don't shrink */
+.leaflet-container {
+  min-height: 300px !important;
 }
 
 
-/* Button styling */
-.btn-primary {
-  background-color: var(--wt-primary);
-  border: 2px solid var(--wt-accent);
-}
 
-.btn-primary:hover {
-  background-color: var(--wt-primary);
-  border: 5px solid var(--wt-accent);
-}
-
-.btn-sm {
-  border-radius: 4px;
-}
-
+/*............................*/
 /* Table styling */
 .datatable-container {
   border-radius: 8px;
@@ -380,6 +420,7 @@ table.dataTable thead th {
 }
 
 
+/*...............................*/
 /* Footer styling */
 .site-footer {
   margin-top: 10px;
@@ -435,34 +476,3 @@ table.dataTable thead th {
   color: var(--wt-text-light);
   text-shadow: 1.2px 1.2px var(--wt-text-dark);
 }
-
-
-/* Ensure maps don't shrink */
-.leaflet-container {
-  min-height: 300px !important;
-}
-
-/* Panel content layout */
-.panel-content {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 56px); /* Adjust based on navbar height */
-}
-
-.panel-body {
-  flex: 1;
-  /* padding: 1.5rem; */
-}
-
-/* Tabs styling */
-.nav-underline .nav-link {
-  color: var(--wt-text-dark);
-  font-size: 1.1rem;
-}
-
-.nav-underline .nav-link.active {
-  color: var(--wt-text-light);
-  border-bottom-color: var(--wt-accent);
-  font-size: 1.1rem;
-}
-

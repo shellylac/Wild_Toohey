@@ -5,7 +5,7 @@ account: wildspire
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14609032
-bundleId: 10215596
+bundleId: 10215709
 url: https://wildspire.shinyapps.io/Wild-Toohey/
 version: 1
 asMultiple: FALSE
