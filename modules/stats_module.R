@@ -7,9 +7,9 @@ statsModuleUI <- function(id) {
     card_body(
       radioButtons(
         ns("plot_type"), "Period to display:",
-        choices = c("Annual trends" = "year",
-                    "Monthly trends" = "month",
-                    "Daily trends" = "hour"),
+        choices = c("Annual" = "year",
+                    "Monthly" = "month",
+                    "Daily" = "hour"),
         selected = "year",
         inline = TRUE
       ),
