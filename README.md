@@ -1,4 +1,4 @@
-# Wild Toohey: A shiny app for wildlife spotting in Toohey Forest
+# Wild Toohey: A shiny app for wildlife spotting
 
 <p align="center">
   <img src="www/wildtoohey_logo_ma_2.png" alt="Wild Toohey Logo" width="450"/>
@@ -50,7 +50,6 @@ The ALA aggregates data from multiple databases, including:
 - [FrogID](https://www.frogid.net.au/)
 - [Koala Count](https://biocollect.ala.org.au/acsa/project/index/77285a13-e231-49e8-b1b4-88cd25c8a4fe)
 - [WildNet](https://www.qld.gov.au/environment/plants-animals/species-information/wildnet)
-- And many others
 
 ## Wild Toohey was built using
 
@@ -78,4 +77,4 @@ Project Structure:
 
 You can find the app here: [Wild Toohey](https://wildspire.shinyapps.io/Wild-Toohey/)
 
-Happy wildlife watching and forest exploring!
+🔭 Happy wildlife watching and forest exploring!
