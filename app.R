@@ -7,7 +7,8 @@ ui <- tagList(
     tags$link(rel = "stylesheet", type = "text/css", href = "wt_custom.css"),
 
     # This script is for the Get Started button functionality
-    tags$script(HTML("
+    tags$script(HTML(
+      "
     Shiny.addCustomMessageHandler('switch-tab', function(tabName) {
     // First switch the tab
     $('a[data-value=\"' + tabName + '\"]').tab('show');
@@ -15,8 +16,7 @@ ui <- tagList(
     // Then scroll to the top of the page
     window.scrollTo(0, 0);
     });"
-                     )
-                )
+    ))
   ),
 
   page_navbar(
@@ -32,72 +32,68 @@ ui <- tagList(
     # Home panel with footer
     nav_panel(
       title = bsicons::bs_icon("house-fill"),
-      div(class = "panel-content",
-          div(class = "panel-body", homeModuleUI("home")),
-          div(create_footer())
+      div(
+        class = "panel-content",
+        div(class = "panel-body", homeModuleUI("home")),
+        div(create_footer())
       )
     ),
 
     # Explorer panel with footer
     nav_panel(
       title = "Explorer",
-      div(class = "panel-content",
-          div(class = "panel-body",
-              accordion(
-                open = TRUE,
-                class = "rounded-accordion",
+      div(
+        class = "panel-content",
+        div(
+          class = "panel-body",
+          accordion(
+            open = TRUE,
+            class = "rounded-accordion",
 
-                accordion_panel(
-                  title = div(
-                    bsicons::bs_icon(
-                      "pencil",
-                      size = "1.5rem",
-                      color = "#f9a03f"
-                    ),
-                    span("Species selection",
-                         style = "font-size: 1.1rem")
-                  ),
-                  value = "Species Selection",
-                  speciesSelectionUI("species")
+            accordion_panel(
+              title = div(
+                bsicons::bs_icon(
+                  "pencil",
+                  size = "1.5rem",
+                  color = "#f9a03f"
                 ),
-                navset_card_underline(
-                  id = "explorer-tabs",
-                  selected = "Finder",
-                  height = 650,
-                  full_screen = TRUE,
-                  nav_panel("Finder",
-                            mapModuleUI("finder")),
-                  nav_panel("Trends",
-                            statsModuleUI("stats")),
-                  nav_panel("Hotspots",
-                            heatmapModuleUI("heatmap"))
-                )
-              )
-          ),
-          div(create_footer())
+                span("Species selection", style = "font-size: 1.1rem")
+              ),
+              value = "Species Selection",
+              speciesSelectionUI("species")
+            ),
+            navset_card_underline(
+              id = "explorer-tabs",
+              selected = "Finder",
+              height = 650,
+              full_screen = TRUE,
+              nav_panel("Finder", mapModuleUI("finder")),
+              nav_panel("Trends", statsModuleUI("stats")),
+              nav_panel("Hotspots", heatmapModuleUI("heatmap"))
+            )
+          )
+        ),
+        div(create_footer())
       )
     ),
-
 
     # Species List panel with footer
     nav_panel(
       title = "Species List",
-      div(class = "panel-content",
-          div(class = "panel-body",
-              specieslistModuleUI("specieslist")
-              ),
-          div(create_footer())
+      div(
+        class = "panel-content",
+        div(class = "panel-body", specieslistModuleUI("specieslist")),
+        div(create_footer())
       )
     ),
 
     # About panel with footer
     nav_panel(
       title = "About",
-      div(class = "panel-content",
-          div(class = "panel-body",
-              aboutModuleUI("about")
-              ),
-          div(create_footer())
+      div(
+        class = "panel-content",
+        div(class = "panel-body", aboutModuleUI("about")),
+        div(create_footer())
       )
     )
   )
@@ -123,17 +119,23 @@ server <- function(input, output, session) {
   species_data <- speciesSelectionServer("species")
 
   # Pass filtered data to other data modules
-  mapModuleServer("finder",
-                  filtered_data = species_data$filtered_data,
-                  update_trigger = map_update_trigger)
+  mapModuleServer(
+    "finder",
+    filtered_data = species_data$filtered_data,
+    update_trigger = map_update_trigger
+  )
 
-  heatmapModuleServer("heatmap",
-                      filtered_data = species_data$filtered_data,
-                      taxa_level = species_data$taxa_level)
+  heatmapModuleServer(
+    "heatmap",
+    filtered_data = species_data$filtered_data,
+    taxa_level = species_data$taxa_level
+  )
 
-  statsModuleServer("stats",
-                    filtered_data = species_data$filtered_data,
-                    taxa_level = species_data$taxa_level)
+  statsModuleServer(
+    "stats",
+    filtered_data = species_data$filtered_data,
+    taxa_level = species_data$taxa_level
+  )
 
   specieslistModuleServer("specieslist", species_list)
 
