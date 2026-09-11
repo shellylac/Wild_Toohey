@@ -2,9 +2,18 @@
 modules <- list.files("./modules", pattern = "\\.R$", full.names = TRUE)
 sapply(modules, source)
 
+addResourcePath(
+  "wt-assets",
+  normalizePath("www", winslash = "/", mustWork = TRUE)
+)
+
 ui <- tagList(
   tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "wt_custom.css"),
+    tags$link(
+      rel = "stylesheet",
+      type = "text/css",
+      href = "wt-assets/wt_custom.css"
+    ),
 
     # This script is for the Get Started button functionality
     tags$script(HTML(

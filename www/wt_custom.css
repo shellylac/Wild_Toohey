@@ -19,6 +19,7 @@
 /* Update body with pseudo-element for controllable transparency */
 body {
   position: relative;
+  isolation: isolate;
   background-color: var(--wt-bg-light);
   color: var(--wt-text-dark);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,7 +29,7 @@ body {
 /* Add the background image as a pseudo-element with controllable opacity */
 body::before {
   content: "";
-  background-image: url(toohey_background_2.jpg);
+  background-image: url("toohey_background_2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
