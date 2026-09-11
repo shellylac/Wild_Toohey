@@ -399,6 +399,11 @@ body::before {
   min-height: 300px !important;
 }
 
+.leaflet-tile-pane {
+  filter: grayscale(60%) brightness(120%) contrast(70%);
+  opacity: 0.85;
+}
+
 
 
 /*............................*/

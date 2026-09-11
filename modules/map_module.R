@@ -4,7 +4,8 @@ mapModuleUI <- function(id) {
 
   card(
     radioButtons(
-      ns("date_filter"), "Time period:",
+      ns("date_filter"),
+      "Time period:",
       choices = c(
         "Past week" = "week",
         "Past month" = "month",
@@ -16,11 +17,13 @@ mapModuleUI <- function(id) {
     ),
     conditionalPanel(
       condition = sprintf("input['%s'] == 'custom'", ns("date_filter")),
-      dateRangeInput(ns("date_range"), "Select date range:",
-                     start = min(toohey_occs$eventDate),
-                     end   = Sys.Date(),
-                     min   = min(toohey_occs$eventDate),
-                     max   = Sys.Date()
+      dateRangeInput(
+        ns("date_range"),
+        "Select date range:",
+        start = min(toohey_occs$eventDate),
+        end = Sys.Date(),
+        min = min(toohey_occs$eventDate),
+        max = Sys.Date()
       )
     ),
 
@@ -43,14 +46,14 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
 
     # Debounce the species-filtered data to avoid repeated re-renders
     debounced_data <- reactive({
-
       # React to the update trigger if provided
       if (!is.null(update_trigger)) {
         update_trigger()
       }
 
       filtered_data()
-    }) |> debounce(1000)
+    }) |>
+      debounce(1000)
 
     # Apply the user’s date filter
     date_filtered_data <- reactive({
@@ -58,34 +61,38 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
         dplyr::mutate(eventDate = as.Date(eventDate))
 
       # Switch on date_filter selection
-      switch(input$date_filter,
-             "week" = {
-               data |> dplyr::filter(eventDate >= (Sys.Date() - 7))
-             },
-             "month" = {
-               data |> dplyr::filter(eventDate >= (Sys.Date() - 30))
-             },
-             "latest" = {
-               data |> dplyr::filter(eventDate == max(eventDate)) |> dplyr::slice(1)
-             },
-             "custom" = {
-               data |> dplyr::filter(
-                 eventDate >= input$date_range[1],
-                 eventDate <= input$date_range[2]
-               )
-             }
+      switch(
+        input$date_filter,
+        "week" = {
+          data |> dplyr::filter(eventDate >= (Sys.Date() - 7))
+        },
+        "month" = {
+          data |> dplyr::filter(eventDate >= (Sys.Date() - 30))
+        },
+        "latest" = {
+          data |> dplyr::filter(eventDate == max(eventDate)) |> dplyr::slice(1)
+        },
+        "custom" = {
+          data |>
+            dplyr::filter(
+              eventDate >= input$date_range[1],
+              eventDate <= input$date_range[2]
+            )
+        }
       )
-    }) |> bindCache(
-      input$date_filter,
-      if (input$date_filter == "custom") input$date_range else NULL,
-      debounced_data()
-    )
+    }) |>
+      bindCache(
+        input$date_filter,
+        if (input$date_filter == "custom") input$date_range else NULL,
+        debounced_data()
+      )
 
     # Initialize the map
     output$map <- renderLeaflet({
-      leaflet(options = leafletOptions(attributionControl=FALSE)) |>
+      leaflet(options = leafletOptions(attributionControl = FALSE)) |>
         addTiles() |>
-        addProviderTiles(providers$CartoDB.Positron) |>
+        # addProviderTiles(providers$CartoDB.Positron) |>
+        addProviderTiles(providers$OpenStreetMap.Mapnik) |>
         addFullscreenControl() |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM) |>
         addScaleBar(position = "bottomleft") |>
@@ -107,7 +114,9 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
 
       if (nrow(df) == 0) {
         showNotification(
-          HTML("No data available for current selection.<br>Please select a wider date range."),
+          HTML(
+            "No data available for current selection.<br>Please select a wider date range."
+          ),
           type = "warning",
           duration = 2,
           id = "map_warning"
@@ -128,29 +137,39 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
             icon = ~ awesomeIcons(
               # Pick icon name by class
               icon = dplyr::case_when(
-                class == "Aves"      ~ "dove",  # font-awesome 'dove'
-                class == "Mammalia"  ~ "paw",
-                class == "Reptilia"  ~ "worm",
-                class == "Amphibia"  ~ "frog",
-                TRUE                 ~ "question"
+                class == "Aves" ~ "dove", # font-awesome 'dove'
+                class == "Mammalia" ~ "paw",
+                class == "Reptilia" ~ "worm",
+                class == "Amphibia" ~ "frog",
+                TRUE ~ "question"
               ),
-              library    = "fa",
-              iconColor  = "white",
+              library = "fa",
+              iconColor = "white",
               markerColor = dplyr::case_when(
-                class == "Aves"      ~ BLUE,
-                class == "Mammalia"  ~ RED,
-                class == "Reptilia"  ~ ORANGE,
-                class == "Amphibia"  ~ GREEN,
-                TRUE                 ~ "gray"
+                class == "Aves" ~ BLUE,
+                class == "Mammalia" ~ RED,
+                class == "Reptilia" ~ ORANGE,
+                class == "Amphibia" ~ GREEN,
+                TRUE ~ "gray"
               )
             ),
             popup = ~ paste0(
-              "<a href='", wikipedia_url, "' target='_blank'><b>",
-              vernacular_name, "</b></a><br/>",
-              "Scientific name: <em>", species, "</em><br/>",
-              "Date: ", eventDate, "<br/>",
-              "Source: ", dataResourceName, "<br/>",
-              "<a href='", google_maps_url,
+              "<a href='",
+              wikipedia_url,
+              "' target='_blank'><b>",
+              vernacular_name,
+              "</b></a><br/>",
+              "Scientific name: <em>",
+              species,
+              "</em><br/>",
+              "Date: ",
+              eventDate,
+              "<br/>",
+              "Source: ",
+              dataResourceName,
+              "<br/>",
+              "<a href='",
+              google_maps_url,
               "' target='_blank'>Navigate here with Google Maps</a>"
             ),
             clusterOptions = markerClusterOptions()
@@ -172,7 +191,10 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
         tags$div(
           style = "display: flex; align-items: center; margin-right: 8px;",
           tags$div(
-            style = sprintf("width: 15px; height: 15px; background: %s; margin-right: 3px;", colors[i])
+            style = sprintf(
+              "width: 15px; height: 15px; background: %s; margin-right: 3px;",
+              colors[i]
+            )
           ),
           tags$div(HTML(labels[i]), style = "font-size: 0.8em;")
         )
@@ -192,10 +214,10 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
     observe({
       insertUI(
         selector = paste0("#", ns("findermap_legend_container")),
-        where    = "beforeEnd",
-        ui       = uiOutput(ns("findermap_legend")),
+        where = "beforeEnd",
+        ui = uiOutput(ns("findermap_legend")),
         immediate = TRUE,
-        session  = session
+        session = session
       )
     })
 
@@ -204,6 +226,5 @@ mapModuleServer <- function(id, filtered_data, update_trigger = NULL) {
       leafletProxy("map") |>
         setView(lng = DEFAULT_LONG, lat = DEFAULT_LAT, zoom = DEFAULT_ZOOM)
     })
-
   })
 }
